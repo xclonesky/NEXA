@@ -2261,13 +2261,14 @@ async function acceptCall(){
   if(acceptingCall) return;
   acceptingCall = true;
   document.getElementById('callAcceptBtn').disabled = true;
+  document.getElementById('callMuteBtn').classList.remove('muted');
   if(!callLocalStream){
     try{ callLocalStream = await navigator.mediaDevices.getUserMedia({ audio:true, video:true }); mediaPermissionGranted = true; }
     catch(err){ logDiagnostic('Mic/camera permission', err); acceptingCall = false; document.getElementById('callAcceptBtn').disabled = false; return; }
   }
   try{
     createPeerConnection();
-    callLocalStream.getAudioTracks().forEach(t=>peerConnection.addTrack(t, callLocalStream));
+    callLocalStream.getAudioTracks().forEach(t=>{ t.enabled = true; peerConnection.addTrack(t, callLocalStream); });
     if(pendingOfferRow && pendingOfferRow.offer){
       await peerConnection.setRemoteDescription(JSON.parse(pendingOfferRow.offer));
       flushIceQueue();
@@ -2313,6 +2314,7 @@ function openCallScreen(type, name, headAv){
   callAv.style.backgroundImage = headAv.style.backgroundImage || '';
   callAv.textContent = headAv.style.backgroundImage ? '' : headAv.textContent;
   document.getElementById('callMuteBtn').classList.remove('muted');
+  if(callLocalStream) callLocalStream.getAudioTracks().forEach(t=>t.enabled = true);
   document.getElementById('callCamBtn').classList.remove('on');
   document.getElementById('callLocalVideo').classList.remove('show');
   document.getElementById('callTapAudio').classList.remove('show');
