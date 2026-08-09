@@ -2127,7 +2127,7 @@ function clearReply(){ document.getElementById('replyPreview').classList.remove(
 /* ============================= CALLING (real ringing via Supabase) ============================= */
 let mediaPermissionGranted = false, callLocalStream = null, callTimeoutTimer, pendingCallType = 'audio';
 let activeCallId = null, isIncomingCall = false, pendingOfferRow = null, acceptingCall = false;
-let peerConnection = null, callIceChannel = null, iceQueue = [], outgoingIceQueue = [];
+let peerConnection = null, callIceChannel = null, iceQueue = [], outgoingIceQueue = [], audioSyncInterval = null;
 const RTC_CONFIG = { iceServers: [
   { urls: 'stun:stun.l.google.com:19302' },
   { urls: 'stun:stun1.l.google.com:19302' },
@@ -2172,8 +2172,10 @@ function createPeerConnection(){
   peerConnection.onconnectionstatechange = ()=>{
     const s = peerConnection.connectionState;
     if(['connected','disconnected','failed','closed'].includes(s)) logDiagnostic('Call connection', s);
+    if(s === 'connected') startAudioSyncWatchdog(); else if(s==='disconnected'||s==='failed'||s==='closed') stopAudioSyncWatchdog();
   };
   peerConnection.ontrack = e=>{
+    if(e.receiver && 'playoutDelayHint' in e.receiver) e.receiver.playoutDelayHint = 0;
     const el = document.getElementById('callRemoteAudio');
     if(el.srcObject !== e.streams[0]) el.srcObject = e.streams[0];
     el.play().catch(err=>{
@@ -2181,6 +2183,24 @@ function createPeerConnection(){
       document.getElementById('callTapAudio').classList.add('show');
     });
   };
+}
+function startAudioSyncWatchdog(){
+  stopAudioSyncWatchdog();
+  audioSyncInterval = setInterval(async ()=>{
+    if(!peerConnection) return;
+    const stats = await peerConnection.getStats();
+    stats.forEach(r=>{
+      if(r.type==='inbound-rtp' && r.kind==='audio' && r.jitterBufferDelay && r.jitterBufferEmittedCount){
+        const avgDelayMs = (r.jitterBufferDelay / r.jitterBufferEmittedCount) * 1000;
+        const el = document.getElementById('callRemoteAudio');
+        if(el) el.playbackRate = avgDelayMs > 150 ? 1.15 : 1.0; // brief catch-up burst if buffer has drifted, else normal speed
+      }
+    });
+  }, 3000);
+}
+function stopAudioSyncWatchdog(){
+  clearInterval(audioSyncInterval); audioSyncInterval = null;
+  const el = document.getElementById('callRemoteAudio'); if(el) el.playbackRate = 1.0;
 }
 function enableCallAudio(){
   const el = document.getElementById('callRemoteAudio');
@@ -2323,6 +2343,7 @@ function toggleCallCamera(){
   else vid.classList.remove('show');
 }
 function closeCallUI(){
+  stopAudioSyncWatchdog();
   document.getElementById('callScreen').classList.remove('show');
   clearTimeout(callTimeoutTimer);
   document.getElementById('callLocalVideo').srcObject = null;
