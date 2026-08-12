@@ -3,7 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEXA — by XCLONE STUDIOS</title>
+<title>NEXA — Modern Dating &amp; Connections</title>
+<meta name="description" content="NEXA is a modern dating and social platform where you can meet new people, spark real conversations, and build meaningful connections.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xclonesky.github.io/NEXA/">
+<meta name="theme-color" content="#150C10">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjRkY3QTREIi8+PHN0b3Agb2Zmc2V0PSIwLjU1IiBzdG9wLWNvbG9yPSIjRkYzRDY4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQzgxRTVFIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNTBDMTAiLz48dGV4dCB4PSIzMiIgeT0iNDUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ1cmwoI2cpIj5OPC90ZXh0Pjwvc3ZnPg==">
+<link rel="apple-touch-icon" href="nexa-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NEXA">
+<meta property="og:title" content="NEXA — Modern Dating &amp; Connections">
+<meta property="og:description" content="Meet new people, spark real conversations, and build meaningful connections on NEXA — a modern dating and social platform.">
+<meta property="og:url" content="https://xclonesky.github.io/NEXA/">
+<meta property="og:image" content="https://xclonesky.github.io/NEXA/nexa-og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEXA — Modern Dating &amp; Connections">
+<meta name="twitter:description" content="Meet new people, spark real conversations, and build meaningful connections on NEXA — a modern dating and social platform.">
+<meta name="twitter:image" content="https://xclonesky.github.io/NEXA/nexa-og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"NEXA","url":"https://xclonesky.github.io/NEXA/","description":"NEXA is a modern dating and social platform where you can meet new people, spark real conversations, and build meaningful connections."}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -233,7 +252,7 @@ img{max-width:100%; display:block}
 .topnav button:not(.active):hover{ color:var(--c-text); }
 .topnav button span{ display:none; }
 @media(min-width:560px){ .topnav button span{ display:inline; } }
-.avatar{ border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0; background:var(--grad-hero); font-family:var(--ff-body); }
+.avatar{ border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0; background:var(--grad-hero); font-family:var(--ff-body); background-size:cover; background-position:center; }
 .av-1{ background:linear-gradient(135deg,#FF7A4D,#FF3D68); } .av-2{ background:linear-gradient(135deg,#FF3D68,#C81E5E); }
 .av-3{ background:linear-gradient(135deg,#FFC978,#FF7A4D); } .av-4{ background:linear-gradient(135deg,#C81E5E,#7A1E4A); }
 .av-5{ background:linear-gradient(135deg,#FF8FA3,#C81E5E); } .av-6{ background:linear-gradient(135deg,#FFA26B,#E63950); }
@@ -302,38 +321,8 @@ img{max-width:100%; display:block}
 @keyframes heartPop{ 0%{transform:scale(1)} 45%{transform:scale(1.35)} 100%{transform:scale(1)} }
 .like-btn.liked .icon, .post-actions button.liked .icon{ animation:heartPop .35s ease; }
 
-/* ---------- Flame loader ---------- */
-@keyframes flameTwinkle{0%,100%{opacity:.5; transform:scale(.85); filter:drop-shadow(0 0 2px rgba(255,122,77,.4))} 50%{opacity:1; transform:scale(1.1); filter:drop-shadow(0 0 7px rgba(255,61,104,.65))}}
-.flame-loader{display:inline-block; width:16px; height:16px; color:#fff; vertical-align:-3px; margin-right:6px; animation:flameTwinkle 1s ease-in-out infinite;}
-.flame-loader svg{width:100%; height:100%; fill:currentColor;}
-.flame-loader-lg{width:48px; height:48px; color:var(--c-sunset-2); margin:0 auto; display:block; animation:flameTwinkle 1.15s ease-in-out infinite;}
-.flame-loader-lg svg{width:100%; height:100%; fill:currentColor;}
-.loader-center{display:flex; align-items:center; justify-content:center; padding:44px 0; grid-column:1/-1;}
-
-/* ---------- Discover card: avatar chip over banner ---------- */
-.dc-avatar-chip{ position:absolute; left:14px; bottom:-22px; width:52px; height:52px; border-radius:50%; border:3px solid var(--c-bg2); background:var(--grad-hero); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; font-size:16px; z-index:2; box-shadow:var(--shadow-soft); }
-.discover-card.has-banner .dc-body{ padding-top:32px; }
-
-/* ---------- Home layout toggle ---------- */
-.home-layout-toggle{ display:flex; gap:6px; justify-content:flex-end; margin-bottom:10px; }
-.hlt-btn{ font-size:12px; font-weight:600; padding:6px 13px; border-radius:var(--r-pill); background:var(--c-elev); border:1px solid var(--c-border); color:var(--c-text-faint); }
-.hlt-btn.active{ background:var(--grad-hero); color:#fff; border-color:transparent; }
-.home-wrap.layout-wide{ max-width:1400px; }
-.home-body{ display:block; }
-.home-wrap.layout-rail .home-body{ display:grid; grid-template-columns:230px 1fr; gap:20px; align-items:start; }
-.home-wrap.layout-rail{ max-width:1180px; }
-.home-rail{ display:none; }
-.home-wrap.layout-rail .home-rail{ display:block; position:sticky; top:82px; }
-@media(max-width:920px){ .home-wrap.layout-rail .home-body{ grid-template-columns:1fr; } .home-wrap.layout-rail .home-rail{ display:none; } }
-
-/* ---------- Reels ---------- */
-.reel-wrap{ max-width:420px; margin:0 auto; height:calc(100vh - 170px); min-height:420px; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth; border-radius:var(--r-lg); scrollbar-width:none; }
-.reel-wrap::-webkit-scrollbar{ display:none; }
-.reel-item{ scroll-snap-align:start; scroll-snap-stop:always; height:calc(100vh - 170px); min-height:420px; position:relative; background:#000; border-radius:var(--r-lg); overflow:hidden; margin-bottom:6px; }
-.reel-item img, .reel-item video{ width:100%; height:100%; object-fit:cover; display:block; }
-
 /* ---------- FEED tab ---------- */
-.feed-wrap{ max-width:1080px; margin:0 auto; padding:20px 16px 100px; display:grid; grid-template-columns:220px 1fr 210px; gap:20px; align-items:start; }
+.feed-wrap{ max-width:1320px; margin:0 auto; padding:20px 16px 100px; display:grid; grid-template-columns:240px 1fr 240px; gap:24px; align-items:start; }
 @media(max-width:920px){ .feed-wrap{ grid-template-columns:1fr; } .feed-rail{ display:none; } }
 .rail{ position:sticky; top:82px; }
 .rail-card{ background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-lg); padding:16px; margin-bottom:14px; }
@@ -370,7 +359,7 @@ img{max-width:100%; display:block}
 .post-actions .icon{ width:17px; height:17px; }
 
 /* ---------- CHATROOM tab ---------- */
-.chat-wrap{ max-width:1080px; margin:0 auto; height:calc(100vh - 68px); display:flex; border-top:1px solid var(--c-border-soft); }
+.chat-wrap{ max-width:1320px; margin:0 auto; height:calc(100vh - 68px); display:flex; border-top:1px solid var(--c-border-soft); }
 .chat-list{ width:300px; flex-shrink:0; border-right:1px solid var(--c-border-soft); overflow-y:auto; padding:14px; }
 .chat-list-search{ display:flex; align-items:center; gap:8px; background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:10px 14px; margin-bottom:12px; }
 .chat-list-search input{ font-size:13px; flex:1; }
@@ -641,7 +630,7 @@ img{max-width:100%; display:block}
       </div>
       <div class="auth-visual-tint"></div>
       <div class="auth-visual-fade"></div>
-      <div class="auth-visual-word">NEXA</div>
+      <h1 class="auth-visual-word" style="margin:0">NEXA</h1>
       <div class="auth-visual-caption show" id="loginCaption">NEXA finds your soulmate here 🧐</div>
       <div class="auth-visual-dots" id="loginDots"><span class="active"></span><span></span><span></span><span></span></div>
       <div class="auth-visual-stats">
@@ -717,6 +706,12 @@ img{max-width:100%; display:block}
             <input type="file" id="avatarFileInput" accept="image/*" hidden onchange="handleAvatarSelect(event)">
           </div>
           <div class="field"><label>Bio</label><input type="text" id="suBio" placeholder="Tell people who you are..."></div>
+          <div class="field"><label>Location</label>
+            <div class="dob-row" style="grid-template-columns:1fr 1fr">
+              <select id="suCountry"><option value="">Country</option></select>
+              <select id="suCity"><option value="">City</option></select>
+            </div>
+          </div>
           <div class="chip-section">
             <label>Status tags — select what fits</label>
             <div class="chip-row" data-multi>
@@ -801,7 +796,6 @@ img{max-width:100%; display:block}
       <button class="active" data-tab="tab-home"><svg class="icon"><use href="#i-home"/></svg><span>Home</span></button>
       <button data-tab="tab-feed"><svg class="icon"><use href="#i-flame"/></svg><span>Feed</span></button>
       <button data-tab="tab-chatroom"><svg class="icon"><use href="#i-chat"/></svg><span>Chatroom</span></button>
-      <button data-tab="tab-reels"><svg class="icon"><use href="#i-heart"/></svg><span>Reels</span></button>
     </nav>
     <div class="avatar av-1 topbar-avatar" onclick="openOverlay('myProfile')">A</div>
   </header>
@@ -810,26 +804,7 @@ img{max-width:100%; display:block}
 
     <!-- ---------- HOME ---------- -->
     <div class="tab-panel active" id="tab-home">
-      <div class="home-wrap layout-wide" id="homeWrap">
-        <div class="home-layout-toggle">
-          <button class="hlt-btn active" data-l="wide" onclick="setHomeLayout('wide')">Wide</button>
-          <button class="hlt-btn" data-l="rail" onclick="setHomeLayout('rail')">Rail</button>
-        </div>
-        <div class="home-body" id="homeBody">
-        <aside class="rail home-rail">
-          <div class="rail-card">
-            <div class="rail-title">Your Profile</div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <div class="avatar av-1" style="width:38px;height:38px;font-size:13px">A</div>
-              <div><div style="font-weight:700;font-size:13px">Complete your profile</div><div style="font-size:12px;color:var(--c-text-faint)">Add photos to get more matches</div></div>
-            </div>
-          </div>
-          <div class="rail-card">
-            <div class="rail-title">Quick Filters</div>
-            <div class="pref-pill" style="margin-bottom:8px"><svg class="icon"><use href="#i-sliders"/></svg>Showing: <b>Everyone</b></div>
-          </div>
-        </aside>
-        <div class="home-main">
+      <div class="home-wrap">
         <div class="search-wrap">
           <div class="search-bar"><svg class="icon"><use href="#i-search"/></svg><input id="homeSearchInput" placeholder="Search by name or username..." oninput="handleSearchInput()"></div>
           <div class="search-results" id="searchResults"></div>
@@ -950,8 +925,6 @@ img{max-width:100%; display:block}
             </div>
           </div>
 
-        </div>
-        </div>
         </div>
       </div>
     </div>
@@ -1131,11 +1104,6 @@ img{max-width:100%; display:block}
           </aside>
         </div>
       </div>
-    </div>
-
-    <!-- ---------- REELS ---------- -->
-    <div class="tab-panel" id="tab-reels">
-      <div class="reel-wrap" id="reelWrap"></div>
     </div>
 
   </main>
@@ -1426,7 +1394,7 @@ async function handleLogin(){
   const password = document.getElementById('loginPassword').value;
   if(!email || !password){ logDiagnostic('Login', 'Email and password are required'); return; }
   const btn = document.getElementById('loginBtn'); const original = btn.innerHTML;
-  btn.disabled = true; btn.innerHTML = '<span class="flame-loader"><svg><use href="#i-flame"/></svg></span>Signing in...';
+  btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span>Signing in...';
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
   if(error){ btn.disabled = false; btn.innerHTML = original; logDiagnostic('Login failed', error); return; }
   await loadMyProfile(data.user.id);
@@ -1456,7 +1424,7 @@ async function finishSignup(){
   const ageMin = +document.getElementById('rangeMin').value;
   const ageMax = +document.getElementById('rangeMax').value;
 
-  const btn = document.getElementById('stepNextBtn'); btn.disabled = true; btn.innerHTML = '<span class="flame-loader"><svg><use href="#i-flame"/></svg></span>Creating account...';
+  const btn = document.getElementById('stepNextBtn'); btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span>Creating account...';
   const { data, error } = await sb.auth.signUp({ email, password, options:{ data:{ full_name: fullName, username: username, dob } } });
   if(error){ logDiagnostic('Sign up failed', error); btn.disabled = false; btn.textContent = 'Create Account'; return; }
 
@@ -1469,7 +1437,8 @@ async function finishSignup(){
       if(upErr) logDiagnostic('Avatar upload', upErr);
       else avatarUrl = sb.storage.from('profile-media').getPublicUrl(path).data.publicUrl;
     }
-    const updatePayload = { bio, tags, orientation, show_me: showMe, age_pref_min: ageMin, age_pref_max: ageMax, onboarding_step: 4, onboarding_complete: true };
+    const loc = getSelectedCityCoords();
+    const updatePayload = { bio, tags, orientation, show_me: showMe, age_pref_min: ageMin, age_pref_max: ageMax, onboarding_step: 4, onboarding_complete: true, dob, country: loc.country, city: loc.city, lat: loc.lat, lng: loc.lng };
     if(avatarUrl) updatePayload.avatar_url = avatarUrl;
     const { error: updErr } = await sb.from('profiles').update(updatePayload).eq('id', data.user.id);
     if(updErr) logDiagnostic('Saving profile details', updErr);
@@ -1480,13 +1449,11 @@ async function finishSignup(){
 }
 
 let currentUserId = null;
-let currentUserOrientation = '';
 async function loadMyProfile(userId){
   currentUserId = userId;
   const { data, error } = await sb.from('profiles').select('*').eq('id', userId).single();
   if(error){ logDiagnostic('Load profile', error); return; }
   if(!data) return;
-  currentUserOrientation = (data.orientation || '').toLowerCase();
   const initial = (data.full_name || data.username || 'U').trim().charAt(0).toUpperCase();
   document.querySelectorAll('.topbar-avatar').forEach(el=>{
     if(data.avatar_url){ el.style.backgroundImage = `url(${data.avatar_url})`; el.textContent=''; }
@@ -1501,7 +1468,10 @@ async function loadMyProfile(userId){
   const bannerEl = document.getElementById('myBanner');
   if(bannerEl) bannerEl.style.backgroundImage = data.banner_url ? `url(${data.banner_url})` : '';
   const nameEl = document.querySelector('#ov-myProfile .profile-name');
-  if(nameEl && nameEl.firstChild) nameEl.firstChild.textContent = (data.full_name || data.username || 'You') + ' ';
+  const myAge = computeAge(data.dob);
+  if(nameEl && nameEl.firstChild) nameEl.firstChild.textContent = (data.full_name || data.username || 'You') + (myAge?`, ${myAge}`:'') + ' ';
+  myLat = data.lat ?? null; myLng = data.lng ?? null;
+  autoDetectLocation();
   const handleEl = document.getElementById('myHandle');
   if(handleEl) handleEl.textContent = '@' + (data.username || 'you');
   const bioEl = document.getElementById('myBio');
@@ -1587,6 +1557,70 @@ document.querySelectorAll('.chip[data-toggle]').forEach(chip=>{
   for(let y=2010; y>=1950; y--){ year.add(new Option(y,y)); }
   day.selectedIndex=14; month.selectedIndex=5; year.selectedIndex=25;
 })();
+
+/* ============================= LOCATION (city picker + real distance) ============================= */
+const NEXA_CITIES = {
+  "Kenya": [["Nairobi",-1.2921,36.8219],["Mombasa",-4.0435,39.6682],["Kisumu",-0.0917,34.7680],["Nakuru",-0.3031,36.0800]],
+  "Nigeria": [["Lagos",6.5244,3.3792],["Abuja",9.0765,7.3986],["Ibadan",7.3775,3.9470],["Kano",12.0022,8.5920]],
+  "South Africa": [["Johannesburg",-26.2041,28.0473],["Cape Town",-33.9249,18.4241],["Durban",-29.8587,31.0218],["Pretoria",-25.7479,28.2293]],
+  "Ghana": [["Accra",5.6037,-0.1870],["Kumasi",6.6885,-1.6244]],
+  "Uganda": [["Kampala",0.3476,32.5825]],
+  "Tanzania": [["Dar es Salaam",-6.7924,39.2083],["Dodoma",-6.1630,35.7516]],
+  "Egypt": [["Cairo",30.0444,31.2357],["Alexandria",31.2001,29.9187]],
+  "United States": [["New York",40.7128,-74.0060],["Los Angeles",34.0522,-118.2437],["Chicago",41.8781,-87.6298],["Houston",29.7604,-95.3698],["Miami",25.7617,-80.1918],["San Francisco",37.7749,-122.4194]],
+  "United Kingdom": [["London",51.5072,-0.1276],["Manchester",53.4808,-2.2426],["Birmingham",52.4862,-1.8904]],
+  "Canada": [["Toronto",43.6532,-79.3832],["Vancouver",49.2827,-123.1207],["Montreal",45.5019,-73.5674]],
+  "India": [["Mumbai",19.0760,72.8777],["Delhi",28.7041,77.1025],["Bangalore",12.9716,77.5946],["Chennai",13.0827,80.2707]],
+  "United Arab Emirates": [["Dubai",25.2048,55.2708],["Abu Dhabi",24.4539,54.3773]],
+  "Germany": [["Berlin",52.5200,13.4050],["Munich",48.1351,11.5820]],
+  "France": [["Paris",48.8566,2.3522],["Lyon",45.7640,4.8357]],
+  "Australia": [["Sydney",-33.8688,151.2093],["Melbourne",-37.8136,144.9631]],
+  "Brazil": [["São Paulo",-23.5505,-46.6333],["Rio de Janeiro",-22.9068,-43.1729]],
+  "Philippines": [["Manila",14.5995,120.9842],["Cebu City",10.3157,123.8854]]
+};
+(function populateLocationSelects(){
+  const countrySel = document.getElementById('suCountry'), citySel = document.getElementById('suCity');
+  if(!countrySel || !citySel) return;
+  Object.keys(NEXA_CITIES).sort().forEach(c=>countrySel.add(new Option(c,c)));
+  countrySel.addEventListener('change', ()=>{
+    citySel.innerHTML = '<option value="">City</option>';
+    (NEXA_CITIES[countrySel.value]||[]).forEach(c=>citySel.add(new Option(c[0], c[0])));
+  });
+})();
+function getSelectedCityCoords(){
+  const country = document.getElementById('suCountry')?.value, city = document.getElementById('suCity')?.value;
+  const match = (NEXA_CITIES[country]||[]).find(c=>c[0]===city);
+  return { country: country||null, city: city||null, lat: match?match[1]:null, lng: match?match[2]:null };
+}
+function haversineKm(lat1,lng1,lat2,lng2){
+  if(lat1==null||lng1==null||lat2==null||lng2==null) return null;
+  const R=6371, toRad=d=>d*Math.PI/180;
+  const dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  return R*2*Math.asin(Math.sqrt(a));
+}
+let myLat=null, myLng=null;
+function autoDetectLocation(){
+  if(!navigator.geolocation || !currentUserId) return;
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      myLat = +pos.coords.latitude.toFixed(2); myLng = +pos.coords.longitude.toFixed(2);
+      sb.from('profiles').update({ lat:myLat, lng:myLng, location_source:'device' }).eq('id', currentUserId).then(({error})=>{ if(error) logDiagnostic('Auto-locate', error); });
+    },
+    ()=>{ /* denied or unavailable — keep whatever lat/lng is already stored from signup's city picker */ },
+    { enableHighAccuracy:false, timeout:8000, maximumAge:600000 }
+  );
+}
+/* age from date-of-birth, shown wherever a profile name is rendered */
+function computeAge(dob){
+  if(!dob) return null;
+  const b = new Date(dob); if(isNaN(b)) return null;
+  const t = new Date();
+  let age = t.getFullYear() - b.getFullYear();
+  const m = t.getMonth() - b.getMonth();
+  if(m < 0 || (m===0 && t.getDate() < b.getDate())) age--;
+  return (age>0 && age<120) ? age : null;
+}
 
 /* age range dual slider */
 function updateRange(){
@@ -1685,76 +1719,10 @@ document.getElementById('topnav').addEventListener('click', e=>{
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById(btn.dataset.tab).classList.add('active');
   if(btn.dataset.tab === 'tab-chatroom') loadConversations();
-  if(btn.dataset.tab === 'tab-reels' && !document.getElementById('reelWrap').childElementCount) loadReels();
 });
 
 /* ============================= HOME / FEED ACTIONS ============================= */
 function toggleLike(e, btn){ e.stopPropagation(); btn.classList.toggle('liked'); }
-function setHomeLayout(mode){ const w=document.getElementById('homeWrap'); w.classList.remove('layout-wide','layout-rail'); w.classList.add('layout-'+mode); document.querySelectorAll('.hlt-btn').forEach(b=>b.classList.toggle('active', b.dataset.l===mode)); }
-
-/* ============================= REELS (Pexels) ============================= */
-const PEXELS_KEY = 'w0DAkHaVzXqOKOM0Grt2rlD49B9SoCj0fVAj1JzSVo0j8fudxgHtbtlE';
-function reelQueriesForUser(){
-  const o = currentUserOrientation;
-  if(o==='gay') return ['gay couple love','lgbtq pride romance'];
-  if(o==='lesbian') return ['lesbian couple love','lgbtq pride romance'];
-  if(o==='bisexual' || o==='pansexual') return ['lgbtq couple love','romantic couple'];
-  if(o==='asexual') return ['friendship love','cozy romance'];
-  return ['romantic couple','love story date'];
-}
-async function fetchPexels(kind, query, page){
-  const url = kind==='video'
-    ? `https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=4&page=${page}&orientation=portrait`
-    : `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=4&page=${page}&orientation=portrait`;
-  try{
-    const res = await fetch(url, { headers:{ Authorization: PEXELS_KEY } });
-    if(!res.ok) return [];
-    const data = await res.json();
-    return kind==='video' ? (data.videos||[]) : (data.photos||[]);
-  }catch(e){ return []; }
-}
-let reelObserver, reelEndObserver;
-async function loadReels(){
-  const wrap = document.getElementById('reelWrap'); if(!wrap) return;
-  const queries = reelQueriesForUser();
-  const q = queries[Math.floor(Math.random()*queries.length)];
-  const page = Math.floor(Math.random()*20)+1; // keeps it fresh each load
-  const [photos, videos] = await Promise.all([ fetchPexels('photo', q, page), fetchPexels('video', q, page) ]);
-  const items = [];
-  photos.forEach(p=>items.push({ type:'photo', src:p.src.large }));
-  videos.forEach(v=>{
-    const files = (v.video_files||[]).filter(f=>f.width && f.height && f.width<f.height);
-    const file = (files.sort((a,b)=>a.width-b.width)[0]) || (v.video_files||[])[0];
-    if(file) items.push({ type:'video', src:file.link, poster:v.image });
-  });
-  items.sort(()=>Math.random()-0.5);
-  if(reelEndObserver) reelEndObserver.disconnect();
-  items.forEach(it=>{
-    const el = document.createElement('div');
-    el.className = 'reel-item';
-    el.innerHTML = it.type==='photo'
-      ? `<img src="${it.src}" loading="lazy">`
-      : `<video src="${it.src}" poster="${it.poster||''}" muted loop playsinline preload="metadata"></video>`;
-    wrap.appendChild(el);
-  });
-  if(!reelObserver){
-    reelObserver = new IntersectionObserver(entries=>{
-      entries.forEach(en=>{
-        const v = en.target.querySelector('video'); if(!v) return;
-        if(en.isIntersecting) v.play().catch(()=>{}); else v.pause();
-      });
-    }, { root: wrap, threshold:0.6 });
-  }
-  document.querySelectorAll('.reel-item:not([data-obs])').forEach(el=>{ el.dataset.obs='1'; reelObserver.observe(el); });
-  const all = document.querySelectorAll('.reel-item');
-  const last = all[all.length-1];
-  if(last){
-    reelEndObserver = new IntersectionObserver(entries=>{
-      entries.forEach(en=>{ if(en.isIntersecting){ reelEndObserver.disconnect(); loadReels(); } });
-    }, { root: wrap, threshold:0.1 });
-    reelEndObserver.observe(last);
-  }
-}
 function toggleSave(e, btn){ e.stopPropagation(); btn.classList.toggle('saved'); }
 
 /* ============================= SEARCH ============================= */
@@ -1768,7 +1736,7 @@ function handleSearchInput(){
 }
 async function runSearch(q){
   const box = document.getElementById('searchResults');
-  const { data, error } = await sb.from('profiles').select('id,username,full_name,bio,tags,avatar_url,banner_url')
+  const { data, error } = await sb.from('profiles').select('id,username,full_name,bio,tags,avatar_url,dob')
     .or(`username.ilike.%${q}%,full_name.ilike.%${q}%`).limit(8);
   if(error){ logDiagnostic('Search', error); return; }
   lastSearchResults = data || [];
@@ -1778,7 +1746,7 @@ async function runSearch(q){
     const avStyle = p.avatar_url ? ` style="background-image:url(${p.avatar_url})"` : '';
     return `<div class="search-result-item" onclick="openUserProfile(${i})">
       <div class="avatar av-2"${avStyle}>${p.avatar_url ? '' : initial}</div>
-      <div><div class="search-result-name">${p.full_name || p.username || 'NEXA user'}</div><div class="search-result-handle">@${p.username || 'user'}</div></div>
+      <div><div class="search-result-name">${p.full_name || p.username || 'NEXA user'}${computeAge(p.dob)?`, ${computeAge(p.dob)}`:''}</div><div class="search-result-handle">@${p.username || 'user'}</div></div>
     </div>`;
   }).join('');
   box.classList.add('show');
@@ -1790,10 +1758,9 @@ function renderUserProfileOverlay(p){
   const initial = (p.full_name || p.username || 'U').charAt(0).toUpperCase();
   const av = document.querySelector('#ov-userProfile .profile-head .avatar');
   if(av){ av.style.backgroundImage = p.avatar_url ? `url(${p.avatar_url})` : ''; av.textContent = p.avatar_url ? '' : initial; }
-  const banEl = document.querySelector('#ov-userProfile .profile-banner');
-  if(banEl){ const banSrc = p.banner_url || p.avatar_url; banEl.style.backgroundImage = banSrc ? `url(${banSrc})` : ''; }
   const nameEl = document.querySelector('#ov-userProfile .profile-name');
-  if(nameEl) nameEl.innerHTML = (p.full_name || p.username || 'NEXA user') + ' ';
+  const pAge = computeAge(p.dob);
+  if(nameEl) nameEl.innerHTML = (p.full_name || p.username || 'NEXA user') + (pAge?`, ${pAge}`:'') + ' ';
   const handleEl = document.querySelector('#ov-userProfile .profile-handle');
   if(handleEl) handleEl.textContent = '@' + (p.username || 'user');
   const bioEl = document.querySelector('#ov-userProfile .profile-bio');
@@ -1821,31 +1788,32 @@ async function loadRealProfiles(){
   const grid = document.getElementById('discoverGrid'); if(!grid || !currentUserId) return;
   const { data: blocked } = await sb.from('blocks').select('blocked_id').eq('blocker_id', currentUserId);
   const blockedIds = (blocked || []).map(b=>b.blocked_id);
-  let q = sb.from('profiles').select('id,username,full_name,bio,tags,avatar_url,banner_url').neq('id', currentUserId).limit(20);
+  let q = sb.from('profiles').select('id,username,full_name,bio,tags,avatar_url,dob,lat,lng,city,country').neq('id', currentUserId).limit(20);
   if(blockedIds.length) q = q.not('id', 'in', `(${blockedIds.join(',')})`);
-  grid.querySelectorAll('.discover-card.real').forEach(el=>el.remove());
-  const loader = document.createElement('div'); loader.className='loader-center real'; loader.innerHTML = `<span class="flame-loader-lg"><svg><use href="#i-flame"/></svg></span>`; grid.prepend(loader);
   const { data, error } = await q;
-  loader.remove();
   if(error){ logDiagnostic('Load profiles', error); return; }
-  realProfiles = data || [];
+  realProfiles = (data || []).map(p=>({...p, _distanceKm: haversineKm(myLat,myLng,p.lat,p.lng)}));
+  realProfiles.sort((a,b)=>{
+    if(a._distanceKm==null && b._distanceKm==null) return 0;
+    if(a._distanceKm==null) return 1;
+    if(b._distanceKm==null) return -1;
+    return a._distanceKm - b._distanceKm;
+  });
   grid.querySelectorAll('.discover-card.real').forEach(el=>el.remove());
   realProfiles.slice().reverse().forEach(p=>{
     const initial = (p.full_name || p.username || 'U').charAt(0).toUpperCase();
     const idx = realProfiles.indexOf(p);
-    const photoSrc = p.banner_url || p.avatar_url;
     const el = document.createElement('div');
-    el.className = 'discover-card real' + (p.banner_url ? ' has-banner' : '');
+    el.className = 'discover-card real';
     el.onclick = ()=>{ renderUserProfileOverlay(p); openOverlay('userProfile'); };
-    el.innerHTML = `<div class="dc-photo"${photoSrc?` style="background-image:url(${photoSrc});background-size:cover;background-position:center"`:''}>
-        ${photoSrc ? '' : `<div class="avatar av-2">${initial}</div>`}
-        ${p.banner_url ? `<div class="dc-avatar-chip"${p.avatar_url?` style="background-image:url(${p.avatar_url})"`:''}>${p.avatar_url?'':initial}</div>` : ''}
+    el.innerHTML = `<div class="dc-photo"${p.avatar_url?` style="background-image:url(${p.avatar_url});background-size:cover;background-position:center"`:''}>
+        ${p.avatar_url ? '' : `<div class="avatar av-2">${initial}</div>`}
         <div class="dc-badge"><svg class="icon"><use href="#i-flame"/></svg>New here</div>
         <div class="dc-scrim"></div>
       </div>
       <div class="dc-body">
-        <div class="dc-top"><div class="dc-name">${p.full_name || p.username || 'NEXA user'}</div></div>
-        <div class="dc-loc">Real NEXA member</div>
+        <div class="dc-top"><div class="dc-name">${p.full_name || p.username || 'NEXA user'}${computeAge(p.dob)?`, ${computeAge(p.dob)}`:''}</div></div>
+        <div class="dc-loc">${p._distanceKm!=null?`${Math.round(p._distanceKm)} km away`:(p.city?p.city:'Real NEXA member')}</div>
         <div class="dc-bio">${p.bio || 'No bio yet.'}</div>
         <div class="dc-tags">${(p.tags||[]).slice(0,2).map(t=>`<span class="tag-pill">${t}</span>`).join('')}</div>
         <div class="dc-foot"><span class="dc-mutual">@${p.username||'user'}</span><button class="like-btn" onclick="handleRealLike(event,this,'${p.id}','${(p.full_name||p.username||'them').replace(/'/g,"")}')"><svg class="icon"><use href="#i-heart"/></svg></button></div>
@@ -1981,7 +1949,7 @@ function handleComposeImage(e){
 async function submitPost(){
   const text = document.getElementById('composeText').value.trim();
   if(!text && !composeImageFile){ logDiagnostic('New post', 'Write something or attach a photo first'); return; }
-  const btn = document.getElementById('composeSubmitBtn'); btn.disabled = true; btn.innerHTML = '<span class="flame-loader"><svg><use href="#i-flame"/></svg></span>Posting...';
+  const btn = document.getElementById('composeSubmitBtn'); btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span>Posting...';
   let mediaUrl = null;
   if(composeImageFile){
     const ext = (composeImageFile.name.split('.').pop() || 'jpg').toLowerCase();
@@ -2518,7 +2486,10 @@ function handleRemoteCallStatusChange(row){
       peerConnection.setRemoteDescription(JSON.parse(row.answer)).then(flushIceQueue).catch(err=>logDiagnostic('Set answer', err));
     }
   }
-  else if(status==='ended' || status==='missed') closeCallUI();
+  else if(status==='ended' || status==='missed'){
+    document.getElementById('callSubtext').textContent = status==='missed' ? 'No answer' : 'Call ended';
+    setTimeout(closeCallUI,1200);
+  }
 }
 function subscribeToIncomingCalls(){
   if(!currentUserId) return;
