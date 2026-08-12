@@ -3,7 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEXA — by XCLONE STUDIOS</title>
+<title>NEXA — Modern Dating &amp; Connections</title>
+<meta name="description" content="NEXA is a modern dating and social platform where you can meet new people, spark real conversations, and build meaningful connections.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xclonesky.github.io/NEXA/">
+<meta name="theme-color" content="#150C10">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjRkY3QTREIi8+PHN0b3Agb2Zmc2V0PSIwLjU1IiBzdG9wLWNvbG9yPSIjRkYzRDY4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjQzgxRTVFIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxNTBDMTAiLz48dGV4dCB4PSIzMiIgeT0iNDUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ1cmwoI2cpIj5OPC90ZXh0Pjwvc3ZnPg==">
+<link rel="apple-touch-icon" href="nexa-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NEXA">
+<meta property="og:title" content="NEXA — Modern Dating &amp; Connections">
+<meta property="og:description" content="Meet new people, spark real conversations, and build meaningful connections on NEXA — a modern dating and social platform.">
+<meta property="og:url" content="https://xclonesky.github.io/NEXA/">
+<meta property="og:image" content="https://xclonesky.github.io/NEXA/nexa-og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEXA — Modern Dating &amp; Connections">
+<meta name="twitter:description" content="Meet new people, spark real conversations, and build meaningful connections on NEXA — a modern dating and social platform.">
+<meta name="twitter:image" content="https://xclonesky.github.io/NEXA/nexa-og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"NEXA","url":"https://xclonesky.github.io/NEXA/","description":"NEXA is a modern dating and social platform where you can meet new people, spark real conversations, and build meaningful connections."}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -611,7 +630,7 @@ img{max-width:100%; display:block}
       </div>
       <div class="auth-visual-tint"></div>
       <div class="auth-visual-fade"></div>
-      <div class="auth-visual-word">NEXA</div>
+      <h1 class="auth-visual-word" style="margin:0">NEXA</h1>
       <div class="auth-visual-caption show" id="loginCaption">NEXA finds your soulmate here 🧐</div>
       <div class="auth-visual-dots" id="loginDots"><span class="active"></span><span></span><span></span><span></span></div>
       <div class="auth-visual-stats">
@@ -2386,7 +2405,10 @@ function handleRemoteCallStatusChange(row){
       peerConnection.setRemoteDescription(JSON.parse(row.answer)).then(flushIceQueue).catch(err=>logDiagnostic('Set answer', err));
     }
   }
-  else if(status==='ended' || status==='missed') closeCallUI();
+  else if(status==='ended' || status==='missed'){
+    document.getElementById('callSubtext').textContent = status==='missed' ? 'No answer' : 'Call ended';
+    setTimeout(closeCallUI,1200);
+  }
 }
 function subscribeToIncomingCalls(){
   if(!currentUserId) return;
