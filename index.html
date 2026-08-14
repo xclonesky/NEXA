@@ -593,13 +593,21 @@ img{max-width:100%; display:block}
 /* toast */
 .toast{ position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--c-elev3); border:1px solid var(--c-border); color:var(--c-text); padding:12px 20px; border-radius:var(--r-pill); font-size:13px; font-weight:500; z-index:90; opacity:0; visibility:hidden; transition:all .3s ease; box-shadow:var(--shadow-soft); white-space:nowrap; }
 .toast.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
-.dyn-island{ position:fixed; top:14px; left:50%; transform:translateX(-50%) translateY(-140%); width:min(92vw,380px); background:#17111a; border:1px solid var(--c-border); border-radius:22px; padding:12px 14px; display:flex; align-items:center; gap:10px; box-shadow:0 16px 44px rgba(0,0,0,.55); z-index:300; transition:transform .45s cubic-bezier(.22,1,.36,1); }
+.dyn-island{ position:fixed; top:14px; left:50%; transform:translateX(-50%) translateY(-140%); width:min(94vw,420px); background:#17111a; border:1px solid var(--c-border); border-radius:24px; padding:16px 18px; box-shadow:0 18px 50px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03); z-index:300; transition:transform .45s cubic-bezier(.22,1,.36,1); }
 .dyn-island.show{ transform:translateX(-50%) translateY(0); }
-.dyn-island-icon{ font-size:20px; flex-shrink:0; }
-.dyn-island-body{ flex:1; min-width:0; }
-.dyn-island-title{ font-size:12.5px; font-weight:700; }
-.dyn-island-text{ font-size:12px; color:var(--c-text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dyn-island-row{ display:flex; align-items:flex-start; gap:13px; }
+.dyn-island-icon{ width:40px; height:40px; border-radius:50%; background:var(--grad-hero); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; box-shadow:0 4px 14px rgba(255,61,104,.35); }
+.dyn-island-body{ flex:1; min-width:0; padding-top:2px; }
+.dyn-island-title{ font-size:14px; font-weight:800; letter-spacing:-.1px; }
+.dyn-island-text{ font-size:12.8px; color:var(--c-text-dim); margin-top:3px; line-height:1.45; }
 .dyn-island-close{ color:var(--c-text-faint); flex-shrink:0; padding:4px; }
+.dyn-island-actions{ display:flex; gap:8px; margin-top:12px; padding-left:53px; }
+.dyn-island-actions button{ font-size:12px; font-weight:700; color:var(--c-sunset-2); padding:7px 14px; border-radius:var(--r-pill); background:rgba(255,61,104,.13); }
+.dyn-island-reply{ display:none; align-items:center; gap:8px; margin-top:12px; padding-left:53px; }
+.dyn-island-reply.show{ display:flex; }
+.dyn-island-reply input{ flex:1; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:10px 15px; font-size:13px; color:var(--c-text); }
+.dyn-island-reply input:focus{ border-color:var(--c-sunset-2); }
+.dyn-island-send{ width:36px; height:36px; border-radius:50%; background:var(--grad-hero); display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; box-shadow:0 4px 12px rgba(255,61,104,.35); }
 .nav-badge{ background:#E63950; color:#fff; font-size:10px; font-weight:800; border-radius:999px; min-width:16px; height:16px; padding:0 4px; display:none; align-items:center; justify-content:center; margin-left:5px; vertical-align:middle; }
 .notif-bell{ position:relative; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--c-text-dim); border:2px solid var(--c-border); margin-right:10px; flex-shrink:0; }
 .notif-bell:hover{ background:var(--c-elev2); }
@@ -1321,12 +1329,19 @@ img{max-width:100%; display:block}
 
 <div class="toast" id="toast"></div>
 <div class="dyn-island" id="dynIsland">
-  <div class="dyn-island-icon" id="dynIslandIcon">🔔</div>
-  <div class="dyn-island-body">
-    <div class="dyn-island-title" id="dynIslandTitle"></div>
-    <div class="dyn-island-text" id="dynIslandText"></div>
+  <div class="dyn-island-row">
+    <div class="dyn-island-icon" id="dynIslandIcon">🔔</div>
+    <div class="dyn-island-body">
+      <div class="dyn-island-title" id="dynIslandTitle"></div>
+      <div class="dyn-island-text" id="dynIslandText"></div>
+    </div>
+    <button class="dyn-island-close" onclick="hideDynamicIsland()"><svg class="icon"><use href="#i-x"/></svg></button>
   </div>
-  <button class="dyn-island-close" onclick="hideDynamicIsland()"><svg class="icon"><use href="#i-x"/></svg></button>
+  <div class="dyn-island-actions" id="dynIslandActions"></div>
+  <div class="dyn-island-reply" id="dynIslandReply">
+    <input type="text" id="dynIslandInput" placeholder="Type a reply..." onkeydown="if(event.key==='Enter') sendDynamicIslandReply()">
+    <button class="dyn-island-send" onclick="sendDynamicIslandReply()"><svg class="icon"><use href="#i-send"/></svg></button>
+  </div>
 </div>
 
 <!-- CALL SCREEN -->
@@ -1806,16 +1821,47 @@ async function refreshFriendsCount(pid, elId){
 }
 
 /* ============================= NOTIFICATIONS ============================= */
-function showDynamicIsland(icon, title, text){
+function showDynamicIsland(icon, title, text, opts={}){
   const el = document.getElementById('dynIsland');
   document.getElementById('dynIslandIcon').textContent = icon;
   document.getElementById('dynIslandTitle').textContent = title;
   document.getElementById('dynIslandText').textContent = text;
+  document.getElementById('dynIslandReply').classList.remove('show');
+  document.getElementById('dynIslandInput').value = '';
+  el.dataset.convId = opts.convId || '';
+  document.getElementById('dynIslandActions').innerHTML = opts.convId ? `<button onclick="toggleDynIslandReply()">Reply</button>` : '';
   el.classList.add('show');
   clearTimeout(el._hideTimer);
   el._hideTimer = setTimeout(hideDynamicIsland, 7000);
 }
-function hideDynamicIsland(){ document.getElementById('dynIsland').classList.remove('show'); }
+function hideDynamicIsland(){
+  const el = document.getElementById('dynIsland');
+  el.classList.remove('show');
+  document.getElementById('dynIslandReply').classList.remove('show');
+}
+function toggleDynIslandReply(){
+  const el = document.getElementById('dynIsland');
+  clearTimeout(el._hideTimer);
+  document.getElementById('dynIslandReply').classList.add('show');
+  document.getElementById('dynIslandInput').focus();
+}
+async function sendDynamicIslandReply(){
+  const el = document.getElementById('dynIsland');
+  const convId = el.dataset.convId;
+  const input = document.getElementById('dynIslandInput');
+  const text = input.value.trim();
+  if(!text || !convId) return;
+  input.disabled = true;
+  const { data: conv } = await sb.from('conversations').select('profile_a,profile_b').eq('id',convId).single();
+  const otherId = conv ? (conv.profile_a===currentUserId ? conv.profile_b : conv.profile_a) : null;
+  const { error } = await sb.from('messages').insert({ conversation_id: convId, sender_id: currentUserId, content: text });
+  input.disabled = false;
+  if(error){ logDiagnostic('Quick reply', error); return; }
+  if(otherId) sb.from('notifications').insert({ profile_id: otherId, type:'message', title: myDisplayName, body: text.slice(0,80), related_id: convId }).then(()=>{});
+  showToast('Reply sent');
+  hideDynamicIsland();
+  loadConversations();
+}
 function isInChatroom(){ return document.getElementById('tab-chatroom')?.classList.contains('active'); }
 function updateChatBadge(){
   const badge = document.getElementById('chatroomBadge'); if(!badge) return;
@@ -1835,7 +1881,7 @@ function handleIncomingNotification(n){
   if(n.type==='message'){
     if(!isInChatroom()){
       unreadMsgCount++; updateChatBadge();
-      showDynamicIsland(icons.message, n.title||'New message', n.body||'');
+      showDynamicIsland(icons.message, n.title||'New message', n.body||'', { convId: n.related_id });
     }
     return;
   }
