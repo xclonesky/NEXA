@@ -57,6 +57,8 @@
 <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M5 6h6M15 6h4M5 12h10M19 12h0M5 18h2M11 18h8"/><circle cx="13" cy="6" r="2"/><circle cx="17" cy="12" r="0" opacity="0"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/></symbol>
 <symbol id="i-arrleft" viewBox="0 0 24 24"><path d="m11 5-7 7 7 7M4 12h16"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10.5a6 6 0 0 1 12 0c0 3.5 1 5 2 6H4c1-1 2-2.5 2-6z"/><path d="M9.5 19.5a2.5 2.5 0 0 0 5 0"/></symbol>
+<symbol id="i-userplus" viewBox="0 0 24 24"><circle cx="9.5" cy="9" r="3.5"/><path d="M3.5 19.5c1-3.7 3.2-5.5 6-5.5s5 1.8 6 5.5"/><path d="M18 8v6M15 11h6"/></symbol>
 <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
 <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/></symbol>
 <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></symbol>
@@ -347,7 +349,10 @@ img{max-width:100%; display:block}
 .composer input::placeholder{ color:var(--c-text-faint); }
 .composer .icon{ color:var(--c-sunset-1); }
 
-.post{ background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-lg); padding:16px; margin-bottom:14px; }
+.post{ background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-lg); padding:16px; margin-bottom:14px; transition:opacity .25s ease, transform .25s ease; }
+.post.deleting{ animation:popOut .25s ease forwards; }
+.post-menu-btn{ margin-left:auto; color:var(--c-text-faint); padding:4px; border-radius:8px; }
+.post-menu-btn:hover{ background:var(--c-elev2); }
 .post-head{ display:flex; align-items:center; gap:11px; margin-bottom:11px; }
 .post-head .avatar{ width:42px; height:42px; font-size:15px; }
 .post-name{ font-weight:700; font-size:14px; }
@@ -409,6 +414,13 @@ img{max-width:100%; display:block}
 .bubble-row:not(.me) .bubble{ background:var(--c-elev2); border:1px solid var(--c-border); border-radius:18px 18px 18px 4px; }
 .bubble-row.me .bubble{ background:var(--grad-hero); color:#fff; border-radius:18px 18px 4px 18px; box-shadow:0 4px 14px rgba(255,61,104,.25); }
 .bubble.deleting{ animation:popOut .25s ease forwards; }
+.unsend-opt{ display:flex; align-items:center; gap:10px; padding:13px 14px; border-radius:14px; background:var(--c-elev2); border:1px solid var(--c-border); margin-bottom:10px; cursor:pointer; font-size:14px; transition:border-color .15s ease; }
+.unsend-opt:has(input:checked){ border-color:var(--c-sunset-2); }
+.unsend-opt input{ accent-color:var(--c-sunset-2); width:17px; height:17px; flex-shrink:0; }
+.btn-danger{ background:#E63950; color:#fff; box-shadow:0 6px 18px rgba(230,57,80,.35); }
+.call-log-row{ justify-content:center; }
+.call-log-bubble{ max-width:none; display:inline-flex; align-items:center; gap:6px; padding:7px 15px; font-size:12px; font-weight:600; color:var(--c-text-dim); background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); cursor:default; }
+.call-log-bubble.missed{ color:#FF7A8A; border-color:rgba(255,122,138,.3); background:rgba(255,122,138,.08); }
 @keyframes popOut{ to{ opacity:0; transform:scale(.85); } }
 .reactions-mini{ display:flex; gap:3px; margin-top:4px; }
 .reactions-mini span{ font-size:12px; background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:2px 7px; }
@@ -581,6 +593,24 @@ img{max-width:100%; display:block}
 /* toast */
 .toast{ position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--c-elev3); border:1px solid var(--c-border); color:var(--c-text); padding:12px 20px; border-radius:var(--r-pill); font-size:13px; font-weight:500; z-index:90; opacity:0; visibility:hidden; transition:all .3s ease; box-shadow:var(--shadow-soft); white-space:nowrap; }
 .toast.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.dyn-island{ position:fixed; top:14px; left:50%; transform:translateX(-50%) translateY(-140%); width:min(92vw,380px); background:#17111a; border:1px solid var(--c-border); border-radius:22px; padding:12px 14px; display:flex; align-items:center; gap:10px; box-shadow:0 16px 44px rgba(0,0,0,.55); z-index:300; transition:transform .45s cubic-bezier(.22,1,.36,1); }
+.dyn-island.show{ transform:translateX(-50%) translateY(0); }
+.dyn-island-icon{ font-size:20px; flex-shrink:0; }
+.dyn-island-body{ flex:1; min-width:0; }
+.dyn-island-title{ font-size:12.5px; font-weight:700; }
+.dyn-island-text{ font-size:12px; color:var(--c-text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dyn-island-close{ color:var(--c-text-faint); flex-shrink:0; padding:4px; }
+.nav-badge{ background:#E63950; color:#fff; font-size:10px; font-weight:800; border-radius:999px; min-width:16px; height:16px; padding:0 4px; display:none; align-items:center; justify-content:center; margin-left:5px; vertical-align:middle; }
+.notif-bell{ position:relative; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--c-text-dim); border:2px solid var(--c-border); margin-right:10px; flex-shrink:0; }
+.notif-bell:hover{ background:var(--c-elev2); }
+.notif-dot{ position:absolute; top:3px; right:3px; width:9px; height:9px; border-radius:50%; background:#E63950; border:2px solid var(--c-bg); display:none; }
+.befriend-pill{ background:#fff; color:#111; border:none; border-radius:var(--r-pill); padding:6px 13px; font-size:11.5px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+.befriend-pill.pill-pending{ background:var(--c-elev3); color:var(--c-text-dim); }
+.befriend-pill.pill-friends{ background:#22c55e; color:#fff; }
+.notif-item{ padding:13px 4px; border-bottom:1px solid var(--c-border-soft); }
+.notif-item-title{ font-size:13.5px; font-weight:700; }
+.notif-item-body{ font-size:12.5px; color:var(--c-text-dim); margin-top:2px; }
+.notif-item-time{ font-size:11px; color:var(--c-text-faint); margin-top:4px; }
 
 .diag-panel{ position:fixed; left:18px; bottom:18px; width:340px; max-width:calc(100vw - 36px); background:var(--c-elev); border:1px solid var(--c-border); border-radius:14px; box-shadow:var(--shadow-soft); z-index:95; opacity:0; visibility:hidden; transform:translateY(10px); transition:all .25s ease; }
 .diag-panel.show{ opacity:1; visibility:visible; transform:translateY(0); }
@@ -806,8 +836,10 @@ img{max-width:100%; display:block}
     <nav class="topnav" id="topnav">
       <button class="active" data-tab="tab-home"><svg class="icon"><use href="#i-home"/></svg><span>Home</span></button>
       <button data-tab="tab-feed"><svg class="icon"><use href="#i-flame"/></svg><span>Feed</span></button>
-      <button data-tab="tab-chatroom"><svg class="icon"><use href="#i-chat"/></svg><span>Chatroom</span></button>
+      <button data-tab="tab-reels"><svg class="icon"><use href="#i-video"/></svg><span>Reels</span></button>
+      <button data-tab="tab-chatroom"><svg class="icon"><use href="#i-chat"/></svg><span>Chatroom</span><span class="nav-badge" id="chatroomBadge">0</span></button>
     </nav>
+    <button class="notif-bell" id="notifBell" onclick="openOverlay('notifications'); loadNotifications();"><svg class="icon"><use href="#i-bell"/></svg><span class="notif-dot" id="notifDot"></span></button>
     <div class="avatar av-1 topbar-avatar" onclick="openOverlay('myProfile')">A</div>
   </header>
 
@@ -937,6 +969,14 @@ img{max-width:100%; display:block}
           </div>
 
         </div>
+      </div>
+    </div>
+
+    <!-- ---------- REELS ---------- -->
+    <div class="tab-panel" id="tab-reels">
+      <div class="home-wrap">
+        <div class="section-title">Reels — everyone, one card at a time</div>
+        <div class="discover-grid" id="reelsGrid"></div>
       </div>
     </div>
 
@@ -1141,7 +1181,7 @@ img{max-width:100%; display:block}
         <div class="profile-stats">
           <div class="pstat"><b>24</b><span>Posts</span></div>
           <div class="pstat"><b>318</b><span>Matches</span></div>
-          <div class="pstat"><b>1.2k</b><span>Likes</span></div>
+          <div class="pstat" id="myFriendsStat"><b>0</b><span>Friends</span></div>
         </div>
         <div class="profile-actions"><button class="btn btn-primary" onclick="openEditProfile()">Edit Profile</button></div>
       </div>
@@ -1172,6 +1212,17 @@ img{max-width:100%; display:block}
     </div>
   </div>
 
+  <!-- NOTIFICATIONS OVERLAY -->
+  <div class="overlay" id="ov-notifications">
+    <div class="overlay-sheet">
+      <div class="profile-banner" style="height:auto;padding:16px;display:flex;align-items:center;justify-content:space-between">
+        <div class="modal-title" style="margin:0">Notifications</div>
+        <button class="overlay-close" onclick="closeOverlay('notifications')"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div id="notifList" style="padding:4px 16px 24px"></div>
+    </div>
+  </div>
+
   <!-- OTHER USER PROFILE OVERLAY -->
   <div class="overlay" id="ov-userProfile">
     <div class="overlay-sheet">
@@ -1185,10 +1236,11 @@ img{max-width:100%; display:block}
         <div class="profile-stats">
           <div class="pstat"><b>41</b><span>Posts</span></div>
           <div class="pstat"><b>2.1k</b><span>Likes</span></div>
-          <div class="pstat"><b>27</b><span>Age</span></div>
+          <div class="pstat" id="userProfileFriendsStat"><b>0</b><span>Friends</span></div>
         </div>
         <div class="profile-actions">
           <button class="btn btn-primary" id="userProfileMsgBtn" onclick="showToast('Message sent (demo)')">Message</button>
+          <button class="btn btn-ghost" id="userProfileFriendBtn" style="width:auto;padding:13px 18px" onclick="showToast('Demo profile')"><svg class="icon"><use href="#i-userplus"/></svg>Befriend</button>
           <button class="btn btn-ghost" id="userProfileLikeBtn" style="width:auto;padding:13px 18px" onclick="showToast('Liked Amara (demo)')"><svg class="icon"><use href="#i-heart"/></svg></button>
         </div>
         <div style="text-align:center;margin-bottom:14px"><a id="userProfileBlockLink" style="font-size:12px;color:var(--c-text-faint);cursor:pointer" onclick="showToast('Block (demo)')">Block this person</a></div>
@@ -1231,6 +1283,22 @@ img{max-width:100%; display:block}
       <div class="emoji-grid" id="emojiGrid"></div>
     </div>
   </div>
+  <div class="modal" id="modal-unsendModal">
+    <div class="modal-box" style="max-width:360px">
+      <div class="modal-title">Unsend message?</div>
+      <label class="unsend-opt"><input type="radio" name="unsendScope" value="me" checked><span>Delete for me</span></label>
+      <label class="unsend-opt"><input type="radio" name="unsendScope" value="everyone"><span>Delete for everyone</span></label>
+      <button class="btn btn-danger" style="margin-top:6px" onclick="confirmUnsend()">Delete</button>
+    </div>
+  </div>
+  <div class="modal" id="modal-deletePostModal">
+    <div class="modal-box" style="max-width:360px; text-align:center">
+      <div class="modal-title" style="justify-content:center">Delete this post?</div>
+      <p style="font-size:13.5px; color:var(--c-text-dim); margin-bottom:18px">It'll be removed from your profile and everyone's feed. This can't be undone.</p>
+      <button class="btn btn-danger" onclick="confirmDeletePost()">Delete post</button>
+      <button class="btn" style="background:var(--c-elev2); color:var(--c-text-dim); margin-top:10px" onclick="closeModal('deletePostModal')">Cancel</button>
+    </div>
+  </div>
 
 </section>
 
@@ -1240,7 +1308,10 @@ img{max-width:100%; display:block}
 <div class="bubble-menu" id="bubbleMenu">
   <button onclick="bubbleAction('reply')"><svg class="icon"><use href="#i-reply"/></svg>Reply</button>
   <button onclick="bubbleAction('react')"><svg class="icon"><use href="#i-smile"/></svg>React</button>
-  <button class="danger" onclick="bubbleAction('delete')"><svg class="icon"><use href="#i-trash"/></svg>Delete</button>
+  <button class="danger" onclick="bubbleAction('unsend')"><svg class="icon"><use href="#i-trash"/></svg>Unsend</button>
+</div>
+<div class="bubble-menu" id="postMenu">
+  <button class="danger" onclick="openModal('deletePostModal')"><svg class="icon"><use href="#i-trash"/></svg>Delete post</button>
 </div>
 <div class="reaction-tray" id="reactionTray">
   <span onclick="reactTo('❤️')">❤️</span><span onclick="reactTo('😂')">😂</span><span onclick="reactTo('😮')">😮</span>
@@ -1249,6 +1320,14 @@ img{max-width:100%; display:block}
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="dyn-island" id="dynIsland">
+  <div class="dyn-island-icon" id="dynIslandIcon">🔔</div>
+  <div class="dyn-island-body">
+    <div class="dyn-island-title" id="dynIslandTitle"></div>
+    <div class="dyn-island-text" id="dynIslandText"></div>
+  </div>
+  <button class="dyn-island-close" onclick="hideDynamicIsland()"><svg class="icon"><use href="#i-x"/></svg></button>
+</div>
 
 <!-- CALL SCREEN -->
 <div class="call-screen" id="callScreen">
@@ -1409,6 +1488,7 @@ async function handleLogin(){
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
   if(error){ btn.disabled = false; btn.innerHTML = original; logDiagnostic('Login failed', error); return; }
   await loadMyProfile(data.user.id);
+  sb.from('notifications').insert({ profile_id: data.user.id, type:'security', title:'New sign-in to your account', body:'Your account was just signed in to. Wasn\'t you? Change your password.' }).then(()=>{});
   btn.disabled = false; btn.innerHTML = original;
   enterDashboard();
 }
@@ -1466,6 +1546,8 @@ async function loadMyProfile(userId){
   const { data, error } = await sb.from('profiles').select('*').eq('id', userId).single();
   if(error){ logDiagnostic('Load profile', error); return; }
   if(!data) return;
+  myDisplayName = data.full_name || data.username || 'Someone';
+  refreshFriendsCount(currentUserId, 'myFriendsStat');
   const myAvUrl = avatarUrlFor(data);
   document.querySelectorAll('.topbar-avatar').forEach(el=>{
     el.style.backgroundImage = `url(${myAvUrl})`; el.textContent='';
@@ -1483,6 +1565,7 @@ async function loadMyProfile(userId){
   myLat = data.lat ?? null; myLng = data.lng ?? null;
   autoDetectLocation();
   initPresence();
+  initNotifications();
   const handleEl = document.getElementById('myHandle');
   if(handleEl) handleEl.textContent = '@' + (data.username || 'you');
   const bioEl = document.getElementById('myBio');
@@ -1675,6 +1758,97 @@ function refreshAllStatusDots(){
   }
 }
 let myLat=null, myLng=null;
+let myDisplayName = 'Someone';
+let unreadMsgCount = 0;
+
+/* ============================= FRIENDS ============================= */
+async function sendFriendRequest(e, otherId, btn){
+  if(e) e.stopPropagation();
+  if(!otherId || btn.disabled) return;
+  btn.disabled = true;
+  const { data: incoming } = await sb.from('friendships').select('id,status').eq('requester_id',otherId).eq('addressee_id',currentUserId).maybeSingle();
+  if(incoming && incoming.status==='pending'){ await acceptFriendRequest(incoming.id, otherId, btn); return; }
+  const { error } = await sb.from('friendships').insert({ requester_id: currentUserId, addressee_id: otherId, status:'pending' });
+  if(error){ if(error.code!=='23505') logDiagnostic('Friend request', error); btn.disabled=false; return; }
+  btn.innerHTML = 'Requested'; btn.classList.add('pill-pending');
+  sb.from('notifications').insert({ profile_id: otherId, type:'friend_request', title:`${myDisplayName} sent you a friend request`, body:'Wants to be friends with you', related_id: currentUserId }).then(()=>{});
+}
+async function acceptFriendRequest(reqId, otherId, btn){
+  const { error } = await sb.from('friendships').update({ status:'accepted' }).eq('id', reqId);
+  if(error){ logDiagnostic('Accept friend', error); return; }
+  if(btn){ btn.innerHTML = 'Friends'; btn.classList.add('pill-friends'); btn.classList.remove('pill-pending'); btn.disabled=true; btn.onclick=null; }
+  sb.from('notifications').insert({ profile_id: otherId, type:'friend_accept', title:`${myDisplayName} accepted your friend request`, body:'You are now friends', related_id: currentUserId }).then(()=>{});
+  showToast("You're now friends!");
+  refreshFriendsCount(currentUserId, 'myFriendsStat');
+}
+async function refreshFriendButton(p){
+  const btn = document.getElementById('userProfileFriendBtn'); if(!btn || !p.id) return;
+  btn.disabled = false; btn.classList.remove('pill-pending','pill-friends'); btn.innerHTML = '<svg class="icon"><use href="#i-userplus"/></svg>Befriend';
+  refreshFriendsCount(p.id, 'userProfileFriendsStat');
+  const [{data:out}, {data:inc}] = await Promise.all([
+    sb.from('friendships').select('id,status').eq('requester_id',currentUserId).eq('addressee_id',p.id).maybeSingle(),
+    sb.from('friendships').select('id,status').eq('requester_id',p.id).eq('addressee_id',currentUserId).maybeSingle()
+  ]);
+  if((out&&out.status==='accepted') || (inc&&inc.status==='accepted')){
+    btn.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>Friends'; btn.classList.add('pill-friends'); btn.disabled=true; btn.onclick=null;
+  } else if(inc && inc.status==='pending'){
+    btn.innerHTML = 'Accept Request'; btn.onclick=()=>acceptFriendRequest(inc.id, p.id, btn);
+  } else if(out && out.status==='pending'){
+    btn.innerHTML = 'Requested'; btn.classList.add('pill-pending'); btn.disabled=true;
+  } else {
+    btn.onclick=(e)=>sendFriendRequest(e, p.id, btn);
+  }
+}
+async function refreshFriendsCount(pid, elId){
+  const el = document.getElementById(elId); if(!el) return;
+  const { count } = await sb.from('friendships').select('*',{count:'exact',head:true}).or(`requester_id.eq.${pid},addressee_id.eq.${pid}`).eq('status','accepted');
+  const b = el.querySelector('b'); if(b) b.textContent = count || 0;
+}
+
+/* ============================= NOTIFICATIONS ============================= */
+function showDynamicIsland(icon, title, text){
+  const el = document.getElementById('dynIsland');
+  document.getElementById('dynIslandIcon').textContent = icon;
+  document.getElementById('dynIslandTitle').textContent = title;
+  document.getElementById('dynIslandText').textContent = text;
+  el.classList.add('show');
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(hideDynamicIsland, 7000);
+}
+function hideDynamicIsland(){ document.getElementById('dynIsland').classList.remove('show'); }
+function isInChatroom(){ return document.getElementById('tab-chatroom')?.classList.contains('active'); }
+function updateChatBadge(){
+  const badge = document.getElementById('chatroomBadge'); if(!badge) return;
+  if(isInChatroom() || unreadMsgCount<=0){ badge.style.display='none'; }
+  else { badge.style.display='inline-flex'; badge.textContent = unreadMsgCount>99?'99+':unreadMsgCount; }
+}
+function initNotifications(){
+  if(!currentUserId) return;
+  sb.channel('notif-'+currentUserId)
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'notifications', filter:`profile_id=eq.${currentUserId}` }, payload=>{
+      handleIncomingNotification(payload.new);
+    }).subscribe();
+}
+function handleIncomingNotification(n){
+  const dot = document.getElementById('notifDot'); if(dot) dot.style.display='block';
+  const icons = { message:'💬', match:'💕', friend_request:'🤝', friend_accept:'✅', security:'🛡️' };
+  if(n.type==='message'){
+    if(!isInChatroom()){
+      unreadMsgCount++; updateChatBadge();
+      showDynamicIsland(icons.message, n.title||'New message', n.body||'');
+    }
+    return;
+  }
+  showDynamicIsland(icons[n.type]||'🔔', n.title||'NEXA', n.body||'');
+}
+async function loadNotifications(){
+  const list = document.getElementById('notifList'); if(!list || !currentUserId) return;
+  const { data } = await sb.from('notifications').select('*').eq('profile_id',currentUserId).order('created_at',{ascending:false}).limit(30);
+  const icons = { message:'💬', match:'💕', friend_request:'🤝', friend_accept:'✅', security:'🛡️' };
+  list.innerHTML = (data||[]).map(n=>`<div class="notif-item"><div class="notif-item-title">${icons[n.type]||'🔔'} ${n.title||''}</div><div class="notif-item-body">${n.body||''}</div><div class="notif-item-time">${timeAgo(n.created_at)}</div></div>`).join('') || '<div class="empty-hint" style="text-align:center;color:var(--c-text-faint);padding:30px 0">No notifications yet.</div>';
+  const dot = document.getElementById('notifDot'); if(dot) dot.style.display='none';
+  sb.from('notifications').update({read_at:new Date().toISOString()}).eq('profile_id',currentUserId).is('read_at',null).then(()=>{});
+}
 function autoDetectLocation(){
   if(!navigator.geolocation || !currentUserId) return;
   navigator.geolocation.getCurrentPosition(
@@ -1793,7 +1967,8 @@ document.getElementById('topnav').addEventListener('click', e=>{
   btn.classList.add('active');
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById(btn.dataset.tab).classList.add('active');
-  if(btn.dataset.tab === 'tab-chatroom') loadConversations();
+  if(btn.dataset.tab === 'tab-chatroom'){ loadConversations(); unreadMsgCount = 0; updateChatBadge(); }
+  if(btn.dataset.tab === 'tab-reels') renderReelsGrid();
 });
 
 /* ============================= HOME / FEED ACTIONS ============================= */
@@ -1846,6 +2021,7 @@ function renderUserProfileOverlay(p){
   if(msgBtn) msgBtn.setAttribute('onclick', p.id ? `startConversation('${p.id}')` : "showToast('Demo profile — messaging disabled')");
   const blockLink = document.getElementById('userProfileBlockLink');
   if(blockLink) blockLink.setAttribute('onclick', p.id ? `handleBlock('${p.id}')` : "showToast('Demo profile — block disabled')");
+  if(p.id) refreshFriendButton(p);
 }
 function openUserProfile(i){
   const p = lastSearchResults[i]; if(!p) return;
@@ -1888,10 +2064,32 @@ async function loadRealProfiles(){
         <div class="dc-loc">${p._distanceKm!=null?`${Math.round(p._distanceKm)} km away`:(p.city?p.city:'Real NEXA member')}</div>
         <div class="dc-bio">${p.bio || 'No bio yet.'}</div>
         <div class="dc-tags">${(p.tags||[]).slice(0,2).map(t=>`<span class="tag-pill">${t}</span>`).join('')}</div>
-        <div class="dc-foot"><span class="dc-mutual">@${p.username||'user'}</span><button class="like-btn" onclick="handleRealLike(event,this,'${p.id}','${(p.full_name||p.username||'them').replace(/'/g,"")}')"><svg class="icon"><use href="#i-heart"/></svg></button></div>
+        <div class="dc-foot"><span class="dc-mutual">@${p.username||'user'}</span><button class="befriend-pill" onclick="sendFriendRequest(event,'${p.id}',this)"><svg class="icon" style="width:12px;height:12px"><use href="#i-userplus"/></svg>Befriend</button><button class="like-btn" onclick="handleRealLike(event,this,'${p.id}','${(p.full_name||p.username||'them').replace(/'/g,"")}')"><svg class="icon"><use href="#i-heart"/></svg></button></div>
       </div>`;
     grid.prepend(el);
   });
+  renderReelsGrid();
+}
+function renderReelsGrid(){
+  const grid = document.getElementById('reelsGrid'); if(!grid) return;
+  grid.innerHTML = realProfiles.map(p=>`<div class="discover-card real" onclick="openReelsProfile('${p.id}')">
+      <div class="dc-photo" style="background-image:url(${avatarUrlFor(p)});background-size:cover;background-position:center">
+        ${statusDotSpan(p.id)}
+        <div class="dc-badge"><svg class="icon"><use href="#i-flame"/></svg>New here</div>
+        <div class="dc-scrim"></div>
+      </div>
+      <div class="dc-body">
+        <div class="dc-top"><div class="dc-name">${p.full_name || p.username || 'NEXA user'}${computeAge(p.dob)?`, ${computeAge(p.dob)}`:''}</div></div>
+        <div class="dc-loc">${p._distanceKm!=null?`${Math.round(p._distanceKm)} km away`:(p.city?p.city:'Real NEXA member')}</div>
+        <div class="dc-bio">${p.bio || 'No bio yet.'}</div>
+        <div class="dc-tags">${(p.tags||[]).slice(0,2).map(t=>`<span class="tag-pill">${t}</span>`).join('')}</div>
+        <div class="dc-foot"><span class="dc-mutual">@${p.username||'user'}</span><button class="befriend-pill" onclick="sendFriendRequest(event,'${p.id}',this)"><svg class="icon" style="width:12px;height:12px"><use href="#i-userplus"/></svg>Befriend</button><button class="like-btn" onclick="handleRealLike(event,this,'${p.id}','${(p.full_name||p.username||'them').replace(/'/g,"")}')"><svg class="icon"><use href="#i-heart"/></svg></button></div>
+      </div>
+    </div>`).join('') || '<div class="dc-empty" style="grid-column:1/-1;color:var(--c-text-faint);text-align:center;padding:40px 0">No one to show yet — check back soon.</div>';
+}
+function openReelsProfile(id){
+  const p = realProfiles.find(x=>x.id===id); if(!p) return;
+  renderUserProfileOverlay(p); openOverlay('userProfile');
 }
 async function handleRealLike(e, btn, toId, toName){
   e.stopPropagation();
@@ -1901,7 +2099,10 @@ async function handleRealLike(e, btn, toId, toName){
   const { error } = await sb.from('likes').insert({ from_profile: currentUserId, to_profile: toId });
   if(error){ if(error.code !== '23505') logDiagnostic('Like', error); return; }
   const { data: mutual } = await sb.from('likes').select('id').eq('from_profile', toId).eq('to_profile', currentUserId).maybeSingle();
-  if(mutual){ document.getElementById('matchName').textContent = toName || 'them'; openModal('matchModal'); }
+  if(mutual){
+    document.getElementById('matchName').textContent = toName || 'them'; openModal('matchModal');
+    sb.from('notifications').insert({ profile_id: toId, type:'match', title:'New match!', body:`You and ${myDisplayName} liked each other`, related_id: currentUserId }).then(()=>{});
+  }
 }
 async function handleBlock(id){
   const { error } = await sb.from('blocks').insert({ blocker_id: currentUserId, blocked_id: id });
@@ -1932,8 +2133,10 @@ function renderPostCard(p){
   const saveCount = (p.post_saves||[]).length;
   const iLiked = (p.post_likes||[]).some(l=>l.profile_id===currentUserId);
   const iSaved = (p.post_saves||[]).some(l=>l.profile_id===currentUserId);
-  return `<article class="post real">
-    <div class="post-head"><div class="avatar av-2"${avStyle}></div><div><div class="post-name">${name}</div><div class="post-time">${timeAgo(p.created_at)}</div></div></div>
+  const mine = p.profile_id === currentUserId;
+  const menuBtn = mine ? `<button class="post-menu-btn" onclick="openPostMenu(event,'${p.id}')"><svg class="icon"><use href="#i-dots"/></svg></button>` : '';
+  return `<article class="post real" data-post-id="${p.id}">
+    <div class="post-head"><div class="avatar av-2"${avStyle}></div><div><div class="post-name">${name}</div><div class="post-time">${timeAgo(p.created_at)}</div></div>${menuBtn}</div>
     <div class="post-text">${p.content || ''}</div>
     ${media}
     <div class="post-actions">
@@ -1943,10 +2146,30 @@ function renderPostCard(p){
     </div>
   </article>`;
 }
+let activePostId = null;
+function openPostMenu(e, postId){
+  e.stopPropagation();
+  activePostId = postId;
+  positionFloating(document.getElementById('postMenu'), e.clientX, e.clientY);
+  document.getElementById('bubbleMenu').classList.remove('show');
+  document.getElementById('reactionTray').classList.remove('show');
+}
+async function confirmDeletePost(){
+  if(!activePostId) return;
+  const id = activePostId;
+  closeModal('deletePostModal');
+  document.getElementById('postMenu').classList.remove('show');
+  const { error } = await sb.from('posts').update({ deleted_at: new Date().toISOString() }).eq('id', id).eq('profile_id', currentUserId);
+  if(error){ logDiagnostic('Delete post', error); return; }
+  const el = document.querySelector(`.post[data-post-id="${id}"]`);
+  if(el){ el.classList.add('deleting'); setTimeout(()=>el.remove(), 260); }
+  showToast('Post deleted');
+}
 async function loadFeed(){
   const center = document.getElementById('feedCenter'); if(!center || !currentUserId) return;
   const { data, error } = await sb.from('posts')
     .select('*, profile:profiles(username,full_name,avatar_url), post_likes(profile_id), post_saves(profile_id)')
+    .is('deleted_at', null)
     .order('created_at', { ascending:false }).limit(20);
   if(error){ logDiagnostic('Load feed', error); return; }
   center.querySelectorAll('.post.real, .post.filtered').forEach(el=>el.remove());
@@ -2138,7 +2361,11 @@ document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click', e=>{ 
 
 /* full emoji grid (for expanded reactions) */
 (function buildEmojiGrid(){
-  const emojis=['❤️','😂','😮','😢','🙌','🔥','😍','👏','😉','🥲','😎','😭','🎉','💯','🙏','😅','🤔','😘','🤝','😴','🥳','😇','😬','✨'];
+  const emojis=['❤️','😂','😮','😢','🙌','🔥','😍','👏','😉','🥲','😎','😭','🎉','💯','🙏','😅','🤔','😘','🤝','😴','🥳','😇','😬','✨',
+    '👍','👎','😀','😃','😄','😁','😆','🥹','😊','🙂','🙃','😌','😋','😛','😜','🤪','🤨','🧐','🤗','🤭','🤫','🤔','😐','😑','😏',
+    '😒','🙄','😴','🤤','😪','😷','🤒','🤕','🤢','🥵','🥶','😱','😨','😰','😥','😓','🤯','😡','🤬','😈','👻','💀','👀','💋','💕',
+    '💖','💗','💓','💞','💘','💝','💔','❣️','💜','🧡','💛','💚','💙','🤍','🖤','🤎','👌','✌️','🤞','🫶','👋','🙌','💪','🫡','🎂',
+    '🎈','🎁','🌹','🌸','🌻','🍾','🥂','☕','🍕','🍔','🍟','🍦','⭐','🌟','⚡','☀️','🌙','🌈','☁️','❄️'];
   const grid=document.getElementById('emojiGrid');
   emojis.forEach(em=>{ const s=document.createElement('span'); s.textContent=em; s.onclick=()=>{ reactTo(em); closeModal('emojiModal'); }; grid.appendChild(s); });
 })();
@@ -2207,11 +2434,11 @@ async function loadConversations(){
     const [{ data: other }, { count: unread }, { data: lastMsgs }] = await Promise.all([
       sb.from('profiles').select('id,username,full_name,avatar_url,gender,last_seen').eq('id',otherId).single(),
       sb.from('messages').select('*',{count:'exact',head:true}).eq('conversation_id',c.id).is('read_at',null).neq('sender_id',currentUserId),
-      sb.from('messages').select('content,media_type').eq('conversation_id',c.id).order('created_at',{ascending:false}).limit(1)
+      sb.from('messages').select('content,media_type,type,call_status').eq('conversation_id',c.id).order('created_at',{ascending:false}).limit(1)
     ]);
     if(!other) return null;
     const last = lastMsgs && lastMsgs[0];
-    const preview = last ? (last.content || (last.media_type==='voice'?'🎤 Voice note':last.media_type==='video'?'🎬 Video':last.media_type==='image'?'📷 Photo':'')) : 'Say hello 👋';
+    const preview = last ? (last.type==='call_log' ? {started:'📞 Call started',ended:'📞 Call ended',missed:'📞 Missed call',declined:'📞 Missed call'}[last.call_status] || '📞 Call' : (last.content || (last.media_type==='voice'?'🎤 Voice note':last.media_type==='video'?'🎬 Video':last.media_type==='image'?'📷 Photo':''))) : 'Say hello 👋';
     return { c, other, unread: unread||0, preview };
   }))).filter(Boolean);
   myConversationsCache = items;
@@ -2235,7 +2462,7 @@ async function openRealConvo(convId, other){
   subscribeToConversation(convId);
 }
 async function loadMessages(convId){
-  const { data, error } = await sb.from('messages').select('*').eq('conversation_id',convId).is('deleted_at',null).order('created_at',{ascending:true});
+  const { data, error } = await sb.from('messages').select('*').eq('conversation_id',convId).is('deleted_at',null).not('deleted_for','cs',`{${currentUserId}}`).order('created_at',{ascending:true});
   if(error){ logDiagnostic('Load messages', error); return; }
   document.getElementById('messages').innerHTML = '';
   (data||[]).forEach(m=>appendRealMessage(m));
@@ -2243,6 +2470,21 @@ async function loadMessages(convId){
 function appendRealMessage(m){
   const box = document.getElementById('messages');
   const mine = m.sender_id === currentUserId;
+  if(m.type === 'call_log'){
+    const wrap = document.createElement('div'); wrap.className = 'bubble-row call-log-row'; wrap.dataset.msgId = m.id;
+    const icon = m.call_kind==='video' ? '🎥' : '📞';
+    let label;
+    if(m.call_status==='started') label = mine ? 'You started a call' : 'Call started';
+    else if(m.call_status==='ended') label = `Call ended${m.call_duration?` · ${Math.floor(m.call_duration/60)}:${String(m.call_duration%60).padStart(2,'0')}`:''}`;
+    else if(m.call_status==='missed') label = mine ? 'No answer' : 'Missed call';
+    else if(m.call_status==='declined') label = mine ? 'Call declined' : 'Missed call';
+    else label = 'Call';
+    const isMissLike = m.call_status==='missed' || m.call_status==='declined';
+    wrap.innerHTML = `<div class="call-log-bubble${isMissLike?' missed':''}"><span>${icon}</span><span>${label}</span></div>`;
+    box.appendChild(wrap);
+    box.scrollTop = box.scrollHeight;
+    return;
+  }
   const wrap = document.createElement('div'); wrap.className = 'bubble-row' + (mine?' me':'');
   const bubble = document.createElement('div'); bubble.className='bubble'; bubble.dataset.msgId = m.id;
   if(m.media_type === 'voice'){
@@ -2277,6 +2519,11 @@ function subscribeToConversation(convId){
       if(payload.new.sender_id !== currentUserId) markAsRead(convId);
     })
     .on('postgres_changes', { event:'UPDATE', schema:'public', table:'messages', filter:`conversation_id=eq.${convId}` }, payload=>{
+      if(payload.new.deleted_at){
+        const el = document.querySelector(`.bubble[data-msg-id="${payload.new.id}"]`);
+        if(el){ el.classList.add('deleting'); setTimeout(()=>el.closest('.bubble-row').remove(), 260); }
+        return;
+      }
       if(payload.new.read_at){
         const seenEl = document.querySelector(`.seen-label[data-seen-for="${payload.new.id}"]`);
         if(seenEl) seenEl.textContent = 'SEEN⚡';
@@ -2392,7 +2639,7 @@ function stopCallerRingtone(){ try{ callerRingtoneAudio.pause(); callerRingtoneA
 function playReceiverRingtone(){ try{ receiverRingtoneAudio.currentTime = 0; receiverRingtoneAudio.play().catch(()=>{}); }catch(e){} }
 function stopReceiverRingtone(){ try{ receiverRingtoneAudio.pause(); receiverRingtoneAudio.currentTime = 0; }catch(e){} }
 let mediaPermissionGranted = false, callLocalStream = null, callTimeoutTimer, pendingCallType = 'audio';
-let activeCallId = null, isIncomingCall = false, pendingOfferRow = null, acceptingCall = false;
+let activeCallId = null, isIncomingCall = false, pendingOfferRow = null, acceptingCall = false, callStartedAt = null;
 let peerConnection = null, callIceChannel = null, iceQueue = [], outgoingIceQueue = [], audioSyncInterval = null;
 const RTC_CONFIG = { iceServers: [
   { urls: 'stun:stun.l.google.com:19302' },
@@ -2561,18 +2808,33 @@ async function declineCall(){
 }
 function handleRemoteCallStatusChange(row){
   const status = row.status;
-  if(status==='declined'){ document.getElementById('callSubtext').textContent='Declined'; setTimeout(closeCallUI,1200); }
+  if(status==='declined'){
+    document.getElementById('callSubtext').textContent='Declined'; setTimeout(closeCallUI,1200);
+    if(!isIncomingCall) logCallEvent(row, 'declined');
+  }
   else if(status==='accepted'){
     stopCallerRingtone();
     document.getElementById('callSubtext').textContent='Connected'; clearTimeout(callTimeoutTimer);
-    if(!isIncomingCall && peerConnection && row.answer && !peerConnection.currentRemoteDescription){
-      peerConnection.setRemoteDescription(JSON.parse(row.answer)).then(flushIceQueue).catch(err=>logDiagnostic('Set answer', err));
+    if(!isIncomingCall){
+      callStartedAt = Date.now();
+      logCallEvent(row, 'started');
+      if(peerConnection && row.answer && !peerConnection.currentRemoteDescription){
+        peerConnection.setRemoteDescription(JSON.parse(row.answer)).then(flushIceQueue).catch(err=>logDiagnostic('Set answer', err));
+      }
     }
   }
   else if(status==='ended' || status==='missed'){
     document.getElementById('callSubtext').textContent = status==='missed' ? 'No answer' : 'Call ended';
+    if(!isIncomingCall) logCallEvent(row, status==='missed' ? 'missed' : 'ended');
     setTimeout(closeCallUI,1200);
   }
+}
+function logCallEvent(row, callStatus){
+  if(!row.conversation_id) return;
+  let duration = null;
+  if(callStatus==='ended' && callStartedAt) duration = Math.max(0, Math.round((Date.now()-callStartedAt)/1000));
+  if(callStatus!=='started') callStartedAt = null;
+  sb.from('messages').insert({ conversation_id: row.conversation_id, sender_id: currentUserId, type:'call_log', call_status: callStatus, call_kind: row.call_type, call_duration: duration }).then(({error})=>{ if(error) logDiagnostic('Call log', error); });
 }
 function subscribeToIncomingCalls(){
   if(!currentUserId) return;
@@ -2668,6 +2930,7 @@ async function sendMessage(){
   if(activeConversationId){
     const { error } = await sb.from('messages').insert({ conversation_id: activeConversationId, sender_id: currentUserId, content: text, reply_to_id: replyTarget ? replyTarget.dataset.msgId : null });
     if(error) logDiagnostic('Send message', error);
+    else if(activeConversationOtherId) sb.from('notifications').insert({ profile_id: activeConversationOtherId, type:'message', title: myDisplayName, body: text.slice(0,80), related_id: activeConversationId }).then(()=>{});
     clearReply();
     loadConversations();
     return;
@@ -2715,9 +2978,8 @@ function positionFloating(el, x, y){
 function bubbleAction(action){
   document.getElementById('bubbleMenu').classList.remove('show');
   if(!activeBubble) return;
-  if(action==='delete'){
-    activeBubble.classList.add('deleting');
-    setTimeout(()=>activeBubble.closest('.bubble-row').remove(), 260);
+  if(action==='unsend'){
+    openModal('unsendModal');
   } else if(action==='reply'){
     document.getElementById('replyText').textContent = activeBubble.textContent.slice(0,60);
     document.getElementById('replyPreview').classList.add('show');
@@ -2728,6 +2990,27 @@ function bubbleAction(action){
     positionFloating(tray, rect.left, rect.top-46);
   }
 }
+async function confirmUnsend(){
+  if(!activeBubble) return;
+  const scope = document.querySelector('input[name="unsendScope"]:checked').value;
+  const msgId = activeBubble.dataset.msgId;
+  const bubbleToRemove = activeBubble;
+  closeModal('unsendModal');
+  if(msgId){
+    if(scope==='everyone'){
+      const { error } = await sb.from('messages').update({ deleted_at:new Date().toISOString() }).eq('id', msgId);
+      if(error){ logDiagnostic('Unsend for everyone', error); return; }
+    } else {
+      const { data: row } = await sb.from('messages').select('deleted_for').eq('id', msgId).single();
+      const arr = (row && row.deleted_for) || [];
+      if(!arr.includes(currentUserId)) arr.push(currentUserId);
+      const { error } = await sb.from('messages').update({ deleted_for: arr }).eq('id', msgId);
+      if(error){ logDiagnostic('Delete for me', error); return; }
+    }
+  }
+  bubbleToRemove.classList.add('deleting');
+  setTimeout(()=>bubbleToRemove.closest('.bubble-row').remove(), 260);
+}
 function reactTo(emoji){
   document.getElementById('reactionTray').classList.remove('show');
   if(!activeBubble) return;
@@ -2736,7 +3019,7 @@ function reactTo(emoji){
   const span=document.createElement('span'); span.textContent=emoji; mini.appendChild(span);
 }
 document.addEventListener('click', (e)=>{
-  if(!e.target.closest('.bubble-menu')) document.getElementById('bubbleMenu').classList.remove('show');
+  if(!e.target.closest('.bubble-menu')) { document.getElementById('bubbleMenu').classList.remove('show'); document.getElementById('postMenu').classList.remove('show'); }
   if(!e.target.closest('.reaction-tray') && !e.target.closest('button[onclick*="react"]')) document.getElementById('reactionTray').classList.remove('show');
 });
 
