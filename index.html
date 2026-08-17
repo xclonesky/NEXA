@@ -426,18 +426,48 @@ img{max-width:100%; display:block}
 .call-log-bubble.missed{ color:#FF7A8A; border-color:rgba(255,122,138,.3); background:rgba(255,122,138,.08); }
 @keyframes popOut{ to{ opacity:0; transform:scale(.85); } }
 .reactions-mini{ display:flex; gap:3px; margin-top:4px; }
-.reactions-mini span{ font-size:12px; background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:2px 7px; }
+.reactions-mini span{ font-size:12px; background:var(--c-elev); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:2px 7px; animation:reactLand .4s cubic-bezier(.34,1.56,.64,1); }
 .bubble-row.me .reactions-mini{ justify-content:flex-end; }
+@keyframes reactLand{ 0%{ transform:scale(0); } 60%{ transform:scale(1.35); } 100%{ transform:scale(1); } }
+.bubble.react-ack{ animation:bubbleAck .3s ease; }
+@keyframes bubbleAck{ 0%{ transform:scale(1); } 35%{ transform:scale(1.035); } 100%{ transform:scale(1); } }
+.floating-heart{ position:fixed; z-index:200; font-size:52px; pointer-events:none; left:0; top:0; transform:translate(-50%,-50%) scale(0); animation:floatHeart .9s cubic-bezier(.17,.89,.32,1.28) forwards; filter:drop-shadow(0 6px 16px rgba(255,61,104,.45)); }
+@keyframes floatHeart{ 0%{ transform:translate(-50%,-50%) scale(0); opacity:1; } 28%{ transform:translate(-50%,-62%) scale(1.3); opacity:1; } 100%{ transform:translate(-50%,-150%) scale(1); opacity:0; } }
+
+/* chat theme packs — wallpaper pattern + paired bubble gradient */
+#messages{ background-repeat:repeat, no-repeat; background-attachment:local, local; }
+#messages.mtheme-sunset{ background-image:repeating-linear-gradient(135deg, rgba(255,201,120,.07) 0 2px, transparent 2px 22px), linear-gradient(180deg,#3A1E18,#150C10); }
+#messages.mtheme-sunset .bubble-row.me .bubble{ background:linear-gradient(135deg,#FF7A4D,#FFC978); box-shadow:0 4px 14px rgba(255,138,77,.3); }
+#messages.mtheme-midnight{ background-image:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1.5px), linear-gradient(180deg,#3A1428,#150C10); background-size:20px 20px, cover; }
+#messages.mtheme-midnight .bubble-row.me .bubble{ background:linear-gradient(135deg,#B23A8F,#5A1E7A); box-shadow:0 4px 14px rgba(138,30,122,.35); }
+#messages.mtheme-neon{ background-image:repeating-linear-gradient(45deg, rgba(94,234,212,.08) 0 1px, transparent 1px 16px), linear-gradient(180deg,#0F1A18,#0A0A0C); background-size:auto, cover; }
+#messages.mtheme-neon .bubble-row.me .bubble{ background:linear-gradient(135deg,#5EEAD4,#FF3D68); box-shadow:0 4px 14px rgba(94,234,212,.25); }
+#messages.mtheme-gold{ background-image:radial-gradient(rgba(255,214,130,.14) 1.5px, transparent 2px), linear-gradient(180deg,#3A2A10,#1A1008); background-size:26px 26px, cover; }
+#messages.mtheme-gold .bubble-row.me .bubble{ background:linear-gradient(135deg,#FFC978,#FF7A4D); color:#20120a; box-shadow:0 4px 14px rgba(255,201,120,.3); }
+#messages.mtheme-blush{ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 20c-4-3-7-6-7-9.5A4 4 0 0 1 14 8a4 4 0 0 1 7 2.5c0 3.5-3 6.5-7 9.5z' fill='%23FF8AA8' fill-opacity='.12'/%3E%3C/svg%3E"), linear-gradient(180deg,#3A1A28,#180E14); background-size:28px 28px, cover; }
+#messages.mtheme-blush .bubble-row.me .bubble{ background:linear-gradient(135deg,#FF8AA8,#C81E5E); box-shadow:0 4px 14px rgba(255,138,168,.3); }
+.theme-label{ font-size:9.5px; color:var(--c-text-faint); text-align:center; margin-top:4px; width:34px; }
+.swatch-item{ display:flex; flex-direction:column; align-items:center; }
 
 .reply-preview{ display:none; align-items:center; gap:10px; padding:9px 16px; margin:0 16px; background:var(--c-elev2); border-left:3px solid var(--c-sunset-2); border-radius:8px; font-size:12.5px; color:var(--c-text-dim); }
 .reply-preview.show{ display:flex; }
 .reply-preview b{ color:var(--c-text); }
 .reply-preview button{ margin-left:auto; color:var(--c-text-faint); }
 
-.emoji-tray{ display:none; gap:6px; padding:10px 18px 0; flex-wrap:wrap; }
+.emoji-tray{ display:none; flex-direction:column; padding:12px 16px 4px; }
 .emoji-tray.show{ display:flex; }
-.emoji-tray span{ font-size:20px; cursor:pointer; padding:4px; border-radius:8px; transition:background .15s ease; }
-.emoji-tray span:hover{ background:var(--c-elev2); }
+.emoji-search{ display:flex; align-items:center; gap:8px; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:8px 14px; margin-bottom:8px; }
+.emoji-search .icon{ width:15px; height:15px; color:var(--c-text-faint); flex-shrink:0; }
+.emoji-search input{ flex:1; background:transparent; font-size:13px; }
+.emoji-search input::placeholder{ color:var(--c-text-faint); }
+.emoji-cats{ display:flex; gap:4px; overflow-x:auto; padding-bottom:8px; margin-bottom:4px; scrollbar-width:none; }
+.emoji-cats::-webkit-scrollbar{ display:none; }
+.echip{ flex-shrink:0; width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:15px; background:var(--c-elev2); border:1px solid transparent; transition:all .15s ease; }
+.echip.active{ background:rgba(255,61,104,.14); border-color:var(--c-sunset-2); }
+.emoji-grid-tray{ display:grid; grid-template-columns:repeat(8,1fr); gap:1px; max-height:170px; overflow-y:auto; }
+.emoji-grid-tray span{ font-size:19px; text-align:center; cursor:pointer; padding:6px 0; border-radius:8px; transition:background .15s ease, transform .1s ease; }
+.emoji-grid-tray span:hover{ background:var(--c-elev2); transform:scale(1.15); }
+.emoji-empty{ grid-column:1/-1; text-align:center; color:var(--c-text-faint); font-size:12.5px; padding:22px 0; }
 
 .chat-input-bar{ display:flex; align-items:center; gap:8px; padding:14px 16px; border-top:1px solid var(--c-border-soft); }
 .chat-input-bar input{ flex:1; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:12px 18px; font-size:13.8px; }
@@ -479,7 +509,7 @@ img{max-width:100%; display:block}
 .info-section-title{ font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--c-text-faint); font-weight:700; margin-bottom:10px; }
 .file-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
 .file-thumb{ aspect-ratio:1; border-radius:8px; background:var(--grad-soft); border:1px solid var(--c-border); }
-.swatch-row{ display:flex; gap:8px; }
+.swatch-row{ display:flex; gap:10px; flex-wrap:wrap; }
 .swatch{ width:32px; height:32px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform .15s ease; }
 .swatch:hover{ transform:scale(1.08); }
 .swatch.active{ border-color:#fff; }
@@ -569,9 +599,22 @@ img{max-width:100%; display:block}
 .compose-area::placeholder{ color:var(--c-text-faint); }
 .compose-tools{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
 .compose-tools .icon-btn{ width:38px; height:38px; }
-.emoji-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
-.emoji-grid span{ font-size:24px; text-align:center; cursor:pointer; padding:8px 0; border-radius:10px; transition:background .15s ease; }
-.emoji-grid span:hover{ background:var(--c-elev2); }
+.emoji-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; max-height:270px; overflow-y:auto; }
+.emoji-grid span{ font-size:24px; text-align:center; cursor:pointer; padding:8px 0; border-radius:10px; transition:background .15s ease, transform .1s ease; }
+.emoji-grid span:hover{ background:var(--c-elev2); transform:scale(1.15); }
+
+/* location sharing */
+.location-bubble{ width:230px; cursor:pointer; }
+.location-thumb{ width:100%; height:140px; border:0; border-radius:12px; display:block; background:var(--c-elev2); pointer-events:none; }
+.location-thumb.interactive{ pointer-events:auto; height:320px; }
+.location-meta{ display:flex; align-items:flex-start; gap:6px; margin-top:8px; }
+.location-meta .icon{ width:14px; height:14px; flex-shrink:0; margin-top:2px; opacity:.85; }
+.location-label{ font-size:12.5px; font-weight:700; line-height:1.35; }
+.location-coords{ font-size:10.5px; opacity:.75; font-variant-numeric:tabular-nums; margin-top:2px; }
+.location-warning{ display:flex; gap:8px; font-size:11.5px; line-height:1.5; color:var(--c-text-dim); background:var(--c-elev2); border:1px solid var(--c-border); border-left:3px solid #FF7A4D; border-radius:10px; padding:11px 12px; margin:14px 0; }
+.location-warning .icon{ width:16px; height:16px; flex-shrink:0; color:#FF7A4D; margin-top:1px; }
+.modal-box-wide{ max-width:520px; }
+.maps-link{ display:block; text-align:center; font-size:12.5px; font-weight:600; color:var(--c-sunset-2); margin-top:10px; }
 
 /* bubble context menu + reaction tray */
 .bubble-menu{ position:fixed; z-index:80; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:14px; padding:6px; box-shadow:var(--shadow-soft); opacity:0; visibility:hidden; transform:scale(.9); transition:all .15s ease; min-width:150px; }
@@ -582,11 +625,18 @@ img{max-width:100%; display:block}
 .bubble-menu .icon{ width:16px; height:16px; color:var(--c-text-faint); }
 .bubble-menu button.danger .icon{ color:#FF7A8A; }
 
-.reaction-tray{ position:fixed; z-index:80; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:7px 9px; display:flex; gap:5px; align-items:center; box-shadow:var(--shadow-soft); opacity:0; visibility:hidden; transform:scale(.9); transition:all .15s ease; }
-.reaction-tray.show{ opacity:1; visibility:visible; transform:scale(1); }
-.reaction-tray span{ font-size:21px; cursor:pointer; transition:transform .15s ease; }
+.reaction-tray{ position:fixed; z-index:80; background:var(--c-elev2); border:1px solid var(--c-border); border-radius:var(--r-pill); padding:7px 9px; display:flex; gap:5px; align-items:center; box-shadow:var(--shadow-soft); opacity:0; visibility:hidden; transform:scale(.4); transition:opacity .15s ease, transform .15s ease, visibility 0s .15s; }
+.reaction-tray.show{ opacity:1; visibility:visible; animation:trayPop .32s cubic-bezier(.34,1.56,.64,1) forwards; }
+.reaction-tray span{ font-size:21px; cursor:pointer; transition:transform .15s ease; opacity:0; }
+.reaction-tray.show span{ animation:trayItemIn .26s ease forwards; }
+.reaction-tray.show span:nth-child(1){ animation-delay:.02s; } .reaction-tray.show span:nth-child(2){ animation-delay:.05s; }
+.reaction-tray.show span:nth-child(3){ animation-delay:.08s; } .reaction-tray.show span:nth-child(4){ animation-delay:.11s; }
+.reaction-tray.show span:nth-child(5){ animation-delay:.14s; } .reaction-tray.show .expand{ animation-delay:.17s; }
 .reaction-tray span:hover{ transform:scale(1.3) translateY(-2px); }
-.reaction-tray .expand{ width:26px; height:26px; border-radius:50%; background:var(--c-elev3); display:flex; align-items:center; justify-content:center; color:var(--c-text-dim); font-size:14px; }
+.reaction-tray .expand{ width:26px; height:26px; border-radius:50%; background:var(--c-elev3); display:flex; align-items:center; justify-content:center; color:var(--c-text-dim); font-size:14px; opacity:0; }
+.reaction-tray.show .expand{ animation:trayItemIn .26s ease forwards; }
+@keyframes trayPop{ 0%{ transform:scale(.4); } 60%{ transform:scale(1.08); } 100%{ transform:scale(1); } }
+@keyframes trayItemIn{ from{ opacity:0; transform:translateY(6px) scale(.5); } to{ opacity:1; transform:translateY(0) scale(1); } }
 
 /* fab */
 .fab{ position:fixed; right:22px; bottom:26px; width:58px; height:58px; border-radius:50%; background:var(--grad-hero); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(255,61,104,.4); z-index:35; transition:transform .2s ease, box-shadow .2s ease; }
@@ -1131,23 +1181,24 @@ img{max-width:100%; display:block}
 
           <div class="messages" id="messages">
             <div class="msg-day">Today</div>
-            <div class="bubble-row"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)">Hey! Did you really turn a run into a date? 😄</div></div>
-            <div class="bubble-row me"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)">Ha — kind of. Ran past this little café, ended up staying two hours.</div></div>
-            <div class="bubble-row"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)">Okay that's actually adorable. Details. Now.</div></div>
-            <div class="bubble-row me"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)">Sunset run turned into a sunset date. Didn't see that coming.</div>
+            <div class="bubble-row"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)" ondblclick="quickReact(event,this)">Hey! Did you really turn a run into a date? 😄</div></div>
+            <div class="bubble-row me"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)" ondblclick="quickReact(event,this)">Ha — kind of. Ran past this little café, ended up staying two hours.</div></div>
+            <div class="bubble-row"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)" ondblclick="quickReact(event,this)">Okay that's actually adorable. Details. Now.</div></div>
+            <div class="bubble-row me"><div class="bubble" oncontextmenu="openBubbleMenu(event,this)" ondblclick="quickReact(event,this)">Sunset run turned into a sunset date. Didn't see that coming.</div>
               <div class="reactions-mini"></div>
             </div>
           </div>
 
           <div class="reply-preview" id="replyPreview"><b>Replying to</b><span id="replyText"></span><button onclick="clearReply()"><svg class="icon" style="width:14px;height:14px"><use href="#i-x"/></svg></button></div>
           <div class="emoji-tray" id="emojiTray">
-            <span onclick="insertEmoji('😀')">😀</span><span onclick="insertEmoji('😍')">😍</span><span onclick="insertEmoji('😂')">😂</span>
-            <span onclick="insertEmoji('🔥')">🔥</span><span onclick="insertEmoji('❤️')">❤️</span><span onclick="insertEmoji('😉')">😉</span>
-            <span onclick="insertEmoji('🥲')">🥲</span><span onclick="insertEmoji('👀')">👀</span>
+            <div class="emoji-search"><svg class="icon"><use href="#i-search"/></svg><input id="emojiSearchTray" placeholder="Search emoji" oninput="filterEmoji(this.value,'tray')"></div>
+            <div class="emoji-cats" id="emojiCatsTray"></div>
+            <div class="emoji-grid-tray" id="emojiGridTray"></div>
           </div>
           <div class="chat-input-bar" id="chatInputBar">
             <button class="icon-btn" onclick="toggleEmojiTray()"><svg class="icon"><use href="#i-smile"/></svg></button>
             <button class="icon-btn" onclick="showToast('Attach a file (demo)')"><svg class="icon"><use href="#i-plus"/></svg></button>
+            <button class="icon-btn" onclick="shareLocation()" title="Send my location"><svg class="icon"><use href="#i-map"/></svg></button>
             <input id="chatInput" placeholder="Type a message..." oninput="broadcastTyping()" onkeydown="if(event.key==='Enter')sendMessage()">
             <button class="icon-btn mic-btn" id="micBtn" onclick="startRecording()"><svg class="icon"><use href="#i-mic"/></svg></button>
             <button class="send-btn" onclick="sendMessage()"><svg class="icon" style="stroke:#fff"><use href="#i-send"/></svg></button>
@@ -1172,11 +1223,12 @@ img{max-width:100%; display:block}
             <div class="info-section">
               <div class="info-section-title">Chat Theme — Background</div>
               <div class="swatch-row">
-                <div class="swatch active" style="background:var(--c-bg)" onclick="setTheme(this,'')"></div>
-                <div class="swatch" style="background:linear-gradient(135deg,#3A1420,#1B1013)" onclick="setTheme(this,'linear-gradient(180deg,#2A1218,#150C10)')"></div>
-                <div class="swatch" style="background:linear-gradient(135deg,#4A1A2E,#7A1E4A)" onclick="setTheme(this,'linear-gradient(180deg,#3A1428,#150C10)')"></div>
-                <div class="swatch" style="background:linear-gradient(135deg,#FF7A4D,#C81E5E)" onclick="setTheme(this,'linear-gradient(180deg,#3A1E18,#150C10)')"></div>
-                <div class="swatch" style="background:linear-gradient(135deg,#2B1A20,#0F0A0C)" onclick="setTheme(this,'#0F0A0C')"></div>
+                <div class="swatch-item"><div class="swatch active" data-theme="classic" style="background:var(--c-bg)" onclick="setTheme(this,'classic')"></div><div class="theme-label">Classic</div></div>
+                <div class="swatch-item"><div class="swatch" data-theme="sunset" style="background:linear-gradient(135deg,#FF7A4D,#FFC978)" onclick="setTheme(this,'sunset')"></div><div class="theme-label">Sunset</div></div>
+                <div class="swatch-item"><div class="swatch" data-theme="midnight" style="background:linear-gradient(135deg,#B23A8F,#5A1E7A)" onclick="setTheme(this,'midnight')"></div><div class="theme-label">Midnight</div></div>
+                <div class="swatch-item"><div class="swatch" data-theme="neon" style="background:linear-gradient(135deg,#5EEAD4,#FF3D68)" onclick="setTheme(this,'neon')"></div><div class="theme-label">Neon</div></div>
+                <div class="swatch-item"><div class="swatch" data-theme="gold" style="background:linear-gradient(135deg,#FFC978,#FF7A4D)" onclick="setTheme(this,'gold')"></div><div class="theme-label">Gold</div></div>
+                <div class="swatch-item"><div class="swatch" data-theme="blush" style="background:linear-gradient(135deg,#FF8AA8,#C81E5E)" onclick="setTheme(this,'blush')"></div><div class="theme-label">Blush</div></div>
               </div>
             </div>
 
@@ -1354,7 +1406,27 @@ img{max-width:100%; display:block}
   <div class="modal" id="modal-emojiModal">
     <div class="modal-box">
       <div class="modal-title">Choose a reaction<button onclick="closeModal('emojiModal')"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <div class="emoji-search"><svg class="icon"><use href="#i-search"/></svg><input id="emojiSearchModal" placeholder="Search emoji" oninput="filterEmoji(this.value,'modal')"></div>
+      <div class="emoji-cats" id="emojiCatsModal"></div>
       <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
+  </div>
+  <div class="modal" id="modal-locationConfirm">
+    <div class="modal-box">
+      <div class="modal-title">Send your location?<button onclick="closeModal('locationConfirm')"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <iframe class="location-thumb" id="locConfirmThumb" style="height:170px" tabindex="-1"></iframe>
+      <div class="location-meta"><svg class="icon"><use href="#i-map"/></svg><div><div class="location-label" id="locConfirmLabel">Locating…</div><div class="location-coords" id="locConfirmCoords"></div></div></div>
+      <div class="location-warning"><svg class="icon"><use href="#i-shield"/></svg><span>This shares your <b>exact</b> GPS coordinates in the chat, visible to whoever you send it to. Only share with people you trust. Xclone Studios is not responsible for any harm, loss, or damage arising from use of this feature — you use it at your own risk.</span></div>
+      <button class="btn" style="background:var(--grad-hero); color:#fff" onclick="confirmSendLocation()">Send location</button>
+      <button class="btn" style="background:var(--c-elev2); color:var(--c-text-dim); margin-top:8px" onclick="closeModal('locationConfirm')">Cancel</button>
+    </div>
+  </div>
+  <div class="modal" id="modal-locationExpand">
+    <div class="modal-box modal-box-wide">
+      <div class="modal-title">Shared location<button onclick="closeModal('locationExpand')"><svg class="icon"><use href="#i-x"/></svg></button></div>
+      <iframe class="location-thumb interactive" id="locExpandFrame"></iframe>
+      <div class="location-meta"><svg class="icon"><use href="#i-map"/></svg><div><div class="location-label" id="locExpandLabel"></div><div class="location-coords" id="locExpandCoords"></div></div></div>
+      <a class="maps-link" id="locExpandLink" target="_blank" rel="noopener">Open in Google Maps ↗</a>
     </div>
   </div>
   <div class="modal" id="modal-unsendModal">
@@ -1390,7 +1462,7 @@ img{max-width:100%; display:block}
 <div class="reaction-tray" id="reactionTray">
   <span onclick="reactTo('❤️')">❤️</span><span onclick="reactTo('😂')">😂</span><span onclick="reactTo('😮')">😮</span>
   <span onclick="reactTo('😢')">😢</span><span onclick="reactTo('🙌')">🙌</span>
-  <div class="expand" onclick="openModal('emojiModal')">+</div>
+  <div class="expand" onclick="openEmojiModal()">+</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -2524,16 +2596,197 @@ function openModal(name){ document.getElementById('modal-'+name).classList.add('
 function closeModal(name){ document.getElementById('modal-'+name).classList.remove('show'); }
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click', e=>{ if(e.target===m) m.classList.remove('show'); }));
 
-/* full emoji grid (for expanded reactions) */
-(function buildEmojiGrid(){
-  const emojis=['❤️','😂','😮','😢','🙌','🔥','😍','👏','😉','🥲','😎','😭','🎉','💯','🙏','😅','🤔','😘','🤝','😴','🥳','😇','😬','✨',
-    '👍','👎','😀','😃','😄','😁','😆','🥹','😊','🙂','🙃','😌','😋','😛','😜','🤪','🤨','🧐','🤗','🤭','🤫','🤔','😐','😑','😏',
-    '😒','🙄','😴','🤤','😪','😷','🤒','🤕','🤢','🥵','🥶','😱','😨','😰','😥','😓','🤯','😡','🤬','😈','👻','💀','👀','💋','💕',
-    '💖','💗','💓','💞','💘','💝','💔','❣️','💜','🧡','💛','💚','💙','🤍','🖤','🤎','👌','✌️','🤞','🫶','👋','🙌','💪','🫡','🎂',
-    '🎈','🎁','🌹','🌸','🌻','🍾','🥂','☕','🍕','🍔','🍟','🍦','⭐','🌟','⚡','☀️','🌙','🌈','☁️','❄️'];
-  const grid=document.getElementById('emojiGrid');
-  emojis.forEach(em=>{ const s=document.createElement('span'); s.textContent=em; s.onclick=()=>{ reactTo(em); closeModal('emojiModal'); }; grid.appendChild(s); });
-})();
+/* ===================== EMOJI LIBRARY (searchable, categorized, recents) ===================== */
+const EMOJI_CATS = [
+  {id:'recent', label:'🕐'}, {id:'smileys', label:'😀'}, {id:'people', label:'🤝'},
+  {id:'animals', label:'🐾'}, {id:'food', label:'🍔'}, {id:'activities', label:'⚽'},
+  {id:'travel', label:'✈️'}, {id:'objects', label:'💡'}, {id:'symbols', label:'❤️'}
+];
+const EMOJI_DATA = [
+  ['😀','grinning happy face smile','smileys'],['😃','grinning big eyes happy','smileys'],['😄','laughing happy joy','smileys'],
+  ['😁','beaming grin happy','smileys'],['😆','laughing squint happy','smileys'],['🤣','rofl laughing funny','smileys'],
+  ['😂','joy laughing tears funny','smileys'],['🙂','smile slight happy','smileys'],['😉','wink flirt','smileys'],
+  ['😊','blush smile happy shy','smileys'],['🥰','love hearts adore crush','smileys'],['😍','heart eyes love crush','smileys'],
+  ['🤩','starstruck excited wow','smileys'],['😘','kiss love flirt','smileys'],['😋','yum tasty delicious tongue','smileys'],
+  ['😛','tongue playful silly','smileys'],['🤪','zany crazy silly wild','smileys'],['🥲','bittersweet tear smile','smileys'],
+  ['🤗','hug warm','smileys'],['🤔','thinking hmm wonder','smileys'],['😴','sleep tired zzz','smileys'],
+  ['😪','sleepy tired yawn','smileys'],['😌','relieved calm content','smileys'],['😎','cool sunglasses swag','smileys'],
+  ['🤓','nerd glasses geek','smileys'],['😏','smirk sly flirt','smileys'],['🙄','eyeroll annoyed unimpressed','smileys'],
+  ['😬','grimace awkward cringe','smileys'],['😳','flushed shy embarrassed','smileys'],['🥺','pleading puppy eyes cute','smileys'],
+  ['😢','cry sad tear','smileys'],['😭','sob crying sad bawling','smileys'],['😡','angry mad rage','smileys'],
+  ['😱','scream shocked scared','smileys'],['🤯','mindblown shocked wow','smileys'],['🥳','party celebrate confetti','smileys'],
+  ['👋','wave hello hi bye','people'],['🙌','celebrate hooray hands up','people'],['👏','clap applause bravo','people'],
+  ['🤝','handshake deal agree','people'],['💪','strong flex muscle','people'],['🙏','pray please thanks','people'],
+  ['👍','thumbsup yes good like','people'],['👎','thumbsdown no bad dislike','people'],['✌️','peace victory','people'],
+  ['🤞','fingers crossed hope luck','people'],['🫶','heart hands love','people'],['🤟','love you rock','people'],
+  ['👌','ok perfect','people'],['✋','stop hand high five','people'],['🫡','salute respect','people'],
+  ['💃','dance party woman','people'],['🕺','dance party man','people'],['👀','eyes look watching','people'],
+  ['💋','kiss lips','people'],['🧑‍🤝‍🧑','people together friends','people'],
+  ['🐶','dog puppy pet','animals'],['🐱','cat kitten pet','animals'],['🐻','bear cute','animals'],
+  ['🦊','fox','animals'],['🐼','panda cute','animals'],['🐨','koala cute','animals'],
+  ['🦁','lion king','animals'],['🐯','tiger','animals'],['🐰','rabbit bunny cute','animals'],
+  ['🦄','unicorn magic','animals'],['🐷','pig','animals'],['🐸','frog','animals'],
+  ['🐵','monkey','animals'],['🦋','butterfly pretty','animals'],['🐧','penguin cute','animals'],
+  ['🦉','owl wise night','animals'],['🐢','turtle slow','animals'],['🐳','whale ocean','animals'],
+  ['🍕','pizza food dinner','food'],['🍔','burger food','food'],['🍟','fries food','food'],
+  ['🌮','taco food mexican','food'],['🍣','sushi food japanese','food'],['🍩','donut sweet dessert','food'],
+  ['🍰','cake dessert birthday','food'],['🎂','birthday cake celebrate','food'],['🍫','chocolate sweet candy','food'],
+  ['🍦','icecream dessert sweet','food'],['🍷','wine drink date','food'],['🍾','champagne celebrate bubbly','food'],
+  ['🍹','cocktail drink party','food'],['☕','coffee drink morning','food'],['🍺','beer drink','food'],
+  ['🍓','strawberry fruit sweet','food'],['🍉','watermelon fruit summer','food'],['🥑','avocado healthy food','food'],
+  ['🍿','popcorn movie snack','food'],['🧋','bubble tea drink','food'],
+  ['⚽','soccer football sport','activities'],['🏀','basketball sport','activities'],['🎮','gaming videogame controller','activities'],
+  ['🎉','party celebrate confetti','activities'],['🎊','confetti party celebrate','activities'],['🎁','gift present birthday','activities'],
+  ['🎵','music note song','activities'],['🎶','music notes song','activities'],['🎤','mic karaoke sing','activities'],
+  ['📸','camera photo picture','activities'],['🏋️','gym workout fitness','activities'],['🧘','yoga meditate calm','activities'],
+  ['🎨','art paint creative','activities'],['♟️','chess game strategy','activities'],
+  ['✈️','plane travel flight','travel'],['🚗','car drive','travel'],['🏖️','beach vacation summer','travel'],
+  ['🗺️','map travel explore','travel'],['🌆','city skyline night','travel'],['🏔️','mountain travel nature','travel'],
+  ['🚀','rocket space launch','travel'],['🚕','taxi cab ride','travel'],['🚲','bike cycling','travel'],
+  ['🛳️','cruise ship travel','travel'],['🎡','ferris wheel fair date','travel'],['🌃','night city skyline','travel'],
+  ['🏕️','camping tent outdoors','travel'],['🚂','train travel','travel'],
+  ['💡','idea lightbulb bright','objects'],['📱','phone mobile','objects'],['💻','laptop computer work','objects'],
+  ['📷','camera photo','objects'],['🎧','headphones music','objects'],['💌','love letter mail romance','objects'],
+  ['💍','ring proposal engagement marriage','objects'],['🔑','key unlock','objects'],['🕯️','candle romantic mood','objects'],
+  ['📚','books read study','objects'],['⏰','alarm clock time','objects'],['🔥','fire hot lit','objects'],
+  ['✨','sparkle shine magic','objects'],
+  ['❤️','heart love red','symbols'],['🧡','heart orange love','symbols'],['💛','heart yellow love','symbols'],
+  ['💚','heart green love','symbols'],['💙','heart blue love','symbols'],['💜','heart purple love','symbols'],
+  ['🖤','heart black love','symbols'],['🤍','heart white love','symbols'],['🤎','heart brown love','symbols'],
+  ['💔','heartbroken breakup sad','symbols'],['💕','hearts love cute','symbols'],['💖','sparkle heart love','symbols'],
+  ['💗','growing heart love','symbols'],['💘','cupid heart love arrow','symbols'],['💝','heart gift love valentine','symbols'],
+  ['❣️','heart exclaim love','symbols'],['💯','hundred perfect score','symbols'],['⭐','star favorite','symbols']
+].map(([e,k,c])=>({e,k,c}));
+
+function getRecentEmoji(){ try{ return JSON.parse(localStorage.getItem('nexa_recent_emoji')||'[]'); } catch(e){ return []; } }
+function pushRecentEmoji(em){
+  let r = getRecentEmoji().filter(x=>x!==em);
+  r.unshift(em);
+  localStorage.setItem('nexa_recent_emoji', JSON.stringify(r.slice(0,24)));
+}
+const emojiState = { tray:{cat:'recent', q:''}, modal:{cat:'recent', q:''} };
+function renderEmojiCats(containerId, target){
+  const el=document.getElementById(containerId); if(!el || el.childElementCount) return;
+  el.innerHTML = EMOJI_CATS.map((c,i)=>`<button class="echip${i===0?' active':''}" onclick="selectEmojiCat('${target}','${c.id}',this)">${c.label}</button>`).join('');
+}
+function selectEmojiCat(target, cat, el){
+  emojiState[target].cat = cat; emojiState[target].q='';
+  el.parentElement.querySelectorAll('.echip').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const inp = document.getElementById(target==='tray'?'emojiSearchTray':'emojiSearchModal'); if(inp) inp.value='';
+  drawEmojiGrid(target);
+}
+function filterEmoji(q, target){ emojiState[target].q = q.trim().toLowerCase(); drawEmojiGrid(target); }
+function drawEmojiGrid(target){
+  const gridEl = document.getElementById(target==='tray'?'emojiGridTray':'emojiGrid');
+  const st = emojiState[target];
+  let list;
+  if(st.q){
+    list = EMOJI_DATA.filter(x=>x.k.includes(st.q));
+  } else if(st.cat==='recent'){
+    const recents = getRecentEmoji();
+    list = recents.map(e=>EMOJI_DATA.find(x=>x.e===e)).filter(Boolean);
+    if(!list.length) list = EMOJI_DATA.filter(x=>x.c==='smileys').slice(0,24);
+  } else {
+    list = EMOJI_DATA.filter(x=>x.c===st.cat);
+  }
+  const onPick = target==='tray' ? 'insertEmoji' : "reactAndCloseModal";
+  gridEl.innerHTML = list.length ? list.map(x=>`<span onclick="${onPick}('${x.e}')">${x.e}</span>`).join('') : '<div class="emoji-empty">No emoji found</div>';
+}
+function reactAndCloseModal(em){ reactTo(em); closeModal('emojiModal'); }
+function openEmojiModal(){
+  renderEmojiCats('emojiCatsModal','modal');
+  drawEmojiGrid('modal');
+  openModal('emojiModal');
+}
+
+/* ===================== SEND MY LOCATION (free, no key needed for the map itself) ===================== */
+// Optional: paste a free Geoapify key below for more reliable landmark-name lookups.
+// Get one at https://myprojects.geoapify.com (free tier, no card required) → create a project → copy the API key.
+// Leave this blank and the feature still works out of the box — it automatically falls back to
+// OpenStreetMap's free Nominatim reverse-geocoding service (no key required, just rate-limited).
+const GEOAPIFY_API_KEY = ''; // <-- paste your key here, e.g. 'abcd1234...'
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function locBBox(lat, lng, delta){
+  return `${(lng-delta).toFixed(5)},${(lat-delta*0.6).toFixed(5)},${(lng+delta).toFixed(5)},${(lat+delta*0.6).toFixed(5)}`;
+}
+function osmEmbedUrl(lat, lng, delta){
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${locBBox(lat,lng,delta)}&marker=${lat}%2C${lng}&layer=mapnik`;
+}
+async function resolveLandmark(lat, lng){
+  if(GEOAPIFY_API_KEY){
+    try{
+      const r = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lng}&format=json&apiKey=${GEOAPIFY_API_KEY}`);
+      const d = await r.json();
+      const res = d.results && d.results[0];
+      if(res) return res.address_line1 || res.formatted || 'Shared location';
+    }catch(e){ /* fall through to Nominatim */ }
+  }
+  try{
+    const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=17`);
+    const d = await r.json();
+    if(d && d.display_name) return d.display_name.split(',').slice(0,2).join(',').trim();
+  }catch(e){ /* offline or blocked — fall back below */ }
+  return 'Shared location';
+}
+function buildLocationBubbleHTML(lat, lng, label){
+  const safeLabel = escHtml(label || 'Shared location');
+  return `<div class="location-bubble" onclick="expandLocation(${lat},${lng},'${escAttr(label||'Shared location')}')">
+    <iframe class="location-thumb" src="${osmEmbedUrl(lat,lng,0.007)}" loading="lazy" tabindex="-1"></iframe>
+    <div class="location-meta"><svg class="icon"><use href="#i-map"/></svg><div><div class="location-label">${safeLabel}</div><div class="location-coords">${lat.toFixed(5)}, ${lng.toFixed(5)}</div></div></div>
+  </div>`;
+}
+function expandLocation(lat, lng, label){
+  document.getElementById('locExpandFrame').src = osmEmbedUrl(lat, lng, 0.012);
+  document.getElementById('locExpandLabel').textContent = label;
+  document.getElementById('locExpandCoords').textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  document.getElementById('locExpandLink').href = `https://www.google.com/maps?q=${lat},${lng}`;
+  openModal('locationExpand');
+}
+let pendingLocation = null;
+function shareLocation(){
+  if(!navigator.geolocation){ showToast("Location isn't available on this device"); return; }
+  pendingLocation = null;
+  document.getElementById('locConfirmThumb').src = '';
+  document.getElementById('locConfirmLabel').textContent = 'Locating…';
+  document.getElementById('locConfirmCoords').textContent = '';
+  openModal('locationConfirm');
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+    pendingLocation = { lat, lng, label: 'Shared location' };
+    document.getElementById('locConfirmThumb').src = osmEmbedUrl(lat, lng, 0.006);
+    document.getElementById('locConfirmCoords').textContent = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    const label = await resolveLandmark(lat, lng);
+    if(pendingLocation){ pendingLocation.label = label; document.getElementById('locConfirmLabel').textContent = label; }
+  }, ()=>{
+    closeModal('locationConfirm');
+    showToast('Could not get your location — check permissions');
+  }, { enableHighAccuracy:true, timeout:10000 });
+}
+function confirmSendLocation(){
+  if(!pendingLocation){ showToast('Still finding your location…'); return; }
+  const { lat, lng, label } = pendingLocation;
+  closeModal('locationConfirm');
+  sendLocationMessage(lat, lng, label);
+}
+async function sendLocationMessage(lat, lng, label){
+  if(activeConversationId){
+    const { error } = await sb.from('messages').insert({ conversation_id: activeConversationId, sender_id: currentUserId, media_type:'location', content: JSON.stringify({ lat, lng, label }) });
+    if(error) logDiagnostic('Send location', error);
+    else if(activeConversationOtherId) sb.from('notifications').insert({ profile_id: activeConversationOtherId, type:'message', title: myDisplayName, body: '📍 Shared a location', related_id: activeConversationId }).then(()=>{});
+    loadConversations();
+    return;
+  }
+  const wrap=document.createElement('div'); wrap.className='bubble-row me';
+  const b=document.createElement('div'); b.className='bubble'; b.dataset.replyLabel='📍 Location';
+  b.innerHTML = buildLocationBubbleHTML(lat, lng, label);
+  b.oncontextmenu=(e)=>openBubbleMenu(e,b); b.ondblclick=(e)=>quickReact(e,b);
+  wrap.appendChild(b);
+  document.getElementById('messages').appendChild(wrap);
+  const m=document.getElementById('messages'); m.scrollTop=m.scrollHeight;
+}
 
 /* ============================= CHATROOM ============================= */
 const demoMessagesHTML = document.getElementById('messages').innerHTML;
@@ -2657,8 +2910,13 @@ function appendRealMessage(m){
     bubble.innerHTML = `<div class="voice-bubble" onclick="toggleVoicePlay(this)"><div class="voice-play"><svg class="icon fillable" style="width:12px;height:12px"><use href="#i-play"/></svg></div><div class="voice-wave">${Array.from({length:16}).map(()=>`<span style="height:${6+Math.random()*12}px"></span>`).join('')}</div><div class="voice-time">${Math.floor(dur/60)}:${String(dur%60).padStart(2,'0')}</div><audio src="${m.media_url}" preload="metadata"></audio></div>`;
   } else if(m.media_type === 'image'){
     bubble.innerHTML = `<img src="${m.media_url}" style="max-width:200px;border-radius:14px;display:block">`;
+  } else if(m.media_type === 'location'){
+    let loc={}; try{ loc = JSON.parse(m.content||'{}'); }catch(e){}
+    bubble.innerHTML = buildLocationBubbleHTML(loc.lat, loc.lng, loc.label);
+    bubble.dataset.replyLabel = '📍 Location';
   } else { bubble.textContent = m.content || ''; }
   bubble.oncontextmenu = (e)=>openBubbleMenu(e,bubble);
+  bubble.ondblclick = (e)=>quickReact(e,bubble);
   wrap.appendChild(bubble);
   if(mine){
     const seen = document.createElement('div');
@@ -2717,8 +2975,12 @@ function showTyping(){
 }
 function hideTyping(){ if(typingEl){ typingEl.remove(); typingEl=null; } }
 
-function toggleEmojiTray(){ document.getElementById('emojiTray').classList.toggle('show'); }
-function insertEmoji(em){ const inp=document.getElementById('chatInput'); inp.value+=em; inp.focus(); }
+function toggleEmojiTray(){
+  const tray = document.getElementById('emojiTray');
+  tray.classList.toggle('show');
+  if(tray.classList.contains('show')){ renderEmojiCats('emojiCatsTray','tray'); drawEmojiGrid('tray'); }
+}
+function insertEmoji(em){ const inp=document.getElementById('chatInput'); inp.value+=em; inp.focus(); pushRecentEmoji(em); }
 
 /* ============================= VOICE NOTES ============================= */
 let mediaRecorder, recordedChunks = [], recTimerInterval, recSeconds = 0, recStream;
@@ -3101,18 +3363,28 @@ async function sendMessage(){
     return;
   }
   const wrap=document.createElement('div'); wrap.className='bubble-row me';
-  const b=document.createElement('div'); b.className='bubble'; b.textContent=text; b.oncontextmenu=(e)=>openBubbleMenu(e,b);
+  const b=document.createElement('div'); b.className='bubble'; b.textContent=text; b.oncontextmenu=(e)=>openBubbleMenu(e,b); b.ondblclick=(e)=>quickReact(e,b);
   wrap.appendChild(b);
   document.getElementById('messages').appendChild(wrap);
   clearReply();
   const m=document.getElementById('messages'); m.scrollTop=m.scrollHeight;
 }
 
-function setTheme(el, bg){
+const CHAT_THEME_IDS = ['sunset','midnight','neon','gold','blush'];
+function setTheme(el, id){
   document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('messages').style.background = bg || 'transparent';
+  const box = document.getElementById('messages');
+  CHAT_THEME_IDS.forEach(t=>box.classList.remove('mtheme-'+t));
+  if(id && id!=='classic') box.classList.add('mtheme-'+id);
+  localStorage.setItem('nexa_chat_theme', id || 'classic');
 }
+function restoreChatTheme(){
+  const id = localStorage.getItem('nexa_chat_theme') || 'classic';
+  const swatch = document.querySelector(`.swatch[data-theme="${id}"]`);
+  if(swatch) setTheme(swatch, id);
+}
+restoreChatTheme();
 function setBubbleStyle(el, compact){
   document.querySelectorAll('.bstyle-row .chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
@@ -3146,7 +3418,7 @@ function bubbleAction(action){
   if(action==='unsend'){
     openModal('unsendModal');
   } else if(action==='reply'){
-    document.getElementById('replyText').textContent = activeBubble.textContent.slice(0,60);
+    document.getElementById('replyText').textContent = (activeBubble.dataset.replyLabel || activeBubble.textContent).slice(0,60);
     document.getElementById('replyPreview').classList.add('show');
     replyTarget=activeBubble;
   } else if(action==='react'){
@@ -3182,6 +3454,19 @@ function reactTo(emoji){
   let mini=activeBubble.parentElement.querySelector('.reactions-mini');
   if(!mini){ mini=document.createElement('div'); mini.className='reactions-mini'; activeBubble.parentElement.appendChild(mini); }
   const span=document.createElement('span'); span.textContent=emoji; mini.appendChild(span);
+  pushRecentEmoji(emoji);
+  activeBubble.classList.remove('react-ack'); void activeBubble.offsetWidth; activeBubble.classList.add('react-ack');
+}
+function quickReact(e, bubbleEl){
+  activeBubble = bubbleEl;
+  reactTo('❤️');
+  spawnFloatingHeart(e.clientX, e.clientY);
+}
+function spawnFloatingHeart(x, y){
+  const h=document.createElement('div'); h.className='floating-heart'; h.textContent='❤️';
+  h.style.left=x+'px'; h.style.top=y+'px';
+  document.body.appendChild(h);
+  h.addEventListener('animationend', ()=>h.remove());
 }
 document.addEventListener('click', (e)=>{
   if(!e.target.closest('.bubble-menu')) { document.getElementById('bubbleMenu').classList.remove('show'); document.getElementById('postMenu').classList.remove('show'); }
