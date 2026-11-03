@@ -205,6 +205,16 @@ button:active>.icon,button:active>svg{transform:scale(.88)}
 @supports(-webkit-touch-callout:none){.nx-post,.nx-ext{-webkit-transform:translateZ(0)}body{-webkit-text-size-adjust:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+/* ===== NEXA v5 ===== */
+#nxDevBtn{position:absolute;top:max(14px,env(safe-area-inset-top));left:14px;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;display:grid;place-items:center;cursor:pointer}
+#nxDev{position:absolute;top:calc(max(14px,env(safe-area-inset-top)) + 54px);left:14px;z-index:5;width:min(320px,calc(100vw - 28px));max-height:70vh;overflow-y:auto;padding:14px;border-radius:22px;background:rgba(24,14,20,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.16);color:#fff;display:none;box-shadow:0 20px 60px rgba(0,0,0,.5)}#nxDev.show{display:block;animation:nxIn .25s both}
+#nxDev b{font-size:14px}#nxDev label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;opacity:.6;margin:12px 0 6px}#nxDev small{display:block;opacity:.65;font-size:11.5px;line-height:1.4;margin-top:10px}
+.dv{display:block;width:100%;text-align:left;padding:9px 12px;margin-bottom:5px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:inherit;font-size:12.5px;cursor:pointer}.dv.on{background:var(--grad-hero);border-color:transparent}
+#nxLvl{height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}#nxLvl i{display:block;height:100%;width:0;background:#34d399;transition:width .08s}
+/* guide: always escapable, never clipped */
+#tour .tour-x{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:3;pointer-events:auto;border:1px solid rgba(255,255,255,.25);background:rgba(20,12,18,.75);backdrop-filter:blur(12px);color:#fff;border-radius:99px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer}
+#tour .tour-card{max-height:calc(100dvh - 24px);overflow-y:auto;pointer-events:auto}
+
 </style>
 </head>
 <body>
@@ -2649,7 +2659,7 @@ async function sendDynamicIslandReply(){
   const { error } = await sb.from('messages').insert({ conversation_id: convId, sender_id: currentUserId, content: text });
   input.disabled = false;
   if(error){ logDiagnostic('Quick reply', error); return; }
-  if(otherId) sb.from('notifications').insert({ profile_id: otherId, type:'message', title: myDisplayName, body: text.slice(0,80), related_id: convId }).then(()=>{});
+  if(otherId) sb.from('notifications').insert({ profile_id: otherId, type:'message', title: myDisplayName, body: text.slice(0,140), related_id: convId }).then(()=>{});
   showToast('Reply sent');
   hideDynamicIsland();
   loadConversations();
@@ -4015,7 +4025,7 @@ async function sendMessage(){
   if(activeConversationId){
     const { error } = await sb.from('messages').insert({ conversation_id: activeConversationId, sender_id: currentUserId, content: text, reply_to_id: replyTarget ? replyTarget.dataset.msgId : null });
     if(error) logDiagnostic('Send message', error);
-    else if(activeConversationOtherId) sb.from('notifications').insert({ profile_id: activeConversationOtherId, type:'message', title: myDisplayName, body: text.slice(0,80), related_id: activeConversationId }).then(()=>{});
+    else if(activeConversationOtherId) sb.from('notifications').insert({ profile_id: activeConversationOtherId, type:'message', title: myDisplayName, body: text.slice(0,140), related_id: activeConversationId }).then(()=>{});
     clearReply();
     loadConversations();
     return;
@@ -4498,15 +4508,22 @@ const NEWS=[
  {i:'lock',t:'Smarter & safer',m:'Spark Mode, Safe Mode, voice intros, icebreakers and real filters. Plus smoother everything.'}];
 const tr={i:0,list:null,m:null};let tourOn=false;
 function tourEvt(n){if(tourOn&&tr.list&&tr.list[tr.i].until===n)setTimeout(()=>tourStep(tr.i+1),600);}
-function tourStart(list){tourOn=true;tr.list=list;if(!tr.m){tr.m=document.createElement('div');tr.m.id='tour';tr.m.innerHTML='<div class="tour-hole"></div><div class="tour-card"></div><div class="tour-dot"></div>';document.body.appendChild(tr.m);}tr.m.classList.add('show');tourStep(0);}
+function tourStart(list){tourOn=true;tr.list=list;if(!tr.m){tr.m=document.createElement('div');tr.m.id='tour';tr.m.innerHTML='<div class="tour-hole"></div><div class="tour-card"></div><div class="tour-dot"></div><button class="tour-x" data-t="skip">Skip ✕</button>';document.body.appendChild(tr.m);}tr.m.classList.add('show');tourStep(0);}
 function tourEnd(){tourOn=false;tr.m&&tr.m.classList.remove('show');localStorage.removeItem('nx_newuser');}
-function tourStep(i){const L=tr.list;if(i>=L.length){tourEnd();return;}tr.i=i;const s=L[i],hole=tr.m.querySelector('.tour-hole'),card=tr.m.querySelector('.tour-card'),dot=tr.m.querySelector('.tour-dot');
+function tourStep(i,retry){const L=tr.list;if(i>=L.length){tourEnd();return;}tr.i=i;const s=L[i],hole=tr.m.querySelector('.tour-hole'),card=tr.m.querySelector('.tour-card'),dot=tr.m.querySelector('.tour-dot');
  if(s.home){const hb=$('#topnav [data-tab="tab-home"]');if(hb&&!hb.classList.contains('active'))hb.click();if(!document.body.classList.contains('deck-mode'))setView(true);}
- setTimeout(()=>{const t=s.el&&$(s.el),r=t&&t.getBoundingClientRect(),ok=r&&r.width>0;if(ok&&r.top<80)t.scrollIntoView({block:'center'});const rr=ok?t.getBoundingClientRect():null;
-  if(rr){hole.style.cssText=`left:${rr.left-8}px;top:${rr.top-8}px;width:${rr.width+16}px;height:${rr.height+16}px;opacity:1`;}else hole.style.cssText='left:50%;top:50%;width:0;height:0;opacity:1';
-  dot.style.display=s.hand&&rr?'block':'none';if(rr){dot.style.left=(rr.left+rr.width*.3)+'px';dot.style.top=(rr.top+rr.height*.5)+'px';dot.style.setProperty('--w',rr.width*.4+'px');}
-  card.innerHTML=`<div class="tour-t">${esc(s.t)}</div><p>${esc(s.m)}</p><div class="tour-dots">${L.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div><div class="tour-b"><button class="nx-chip" data-t="skip">Skip</button>${s.act?`<button class="nx-chip" data-t="act">${s.act}</button>`:''}<button class="nx-chip on" data-t="next">${s.until?'Next (or try it!)':i===L.length-1?'Let\u2019s go':'Next'}</button></div>`;
-  const below=!rr||rr.bottom+230<innerHeight;card.style.cssText=rr?(below?`top:${rr.bottom+18}px`:`bottom:${innerHeight-rr.top+18}px`):'top:50%;transform:translate(-50%,-50%)';},s.home?380:60);}
+ card.innerHTML=`<div class="tour-t">${esc(s.t)}</div><p>${esc(s.m)}</p><div class="tour-dots">${L.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div><div class="tour-b"><button class="nx-chip" data-t="skip">Skip</button>${s.act?`<button class="nx-chip" data-t="act">${s.act}</button>`:''}<button class="nx-chip on" data-t="next">${s.until?'Next (or try it!)':i===L.length-1?'Let\u2019s go':'Next'}</button></div>`;
+ const find=()=>{const t=s.el&&$(s.el),r=t&&t.getBoundingClientRect();return t&&r.width>0&&r.height>0?t:null;};
+ const layout=()=>{const t=find(),W=innerWidth,H=innerHeight,m=10,r=t&&t.getBoundingClientRect();
+  if(r){const l=Math.max(m,r.left-8),tp=Math.max(m,r.top-8),rt=Math.min(W-m,r.right+8),bt=Math.min(H-m,r.bottom+8);hole.style.cssText=`left:${l}px;top:${tp}px;width:${Math.max(0,rt-l)}px;height:${Math.max(0,bt-tp)}px;opacity:1`;}else hole.style.cssText='left:50%;top:50%;width:0;height:0;opacity:1';
+  dot.style.display=s.hand&&r?'block':'none';if(r){dot.style.left=Math.min(W-20,Math.max(20,r.left+r.width*.3))+'px';dot.style.top=Math.min(H-20,Math.max(20,r.top+r.height*.5))+'px';dot.style.setProperty('--w',Math.min(r.width,W)*.4+'px');}
+  const ch=card.offsetHeight||220,pad=12;let top;if(!r)top=(H-ch)/2;else{const below=H-(r.bottom+18)-pad,above=r.top-18-pad;top=below>=ch?r.bottom+18:above>=ch?r.top-18-ch:H-ch-pad;}
+  card.style.cssText=`top:${Math.round(Math.min(Math.max(pad,top),H-ch-pad))}px;bottom:auto;transform:none`;};
+ tr.re=layout;
+ setTimeout(()=>{const t=find();if(s.el&&!t){if(!retry){setTimeout(()=>tourStep(i,1),350);}else tourStep(i+1);return;}
+  if(t){const r=t.getBoundingClientRect();if(r.top<90||r.bottom>innerHeight-24||r.left<0||r.right>innerWidth)t.scrollIntoView({block:r.height>innerHeight*.6?'start':'center',inline:'center'});}
+  layout();setTimeout(layout,420);},s.home?380:60);}
+addEventListener('resize',()=>tourOn&&tr.re&&tr.re());addEventListener('scroll',()=>tourOn&&tr.re&&tr.re(),true);document.addEventListener('keydown',e=>{if(tourOn&&e.key==='Escape')tourEnd();});
 document.addEventListener('click',e=>{const b=e.target.closest('#tour [data-t]');if(!b)return;const a=b.dataset.t;if(a==='skip')tourEnd();else if(a==='act'){tr.list[tr.i].fn();b.textContent='Asked ✓';}else tourStep(tr.i+1);});
 function news(){const m=document.createElement('div');m.id='news';let i=0;const draw=()=>{const s=NEWS[i];m.innerHTML=`<div class="news-card"><div class="news-ic">${svg(s.i)}</div><h2 class="love-title">${esc(s.t)}</h2><p class="love-msg">${esc(s.m)}</p>${i===2?'<div class="news-sw"><i></i><i></i><i></i><i></i></div>':''}<div class="tour-dots">${NEWS.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div><button class="love-btn" id="newsNext">${i===NEWS.length-1?'Explore NEXA':'Next'}</button><button class="news-skip" id="newsSkip">Skip</button></div>`;
   m.querySelector('#newsNext').onclick=()=>{if(++i>=NEWS.length)m.remove();else draw();};m.querySelector('#newsSkip').onclick=()=>m.remove();};draw();document.body.appendChild(m);}
@@ -5003,12 +5020,13 @@ const b64u=s=>{const p='='.repeat((4-s.length%4)%4),b=(s+p).replace(/-/g,'+').re
 async function swInit(){if(SW||!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol))return SW;try{SW=await navigator.serviceWorker.register('sw.js');await navigator.serviceWorker.ready;navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.type==='nx-click')go(e.data.data||{});});}catch(e){SW=null;}return SW;}
 async function pushSub(){const r=await swInit();if(!r||!VAPID||!r.pushManager||Notification.permission!=='granted')return;try{let s=await r.pushManager.getSubscription();if(!s)s=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID)});const j=s.toJSON();await sb.from('push_subscriptions').upsert({profile_id:currentUserId,endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth,ua:navigator.userAgent.slice(0,120)},{onConflict:'endpoint'});}catch(e){logDiagnostic('Push subscribe',e);}}
 function ping(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(880,a.currentTime);o.frequency.setValueAtTime(1175,a.currentTime+.09);g.gain.setValueAtTime(.0001,a.currentTime);g.gain.exponentialRampToValueAtTime(.12,a.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.3);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.32);}catch(e){}}
-const EMO={message:'💬',friend_request:'👋',friend_accept:'🤝',post_like:'❤️',comment:'💬',match:'💘',security:'🔐'};
-function go(d){const t=d.type,r=d.related_id;if(t==='message'){const b=$('#topnav [data-tab="tab-chatroom"]');b&&b.click();}else if((t==='post_like'||t==='comment')&&r)showShared('p',r);else{try{openOverlay('notifications');loadNotifications();}catch(e){}}}
+const VP={message:[70,35,70],friend_request:[60,30,60,30,60],friend_accept:[60,30,60],post_like:[40,20,40],comment:[60,30,60],match:[120,50,120,50,200],security:[200,80,200],call:[500,250,500,250,500,250,500]};
+const EMO={message:'💬',friend_request:'👋',friend_accept:'🤝',post_like:'❤️',comment:'💬',match:'💘',security:'🔐',call:'📞'};
+function go(d){const t=d.type,r=d.related_id;if(t==='call'){pendingCall();return;}if(t==='message'){const b=$('#topnav [data-tab="tab-chatroom"]');b&&b.click();}else if((t==='post_like'||t==='comment')&&r)showShared('p',r);else{try{openOverlay('notifications');loadNotifications();}catch(e){}}}
 function inApp(n){let b=$('#nxNb');if(!b){document.body.insertAdjacentHTML('beforeend','<div id="nxNb"></div>');b=$('#nxNb');}clearTimeout(b._t);b.innerHTML=`<span class="nb-e">${EMO[n.type]||'🔔'}</span><div><b>${esc(n.title)}</b><small>${esc(n.body||'')}</small></div>`;b.onclick=()=>{b.classList.remove('show');go(n);};b.classList.remove('show');void b.offsetWidth;b.classList.add('show');b._t=setTimeout(()=>b.classList.remove('show'),5500);}
-async function osNotify(n){const o={body:n.body||'',tag:'nx-'+n.id,icon:ICON,badge:ICON,renotify:true,vibrate:[80,40,80],data:{type:n.type,related_id:n.related_id}};try{const r=SW||await swInit();if(r)return r.showNotification(n.title,o);}catch(e){}try{const x=new Notification(n.title,o);x.onclick=()=>{focus();go(o.data);x.close();};}catch(e){}}
+async function osNotify(n){const o={body:n.body||'',tag:'nx-'+n.id,icon:ICON,badge:ICON,renotify:true,vibrate:VP[n.type]||[80,40,80],requireInteraction:n.type==='call',data:{type:n.type,related_id:n.related_id}};try{const r=SW||await swInit();if(r)return r.showNotification(n.title,o);}catch(e){}try{const x=new Notification(n.title,o);x.onclick=()=>{focus();go(o.data);x.close();};}catch(e){}}
 function badge(){try{navigator.setAppBadge&&(UN?navigator.setAppBadge(UN):navigator.clearAppBadge());}catch(e){}}
-function incoming(n){if(n.type==='security'&&Date.now()-T0<25000)return;UN++;badge();vib([40,30,40]);ping();if(document.visibilityState==='visible'&&document.hasFocus())inApp(n);else osNotify(n);}
+function incoming(n){if(n.type==='security'&&Date.now()-T0<25000)return;if(n.type==='call'&&document.visibilityState==='visible')return;UN++;badge();vib(VP[n.type]||[40,30,40]);ping();if(document.visibilityState==='visible'&&document.hasFocus())inApp(n);else osNotify(n);}
 const clearUn=()=>{UN=0;badge();};document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')clearUn();});addEventListener('focus',clearUn);
 function ensureRT(){if(RT||!authed())return;RT=sb.channel('nx-notif-'+currentUserId).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:'profile_id=eq.'+currentUserId},p=>incoming(p.new)).subscribe();
   sb.channel('nx-newposts').on('postgres_changes',{event:'INSERT',schema:'public',table:'posts'},p=>{if(p.new&&p.new.profile_id!==currentUserId&&(p.new.audience||'public')==='public')pill();}).subscribe();}
@@ -5034,12 +5052,120 @@ function permUI(){if(!('Notification' in window)&&!isIOS)return;if($('#nxPerm'))
   inp.addEventListener('focus',async()=>{if(inp.value.trim())return;const n=fromName();if(!n.length)return;const t=await taken(n);if(t)chips(n.filter(x=>!t.has(x)).slice(0,5));});
   const _sn=window.stepNext;window.stepNext=function(){if(UST==='bad'||UST==='wait'){f.classList.add('nx-shake');setTimeout(()=>f.classList.remove('nx-shake'),500);T(UST==='bad'?'Pick a username that’s available':'Checking username…');return;}return _sn.apply(this,arguments);};})();
 /* ---- wiring ---- */
-let GI=null;function afterLogin(){gateCheck();ensureRT();swInit().then(permUI);if(!GI)GI=setInterval(gateCheck,3e5);}
+let GI=null;function afterLogin(){gateCheck();getIce();ensureRT();swInit().then(permUI);if(!GI)GI=setInterval(gateCheck,3e5);}
 $('#topnav [data-tab="tab-feed"]')&&$('#topnav [data-tab="tab-feed"]').addEventListener('click',()=>{if(Date.now()-(ST.t||0)>12e4)loadFeed();});
 NXP.showGate=showGate;NXP.incoming=incoming;
+
+/* ================= v5 · calls rebuilt (real status flow · instant signalling · TURN · devices) ================= */
+const CS={ready:false,q:[],ack:false,cands:[],fi:0,peerReady:false,ended:false,started:false,conn:false,reco:false,ice:null,iceT:0,t0:0,row:null,type:'audio',hb:null,tick:null,lastSeen:0,cam:null,inbox:false,meter:null};
+callStateSteps.length=0;
+const lbl=t=>{const e=document.getElementById('callSubtext');if(e)e.textContent=t;};
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch(e){return null;}};
+const VAC={echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1};
+async function getIce(){if(CS.ice&&Date.now()-CS.iceT<6e5)return CS.ice;try{const{data,error}=await sb.functions.invoke('ice-servers');if(!error&&Array.isArray(data)&&data.length){CS.ice=data;CS.iceT=Date.now();return data;}}catch(e){}return CS.ice||RTC_CONFIG.iceServers;}
+async function getMic(){const id=ls('nx_mic'),g=c=>navigator.mediaDevices.getUserMedia({audio:c,video:false});try{return await g(id?Object.assign({},VAC,{deviceId:{exact:id}}):VAC);}catch(e){if(id&&(e.name==='OverconstrainedError'||e.name==='NotFoundError')){ls('nx_mic',null);return g(VAC);}throw e;}}
+const micMsg=e=>e&&e.name==='NotAllowedError'?'Allow microphone access in your browser to make calls':e&&e.name==='NotFoundError'?'No microphone found — plug one in or enable it':e&&e.name==='NotReadableError'?'Your microphone is busy — close other apps using it':'Could not start the microphone';
+const micLive=()=>callLocalStream&&callLocalStream.getAudioTracks().some(t=>t.readyState==='live');
+const tune=d=>({type:d.type,sdp:d.sdp.replace(/a=fmtp:\d+ [^\r\n]*useinbandfec=1[^\r\n]*/,m=>m.includes('maxaveragebitrate')?m:m+';usedtx=1;maxaveragebitrate=32000;stereo=0')});
+/* signalling: one live channel per call, joined by BOTH sides while ringing */
+function sig(ev,p){if(CS.ready&&callIceChannel)callIceChannel.send({type:'broadcast',event:ev,payload:p||{}});else CS.q.push([ev,p]);}
+function joinCall(id,cb){if(callIceChannel){try{sb.removeChannel(callIceChannel);}catch(e){}callIceChannel=null;}CS.ready=false;const ch=sb.channel('nx-call-'+id);ch.on('broadcast',{event:'*'},m=>onSig(m.event,m.payload||{})).subscribe(s=>{if(s==='SUBSCRIBED'){CS.ready=true;CS.q.splice(0).forEach(([e,p])=>ch.send({type:'broadcast',event:e,payload:p||{}}));cb&&cb();}});callIceChannel=ch;}
+function flushC(){while(CS.fi<CS.cands.length)sig('ice',{candidate:CS.cands[CS.fi++],from:currentUserId});}
+function refreshLbl(){if(CS.ended||CS.started||isIncomingCall)return;lbl(Date.now()-CS.t0<1500?'Calling…':CS.ack?'Ringing…':'Contacting…');}
+function finish(text,kind){if(CS.ended)return;CS.ended=true;lbl(text);stopCallerRingtone();stopReceiverRingtone();if(!isIncomingCall&&CS.row)logCallEvent(CS.row,kind);setTimeout(closeCallUI,1000);}
+async function onSig(ev,p){if(CS.ended)return;CS.lastSeen=Date.now();
+  if(ev==='ice'){if(p.from!==currentUserId)handleIncomingIce(p.candidate);}
+  else if(ev==='ack'&&!isIncomingCall){if(!CS.ack){CS.ack=true;playCallerRingtone();}CS.peerReady=true;flushC();refreshLbl();}
+  else if(ev==='accept'&&!isIncomingCall)onAccepted(p.answer);
+  else if(ev==='decline'&&!isIncomingCall)finish('Declined','declined');
+  else if(ev==='bye')finish(CS.conn||CS.started?'Call ended':isIncomingCall?'Missed call':'Call ended',isIncomingCall?'ended':CS.started?'ended':'ended');
+  else if(ev==='reoffer'&&isIncomingCall&&peerConnection){try{await peerConnection.setRemoteDescription(p.offer);const a=await peerConnection.createAnswer();await peerConnection.setLocalDescription(tune(a));sig('reanswer',{answer:a});}catch(e){logDiagnostic('Re-offer',e);}}
+  else if(ev==='reanswer'&&!isIncomingCall&&peerConnection){try{await peerConnection.setRemoteDescription(p.answer);}catch(e){}}}
+async function onAccepted(ans){if(CS.started)return;CS.started=true;stopCallerRingtone();clearTimeout(callTimeoutTimer);lbl('Connecting…');callStartedAt=Date.now();if(CS.row)logCallEvent(CS.row,'started');CS.peerReady=true;flushC();
+  try{if(peerConnection&&!peerConnection.currentRemoteDescription){await peerConnection.setRemoteDescription(ans);flushIceQueue();}}catch(e){logDiagnostic('Set answer',e);}}
+async function renego(){if(isIncomingCall||!peerConnection)return;try{const o=await peerConnection.createOffer({iceRestart:true});await peerConnection.setLocalDescription(tune(o));sig('reoffer',{offer:o});}catch(e){}}
+function onConnected(){if(CS.conn)return;CS.conn=true;CS.reco=false;callStartedAt=callStartedAt||Date.now();clearTimeout(callTimeoutTimer);stopCallerRingtone();stopReceiverRingtone();CS.lastSeen=Date.now();vib(25);
+  const el=document.getElementById('callSubtext');const draw=()=>{if(CS.reco)return;const s=Math.floor((Date.now()-callStartedAt)/1000);el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};draw();CS.tick=setInterval(draw,1000);
+  CS.hb=setInterval(()=>{sig('hb',{});if(Date.now()-CS.lastSeen>9000&&!CS.ended){finish('Connection lost','ended');}},2500);const sp=ls('nx_spk'),a=document.getElementById('callRemoteAudio');if(sp&&a&&a.setSinkId)a.setSinkId(sp).catch(()=>{});}
+window.createPeerConnection=function(){const pc=new RTCPeerConnection({iceServers:CS.ice||RTC_CONFIG.iceServers,iceCandidatePoolSize:2,bundlePolicy:'max-bundle'});peerConnection=pc;iceQueue=[];outgoingIceQueue=[];CS.cands=[];CS.fi=0;
+  pc.onicecandidate=e=>{if(!e.candidate)return;CS.cands.push(e.candidate);if(CS.peerReady)flushC();};
+  pc.onconnectionstatechange=()=>{const s=pc.connectionState;if(pc!==peerConnection)return;if(['connected','disconnected','failed','closed'].includes(s))logDiagnostic('Call connection',s);
+    if(s==='connected'){onConnected();startAudioSyncWatchdog();}
+    else if(s==='disconnected'||s==='failed'){stopAudioSyncWatchdog();if(CS.conn){CS.reco=true;lbl('Reconnecting…');setTimeout(()=>{if(pc===peerConnection&&pc.connectionState!=='connected'&&!CS.ended)renego();},s==='failed'?300:2500);}else if(s==='failed'&&!CS.ended&&CS.started){renego();}}};
+  pc.ontrack=e=>{if(e.receiver&&'playoutDelayHint' in e.receiver)e.receiver.playoutDelayHint=.12;const el=document.getElementById('callRemoteAudio');if(el.srcObject!==e.streams[0])el.srcObject=e.streams[0];el.play().catch(err=>{logDiagnostic('Remote audio blocked by browser',err);document.getElementById('callTapAudio').classList.add('show');});};
+  return pc;};
+/* caller */
+window.grantCallPermissions=async function(){closeModal('callPermission');try{callLocalStream=await getMic();mediaPermissionGranted=true;}catch(err){logDiagnostic('Mic permission',err);T(micMsg(err));return;}startOutgoingCall(pendingCallType);};
+window.startOutgoingCall=async function(type){
+  isIncomingCall=false;Object.assign(CS,{ready:false,q:[],ack:false,cands:[],fi:0,peerReady:false,ended:false,started:false,conn:false,reco:false,t0:Date.now(),type,row:null});
+  openCallScreen(type,document.getElementById('chatHeadName').textContent||'Someone',document.getElementById('chatHeadAv'));stopCallerRingtone();clearTimeout(callTimeoutTimer);lbl('Calling…');
+  if(!(activeConversationOtherId&&currentUserId))return;const other=activeConversationOtherId;
+  try{
+    if(!micLive())callLocalStream=await getMic();await getIce();createPeerConnection();
+    callLocalStream.getAudioTracks().forEach(t=>peerConnection.addTrack(t,callLocalStream));
+    const offer=await peerConnection.createOffer({offerToReceiveAudio:true});await peerConnection.setLocalDescription(tune(offer));
+    const{data,error}=await sb.from('calls').insert({caller_id:currentUserId,callee_id:other,conversation_id:activeConversationId,status:'ringing',call_type:type,offer:JSON.stringify(offer)}).select().single();
+    if(error||!data){logDiagnostic('Start call',error);lbl('Could not place call');CS.ended=true;setTimeout(closeCallUI,1200);return;}
+    activeCallId=data.id;CS.row=data;joinCall(data.id);
+    const ib=sb.channel('nx-inbox-'+other);ib.subscribe(s=>{if(s==='SUBSCRIBED'){ib.send({type:'broadcast',event:'call',payload:data});setTimeout(()=>sb.removeChannel(ib),2000);}});
+    sb.from('notifications').insert({profile_id:other,type:'call',title:myDisplayName,body:type==='video'?'📹 Incoming video call':'📞 Incoming call',related_id:data.id}).then(()=>{},()=>{});
+    setTimeout(refreshLbl,Math.max(0,1500-(Date.now()-CS.t0)));refreshLbl();
+    callTimeoutTimer=setTimeout(()=>{if(CS.started||CS.ended)return;lbl(CS.ack?'No answer':'Unavailable right now');sig('bye',{});sb.from('calls').update({status:'missed'}).eq('id',data.id).then(()=>{});if(CS.row)logCallEvent(CS.row,'missed');CS.ended=true;setTimeout(closeCallUI,1400);},45000);
+  }catch(err){logDiagnostic('Start call',err);T(micMsg(err));CS.ended=true;closeCallUI();}};
+/* callee */
+const _sic=window.showIncomingCall;
+window.showIncomingCall=async function(row){if(!row||activeCallId===row.id||Date.now()-new Date(row.created_at)>6e4||row.status!=='ringing')return;
+  Object.assign(CS,{ready:false,q:[],ack:false,cands:[],fi:0,peerReady:true,ended:false,started:false,conn:false,reco:false,row});activeCallId=row.id;joinCall(row.id);getIce();
+  await _sic.call(this,row);sig('ack',{from:currentUserId});vib([500,250,500,250,500]);
+  try{const p=await navigator.permissions.query({name:'microphone'});if(p.state==='granted'&&!micLive()){const s=await getMic();if(CS.ended||activeCallId!==row.id)s.getTracks().forEach(t=>t.stop());else callLocalStream=s;}}catch(e){}};
+window.acceptCall=async function(){if(acceptingCall)return;acceptingCall=true;stopReceiverRingtone();document.getElementById('callAcceptBtn').disabled=true;
+  document.getElementById('callDeckIncoming').style.display='none';document.getElementById('callDeckOutgoing').style.display='flex';lbl('Connecting…');document.getElementById('callMuteBtn').classList.remove('muted');
+  try{if(!micLive())callLocalStream=await getMic();mediaPermissionGranted=true;await getIce();createPeerConnection();
+    callLocalStream.getAudioTracks().forEach(t=>{t.enabled=true;peerConnection.addTrack(t,callLocalStream);});
+    const row=pendingOfferRow||CS.row;await peerConnection.setRemoteDescription(JSON.parse(row.offer));flushIceQueue();
+    const ans=await peerConnection.createAnswer();await peerConnection.setLocalDescription(tune(ans));CS.started=true;callStartedAt=Date.now();
+    sig('accept',{answer:ans});sb.from('calls').update({status:'accepted',answer:JSON.stringify(ans)}).eq('id',activeCallId).then(()=>{});clearTimeout(callTimeoutTimer);
+  }catch(err){logDiagnostic('Accept call',err);T(micMsg(err));sig('decline',{});sb.from('calls').update({status:'declined'}).eq('id',activeCallId).then(()=>{});CS.ended=true;closeCallUI();}};
+window.declineCall=async function(){if(CS.ended)return closeCallUI();CS.ended=true;sig('decline',{});if(activeCallId)sb.from('calls').update({status:'declined'}).eq('id',activeCallId).then(()=>{});stopReceiverRingtone();setTimeout(closeCallUI,150);};
+window.endCall=function(){if(!CS.ended){CS.ended=true;sig('bye',{});if(activeCallId)sb.from('calls').update({status:'ended'}).eq('id',activeCallId).then(()=>{});if(!isIncomingCall&&CS.row)logCallEvent(CS.row,'ended');}setTimeout(closeCallUI,120);};
+window.handleRemoteCallStatusChange=function(row){if(!row||row.id!==activeCallId||CS.ended)return;
+  if(row.status==='accepted'&&!isIncomingCall&&row.answer)onAccepted(JSON.parse(row.answer));
+  else if(row.status==='declined'&&!isIncomingCall)finish('Declined','declined');
+  else if(row.status==='ended'||row.status==='missed')finish(row.status==='missed'?'No answer':'Call ended',row.status==='missed'?'missed':'ended');};
+window.subscribeToIncomingCalls=function(){if(!currentUserId||CS.inbox)return;CS.inbox=true;
+  sb.channel('calls-'+currentUserId).on('postgres_changes',{event:'INSERT',schema:'public',table:'calls',filter:`callee_id=eq.${currentUserId}`},p=>showIncomingCall(p.new)).on('postgres_changes',{event:'UPDATE',schema:'public',table:'calls'},p=>handleRemoteCallStatusChange(p.new)).subscribe();
+  sb.channel('nx-inbox-'+currentUserId).on('broadcast',{event:'call'},m=>showIncomingCall(m.payload)).subscribe();pendingCall();};
+async function pendingCall(){if(!authed()||activeCallId)return;try{const{data}=await sb.from('calls').select('*').eq('callee_id',currentUserId).eq('status','ringing').gte('created_at',new Date(Date.now()-45000).toISOString()).order('created_at',{ascending:false}).limit(1);if(data&&data[0])showIncomingCall(data[0]);}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pendingCall();});
+addEventListener('pagehide',()=>{if(activeCallId&&!CS.ended)try{sig('bye',{});}catch(e){}});
+/* cleanup: release mic/camera + timers when a call ends */
+const _ccu=window.closeCallUI;
+window.closeCallUI=function(){const r=_ccu.apply(this,arguments);clearInterval(CS.hb);clearInterval(CS.tick);stopMeter();
+  if(callLocalStream){callLocalStream.getTracks().forEach(t=>t.stop());callLocalStream=null;}if(CS.cam){CS.cam.getTracks().forEach(t=>t.stop());CS.cam=null;}
+  Object.assign(CS,{ready:false,q:[],ack:false,cands:[],fi:0,peerReady:false,started:false,conn:false,reco:false,row:null});CS.ended=false;const p=$('#nxDev');p&&p.classList.remove('show');return r;};
+window.toggleCallCamera=async function(){const b=document.getElementById('callCamBtn'),v=document.getElementById('callLocalVideo'),on=!b.classList.contains('on');
+  if(on){try{CS.cam=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});v.srcObject=CS.cam;v.classList.add('show');b.classList.add('on');}catch(e){T('Camera unavailable — continuing with voice only');}}
+  else{if(CS.cam)CS.cam.getTracks().forEach(t=>t.stop());CS.cam=null;v.srcObject=null;v.classList.remove('show');b.classList.remove('on');}};
+window.toggleCallMute=function(){const b=document.getElementById('callMuteBtn'),m=b.classList.toggle('muted');if(callLocalStream)callLocalStream.getAudioTracks().forEach(t=>t.enabled=!m);vib(10);};
+/* devices: pick + pin mic/speaker, survive plug/unplug */
+async function swapMic(id){try{const s=await navigator.mediaDevices.getUserMedia({audio:id?Object.assign({},VAC,{deviceId:{exact:id}}):VAC,video:false}),nt=s.getAudioTracks()[0],snd=peerConnection&&peerConnection.getSenders().find(x=>!x.track||x.track.kind==='audio');
+  nt.enabled=!document.getElementById('callMuteBtn').classList.contains('muted');if(snd)await snd.replaceTrack(nt);if(callLocalStream)callLocalStream.getAudioTracks().forEach(t=>{t.onended=null;t.stop();});callLocalStream=s;nt.onended=()=>swapMic(null);startMeter();}catch(e){T(micMsg(e));}}
+navigator.mediaDevices&&navigator.mediaDevices.addEventListener&&navigator.mediaDevices.addEventListener('devicechange',async()=>{if(!peerConnection||!callLocalStream)return;const d=await navigator.mediaDevices.enumerateDevices(),pin=ls('nx_mic'),tr=callLocalStream.getAudioTracks()[0];
+  if(pin&&d.some(x=>x.kind==='audioinput'&&x.deviceId===pin)&&tr&&tr.getSettings().deviceId!==pin){swapMic(pin);T('Switched to your selected microphone');}else if(!tr||tr.readyState==='ended'){swapMic(null);T('Microphone changed — using default');}paintDev();});
+function startMeter(){stopMeter();if(!callLocalStream)return;try{const a=new(window.AudioContext||window.webkitAudioContext)(),n=a.createMediaStreamSource(callLocalStream),an=a.createAnalyser();an.fftSize=256;n.connect(an);const b=new Uint8Array(an.frequencyBinCount),bar=$('#nxLvl i');const loop=()=>{an.getByteTimeDomainData(b);let m=0;b.forEach(v=>m=Math.max(m,Math.abs(v-128)));if(bar)bar.style.width=Math.min(100,m*1.6)+'%';CS.meter.r=requestAnimationFrame(loop);};CS.meter={a,r:requestAnimationFrame(loop)};}catch(e){}}
+function stopMeter(){if(CS.meter){cancelAnimationFrame(CS.meter.r);try{CS.meter.a.close();}catch(e){}CS.meter=null;}}
+async function paintDev(){const p=$('#nxDev');if(!p||!p.classList.contains('show'))return;let d=[];try{d=await navigator.mediaDevices.enumerateDevices();}catch(e){}
+  const cur=callLocalStream&&callLocalStream.getAudioTracks()[0]&&callLocalStream.getAudioTracks()[0].getSettings().deviceId,pin=ls('nx_mic'),spk=ls('nx_spk'),a=document.getElementById('callRemoteAudio');
+  const row=(x,on,k)=>`<button class="dv${on?' on':''}" data-k="${k}" data-id="${esc(x.deviceId)}">${esc(x.label||'Device')}</button>`;
+  p.querySelector('.dv-m').innerHTML=d.filter(x=>x.kind==='audioinput'&&x.deviceId!=='communications').map(x=>row(x,(pin||cur)===x.deviceId,'m')).join('')||'<small>No microphones found</small>';
+  p.querySelector('.dv-s').innerHTML=a&&a.setSinkId?d.filter(x=>x.kind==='audiooutput'&&x.deviceId!=='communications').map(x=>row(x,(spk||'default')===x.deviceId,'s')).join(''):'<small>Speaker choice isn’t supported on this browser</small>';}
+(function(){const sc=document.getElementById('callScreen');if(!sc)return;sc.insertAdjacentHTML('beforeend',`<button id="nxDevBtn" aria-label="Audio devices">${ic('deck',18).replace(/<path[^>]*\/>/,'<path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/>')}</button><div id="nxDev"><b>Audio devices</b><label>Microphone</label><div class="dv-m"></div><div id="nxLvl"><i></i></div><label>Speaker</label><div class="dv-s"></div><small>Tip: a Bluetooth headset mic lowers call quality — your device’s own mic sounds clearer.</small></div>`);
+  $('#nxDevBtn').onclick=()=>{const p=$('#nxDev');p.classList.toggle('show');if(p.classList.contains('show')){paintDev();startMeter();}else stopMeter();};
+  $('#nxDev').onclick=async e=>{const b=e.target.closest('.dv');if(!b)return;if(b.dataset.k==='m'){ls('nx_mic',b.dataset.id);await swapMic(b.dataset.id);}else{ls('nx_spk',b.dataset.id);const a=document.getElementById('callRemoteAudio');try{await a.setSinkId(b.dataset.id);}catch(x){T('Could not switch speaker');}}paintDev();};})();
 
 })();
 
 </script>
 </body>
 </html>
+                                                                                                                
