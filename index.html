@@ -222,6 +222,103 @@ button:active>.icon,button:active>svg{transform:scale(.88)}
 .nt{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--c-border)}.nt i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}.nt.ok i{background:#34d399;color:#04301f}.nt.no i{background:#f87171;color:#3b0a0a}.nt b{font-size:13.5px}.nt small{margin-top:2px}
 
 </style>
+<style>
+/* ===== NEXA 40 module: daily hub, plus, chat kit, swipe-reply ===== */
+#signup .auth-visual{position:sticky;top:0;height:100dvh;align-self:flex-start;flex-shrink:0}
+
+#signup .auth-visual-photos{position:absolute;inset:0;z-index:0;perspective:1400px}
+#signup .auth-visual-word{position:relative;z-index:2;filter:drop-shadow(0 2px 18px rgba(0,0,0,.35))}
+#signup .auth-visual-caption{min-height:66px}
+.step-sub b{color:var(--c-sunset-1)}
+.photo-must{display:flex;gap:10px;align-items:flex-start;background:rgba(242,84,141,.1);border:1px solid rgba(242,84,141,.35);border-radius:14px;padding:10px 12px;font-size:12.5px;line-height:1.45;color:var(--c-text);margin:0 0 14px}
+#nxGate .gt-auth{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:var(--c-text-dim);margin:12px 4px 4px;cursor:pointer}
+#nxGate .gt-auth input{margin-top:2px;accent-color:#F2548D;width:17px;height:17px;flex:none}
+#nxGate .gt-real{font-size:12.5px;line-height:1.5;color:var(--c-text-dim);background:rgba(255,255,255,.05);border:1px solid var(--c-border);border-radius:12px;padding:10px 12px;margin:10px 0 0}
+#nxGate .gt-real b{color:#fff}
+
+/* swipe to reply */
+#messages{overflow-x:hidden}
+#messages .bubble{touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;will-change:transform}
+#messages .bubble.nx-spring{transition:transform .32s cubic-bezier(.2,1.3,.4,1)}
+.nx-swipe-ic{position:absolute;left:-42px;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;display:grid;place-items:center;background:rgba(139,92,246,.9);color:#fff;opacity:0;transform:scale(.4);pointer-events:none;transition:background .15s}
+.nx-swipe-ic svg{width:15px;height:15px}
+.nx-swipe-ic.go{background:#F2548D}
+.nx-quote{display:block;border-left:3px solid rgba(255,255,255,.7);background:rgba(0,0,0,.18);border-radius:8px;padding:5px 9px;margin:-2px 0 6px;font-size:12px;opacity:.9;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.bubble-row:not(.me) .nx-quote{border-left-color:#8B5CF6;background:rgba(139,92,246,.14)}
+.bubble.nx-flash{animation:nxFlash 1.2s}
+@keyframes nxFlash{0%,60%{box-shadow:0 0 0 3px rgba(242,84,141,.7)}100%{box-shadow:none}}
+
+/* sheet */
+#nxSheetBg{position:fixed;inset:0;z-index:80;background:rgba(10,5,7,.66);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+#nxSheetBg.show{opacity:1;visibility:visible;transition:opacity .25s}
+#nxSheet{position:fixed;left:50%;bottom:0;z-index:81;width:min(560px,100%);max-height:88dvh;overflow-y:auto;background:var(--c-elev);border:1px solid var(--c-border);border-radius:26px 26px 0 0;padding:8px 18px 26px;transform:translate(-50%,105%);transition:transform .35s cubic-bezier(.22,1,.36,1);visibility:hidden}
+#nxSheet.show{transform:translate(-50%,0);visibility:visible}
+@media(min-width:700px){#nxSheet{bottom:50%;border-radius:26px;transform:translate(-50%,60%);opacity:0;max-height:84dvh}#nxSheet.show{transform:translate(-50%,50%);opacity:1}}
+#nxSheet .sh-grab{width:42px;height:4px;border-radius:4px;background:var(--c-border);margin:6px auto 12px}
+#nxSheet h3{margin:0 0 4px;font-family:var(--ff-display);font-style:italic;font-size:24px;font-weight:600}
+#nxSheet .sh-sub{color:var(--c-text-dim);font-size:13px;margin:0 0 14px;line-height:1.45}
+#nxSheet .sh-x{position:absolute;right:14px;top:14px;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;color:var(--c-text)}
+.nxb{background:var(--grad-hero);color:#fff;border:0;border-radius:var(--r-pill,999px);padding:11px 18px;font-weight:700;font-size:13.5px;cursor:pointer}
+.nxb.ghost{background:var(--c-elev2);border:1px solid var(--c-border);color:var(--c-text)}
+.nxb.sm{padding:8px 13px;font-size:12.5px}
+.nxb:disabled{opacity:.5}
+
+/* daily hub */
+#nxDaily{margin:4px 0 18px}
+#nxDaily .dh-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:900px){#nxDaily .dh-row{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.dh-card{position:relative;background:var(--c-elev);border:1px solid var(--c-border);border-radius:20px;padding:14px;cursor:pointer;overflow:hidden;min-height:112px;display:flex;flex-direction:column;gap:4px;text-align:left;color:var(--c-text);transition:transform .2s}
+.dh-card:active{transform:scale(.97)}
+.dh-card.hot{background:linear-gradient(145deg,rgba(255,122,77,.22),rgba(200,30,94,.18));border-color:rgba(255,122,77,.4)}
+.dh-card .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-text-faint)}
+.dh-card .v{font-size:22px;font-weight:800;line-height:1.1}
+.dh-card .d{font-size:12px;color:var(--c-text-dim);line-height:1.35}
+.dh-dots{display:flex;gap:4px;margin-top:auto}
+.dh-dots i{flex:1;height:5px;border-radius:5px;background:var(--c-border)}
+.dh-dots i.on{background:var(--grad-hero)}
+.dh-blur{display:flex;margin-top:auto}
+.dh-blur img,.dh-blur i{width:30px;height:30px;border-radius:50%;border:2px solid var(--c-elev);margin-left:-8px;filter:blur(5px);background:var(--grad-hero);object-fit:cover}
+.dh-blur>:first-child{margin-left:0}
+.dh-lock{position:absolute;right:10px;top:10px;font-size:14px}
+.dh-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
+.dh-title b{font-family:var(--ff-display);font-style:italic;font-size:19px}
+.plus-pill{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:6px 12px;border-radius:999px;border:0;background:linear-gradient(135deg,#FFC978,#FF7A4D 55%,#F2548D);color:#2a0f08;font-weight:800;font-size:12px;cursor:pointer}
+.dp{display:flex;gap:12px;align-items:center;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:16px;padding:10px;margin-bottom:10px}
+.dp img,.dp .ph{width:58px;height:58px;border-radius:14px;object-fit:cover;background:var(--grad-hero);flex:none}
+.dp .t{flex:1;min-width:0}.dp .t b{display:block;font-size:14.5px}.dp .t span{font-size:12px;color:var(--c-text-dim)}
+.dp .a{display:flex;gap:6px}
+.q-ta{width:100%;min-height:90px;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:14px;color:var(--c-text);padding:12px;font:inherit;font-size:14px;resize:vertical}
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bdg{text-align:center;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:16px;padding:12px 6px;font-size:11.5px}
+.bdg .e{font-size:28px;display:block;filter:grayscale(1);opacity:.4}
+.bdg.on .e{filter:none;opacity:1}.bdg.on{border-color:rgba(255,122,77,.5)}
+.opt{display:block;width:100%;text-align:left;background:var(--c-elev2);border:1px solid var(--c-border);color:var(--c-text);border-radius:14px;padding:12px 14px;margin:0 0 8px;font-size:14px;cursor:pointer}
+.opt:active{border-color:#F2548D}
+.q-bar{height:5px;background:var(--c-border);border-radius:5px;margin:0 0 14px;overflow:hidden}.q-bar i{display:block;height:100%;background:var(--grad-hero);transition:width .3s}
+.res{text-align:center;padding:10px 0}.res .big{font-size:54px}.res h4{font-family:var(--ff-display);font-style:italic;font-size:26px;margin:6px 0}
+
+/* plus */
+.pl-tog{display:inline-flex;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:999px;padding:3px;margin:0 0 14px}
+.pl-tog button{border:0;background:none;color:var(--c-text-dim);padding:7px 16px;border-radius:999px;font-weight:700;font-size:12.5px;cursor:pointer}.pl-tog button.on{background:var(--grad-hero);color:#fff}
+.pl-grid{display:grid;gap:12px}
+.pl{position:relative;border:1px solid var(--c-border);background:var(--c-elev2);border-radius:20px;padding:16px}
+.pl.pop{border-color:#FFC978;box-shadow:0 0 0 1px #FFC978,0 14px 40px -16px rgba(255,201,120,.5)}
+.pl .tag{position:absolute;right:14px;top:-10px;background:linear-gradient(135deg,#FFC978,#FF7A4D);color:#2a0f08;font-size:10.5px;font-weight:800;padding:3px 10px;border-radius:999px;letter-spacing:.05em}
+.pl h4{margin:0;font-size:17px}.pl .pr{font-size:28px;font-weight:800;margin:2px 0 8px}.pl .pr small{font-size:12px;font-weight:500;color:var(--c-text-dim)}
+.pl ul{list-style:none;margin:0 0 12px;padding:0;font-size:13px;color:var(--c-text-dim)}.pl li{padding:3px 0}.pl li::before{content:'✓ ';color:#FFC978;font-weight:800}
+.pl .nxb{width:100%}
+.pl-note{font-size:11.5px;color:var(--c-text-faint);text-align:center;margin-top:12px}
+
+/* chat kit */
+.kit-tabs{display:flex;gap:6px;margin:0 0 12px;overflow-x:auto}
+.kit-tabs button{border:1px solid var(--c-border);background:var(--c-elev2);color:var(--c-text-dim);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;cursor:pointer}
+.kit-tabs button.on{background:var(--grad-hero);color:#fff;border-color:transparent}
+.kit-q{background:linear-gradient(145deg,rgba(139,92,246,.22),rgba(242,84,141,.16));border:1px solid var(--c-border);border-radius:18px;padding:18px;font-size:16px;line-height:1.45;margin-bottom:12px;min-height:70px}
+.kit-row{display:flex;gap:8px;flex-wrap:wrap}
+.kit-in{width:100%;background:var(--c-elev2);border:1px solid var(--c-border);border-radius:12px;color:var(--c-text);padding:11px 13px;font:inherit;font-size:14px;margin-bottom:8px}
+.lockrow{display:flex;justify-content:space-between;align-items:center;background:var(--c-elev2);border:1px dashed var(--c-border);border-radius:14px;padding:11px 14px;margin-top:10px;font-size:13px;color:var(--c-text-dim);cursor:pointer}
+
+</style>
 </head>
 <body>
 
@@ -1313,7 +1410,7 @@ html.lite *{transition-duration:.15s!important}
   <div class="auth-wrap">
     <div class="auth-visual">
       <div class="auth-visual-word">NEXA</div>
-      <div class="auth-visual-quote chapter-live">Chapter 1 — About You</div>
+      <div class="auth-visual-quote chapter-live">Step 1 of 4 · About you</div>
       <div class="auth-visual-stats">
         <div><b>4</b><span>Quick Steps</span></div>
         <div><b>2 min</b><span>To Finish</span></div>
@@ -1322,7 +1419,7 @@ html.lite *{transition-duration:.15s!important}
     <div class="auth-form-col"><div class="signup-card">
     <div class="auth-logo"><span class="word">NEXA</span><span class="sub">Create your account</span></div>
     <div class="auth-panel">
-      <div class="chapter-label chapter-live" id="chapterLabel">Chapter 1 — About You</div>
+      <div class="chapter-label chapter-live" id="chapterLabel">Step 1 of 4 · About you</div>
       <div class="chapters">
         <div class="seg current" id="seg1"><i></i></div>
         <div class="seg" id="seg2"><i></i></div>
@@ -2213,7 +2310,7 @@ async function finishSignup(){
   const username = document.getElementById('suUsername').value.trim();
   const password = document.getElementById('suPassword').value;
   if(!fullName || !email || !username || !password){
-    logDiagnostic('Sign up', 'Name, email, username and password are all required (Chapter 1)');
+    logDiagnostic('Sign up', 'Name, email, username and password are all required (Step 1)');
     currentStep = 0; renderStep();
     return;
   }
@@ -2323,7 +2420,7 @@ function startSignup(){
 }
 
 /* ============================= SIGNUP CHAPTERS ============================= */
-const chapterLabels = ['Chapter 1 — About You','Chapter 2 — Your Profile','Chapter 3 — Preferences','Chapter 4 — Finish'];
+const chapterLabels = ['Step 1 of 4 · About you','Step 2 of 4 · Your photo & bio','Step 3 of 4 · Who you like','Step 4 of 4 · Almost there'];
 let currentStep = 0;
 const track = document.getElementById('stepsTrack');
 const segs = ['seg1','seg2','seg3','seg4'].map(id=>document.getElementById(id));
@@ -4252,7 +4349,7 @@ document.addEventListener('click',e=>{const t=e.target;
   if(c.classList.contains('ib')&&S.cur&&S.cur.id){const txt=c.textContent,id=S.cur.id;Promise.resolve(startConversation(id)).then(()=>setTimeout(()=>{const i=$('#chatInput');if(i){i.value=txt;i.focus();}},500));}}});
 document.addEventListener('change',async e=>{if(e.target.id==='safeSw'&&S.me){const v=e.target.checked,{error}=await sb.from('profiles').update({safe_mode:v}).eq('id',currentUserId);if(error){e.target.checked=!v;showToast('Run the SQL update first');}else{S.me.safe_mode=v;showToast(v?'Safe Mode on — photos blurred until you match':'Safe Mode off');}}});
 /* ---- hooks into existing functions (nothing removed) ---- */
-const w=window,_lmp=w.loadMyProfile;w.loadMyProfile=async function(uid){const r=await _lmp.apply(this,arguments);try{const{data}=await sb.from('profiles').select('*').eq('id',uid).single();S.me=data;paintMe();syncMine();if(realProfiles.length)refresh();if(data&&!data.avatar_url)love('existing');}catch(e){}return r;};
+const w=window,_lmp=w.loadMyProfile;w.loadMyProfile=async function(uid){const r=await _lmp.apply(this,arguments);try{const{data}=await sb.from('profiles').select('*').eq('id',uid).single();S.me=data;paintMe();syncMine();if(realProfiles.length)refresh();if(data&&!data.avatar_url&&avatarFile){const u=await uploadToProfileMedia(avatarFile,'avatar');if(u){await sb.from('profiles').update({avatar_url:u}).eq('id',uid);S.me.avatar_url=u;paintMe();}}}catch(e){}return r;};
 const _rg=w.renderReelsGrid;w.renderReelsGrid=function(){const r=_rg.apply(this,arguments);setTimeout(async()=>{if(Date.now()-S.last>20000)await loadExt();refresh();try{decorateStories();}catch(e){}},0);return r;};
 const _rup=w.renderUserProfileOverlay;w.renderUserProfileOverlay=function(p){_rup.apply(this,arguments);try{decorateProfile(p);}catch(e){}};
 const _oo=w.openOverlay;w.openOverlay=function(){_oo.apply(this,arguments);paintMe();};
@@ -4899,11 +4996,11 @@ function setMedia(blob,kind){PS.blob=blob;PS.kind=kind;if(PS.url)URL.revokeObjec
 function edit(mode){PS.mode=mode;if(mode==='create'&&PS.ratio==='orig')PS.ratio='4:5';$('#pst').dataset.mode=mode;$('#pstStart').hidden=true;$('#pstCam').hidden=true;$('#pstEdit').hidden=false;$('#pstPub').hidden=false;$('#pstTitle').textContent=mode==='create'?'Create your post':mode==='cam'?'Camera post':'Upload post';paintSide();stage();}
 async function camOn(f){camOff();camF=f||camF;try{camS=await navigator.mediaDevices.getUserMedia({video:{facingMode:camF,width:{ideal:1920},height:{ideal:1920}},audio:false});$('#pstCamV').srcObject=camS;}catch(e){T('Camera permission needed');$('#pstCam').hidden=true;$('#pstStart').hidden=false;}}
 function camOff(){if(camS){camS.getTracks().forEach(t=>t.stop());camS=null;}}
-function go(m){if(m==='upload')$('#pstFile').click();else if(m==='create'){edit('create');}else{$('#pstStart').hidden=true;$('#pstCam').hidden=false;camOn('user');}}
+function psGo(m){if(m==='upload')$('#pstFile').click();else if(m==='create'){edit('create');}else{$('#pstStart').hidden=true;$('#pstCam').hidden=false;camOn('user');}}
 function closeStudio(){const e=$('#pst');if(e)e.classList.remove('show');psReset();if(e){$('#pstStart').hidden=false;$('#pstEdit').hidden=true;$('#pstCam').hidden=true;$('#pstPub').hidden=true;$('#pstMus').hidden=true;$('#pstTitle').textContent='New post';$('#pstStage').innerHTML='';$('#pstCap').value='';}}
-function openStudio(m){if(!authed())return gate();buildStudio();psReset();closeStudio();$('#pst').classList.add('show');if(m)go(m);}
+function openStudio(m){if(!authed())return gate();buildStudio();psReset();closeStudio();$('#pst').classList.add('show');if(m)psGo(m);}
 function wire(){const R=$('#pst');
-  $('#pstX').onclick=closeStudio;R.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  $('#pstX').onclick=closeStudio;R.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>psGo(b.dataset.go));
   $('#pstFile').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;if(f.size>50*1048576){T('File too large — max 50 MB');return;}edit('upload');setMedia(f,f.type.startsWith('video/')?'video':'image');};
   $('#pcBack').onclick=()=>{camOff();$('#pstCam').hidden=true;$('#pstStart').hidden=false;};$('#pcFlip').onclick=()=>camOn(camF==='user'?'environment':'user');
   $('#pcShut').onclick=()=>{const v=$('#pstCamV');if(!v.videoWidth)return;const c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);c.toBlob(b=>{camOff();edit('cam');setMedia(b,'image');},'image/jpeg',.92);};
@@ -4985,14 +5082,14 @@ async function needPhotos(){try{const{data,error}=await sb.from('posts').select(
 async function gateCheck(){if(!authed())return;const n=await needPhotos();n>0?showGate(n):hideGate();}
 function hideGate(){const g=$('#nxGate');if(g&&g.classList.contains('show')){g.classList.remove('show');document.body.style.overflow='';}}
 function showGate(n){let g=$('#nxGate');if(g&&g.classList.contains('show'))return;
-  if(!g){document.body.insertAdjacentHTML('beforeend',`<div id="nxGate"><div class="gt-card"><div class="gt-h"><span class="nx-logo">NEXA</span><h2>Show us the real you</h2><p id="gtSub"></p><div class="gt-bar"><i id="gtBar"></i></div></div><div class="gt-slots" id="gtSlots"></div><button class="nx-btn gt-go" id="gtGo" disabled>Post &amp; continue</button><button class="gt-out" id="gtOut">Log out</button></div></div>`);g=$('#nxGate');
-    $('#gtOut').onclick=()=>sb.auth.signOut().then(()=>location.reload());$('#gtGo').onclick=gateSubmit;
+  if(!g){document.body.insertAdjacentHTML('beforeend',`<div id="nxGate"><div class="gt-card"><div class="gt-h"><span class="nx-logo">NEXA</span><h2>Show us the real you</h2><p id="gtSub"></p><div class="gt-bar"><i id="gtBar"></i></div></div><div class="gt-real"><b>Authentic photos only.</b> Each photo must be a <b>real photo of you</b> and say something <b>about you</b> — your hobbies, city or style. Give every photo a title that tells the story (e.g. “Sunday hike — my happy place”). Stock images, other people or hidden faces get removed.</div><div class="gt-slots" id="gtSlots"></div><label class="gt-auth"><input type="checkbox" id="gtAuth"><span>I confirm these are real photos of me.</span></label><button class="nx-btn gt-go" id="gtGo" disabled>Post &amp; continue</button><button class="gt-out" id="gtOut">Log out</button></div></div>`);g=$('#nxGate');
+    $('#gtOut').onclick=()=>sb.auth.signOut().then(()=>location.reload());$('#gtGo').onclick=gateSubmit;$('#gtAuth').onchange=gateValid;
     $('#gtSlots').addEventListener('change',e=>{const s=e.target.closest('.gt-slot');if(!s||e.target.type!=='file')return;const f=e.target.files[0];if(!f)return;GATE[+s.dataset.i]=f;const pk=s.querySelector('.gt-pick');pk.style.backgroundImage=`url(${URL.createObjectURL(f)})`;pk.classList.add('has');gateValid();});
     $('#gtSlots').addEventListener('input',e=>{if(e.target.classList.contains('gt-t'))gateValid();});}
-  GATE.length=0;$('#gtSub').textContent=`Add ${n} photo${n>1?'s':''} with a title to unlock NEXA. They appear in the feed and on your profile.`;
-  $('#gtSlots').innerHTML=Array.from({length:n},(_,i)=>`<div class="gt-slot" data-i="${i}"><label class="gt-pick"><input type="file" accept="image/*" hidden><span class="gt-ph">${ic('camera',26)}<b>Add photo</b></span></label><input class="gt-t" maxlength="60" placeholder="Title this photo"></div>`).join('');
+  GATE.length=0;$('#gtAuth').checked=false;$('#gtSub').textContent=`Add ${n} real photo${n>1?'s':''} of you, each with a title about you, to unlock NEXA. They appear in the feed and on your profile.`;
+  $('#gtSlots').innerHTML=Array.from({length:n},(_,i)=>`<div class="gt-slot" data-i="${i}"><label class="gt-pick"><input type="file" accept="image/*" hidden><span class="gt-ph">${ic('camera',26)}<b>Add photo</b></span></label><input class="gt-t" maxlength="60" placeholder="Title it — say something about you"></div>`).join('');
   $('#gtGo').disabled=true;$('#gtBar').style.width='0';g.classList.add('show');document.body.style.overflow='hidden';}
-function gateValid(){const sl=$$('#gtSlots .gt-slot');let ok=0;sl.forEach((s,i)=>{if(GATE[i]&&s.querySelector('.gt-t').value.trim().length>=3)ok++;});$('#gtBar').style.width=Math.round(ok/sl.length*100)+'%';$('#gtGo').disabled=ok<sl.length;}
+function gateValid(){const sl=$$('#gtSlots .gt-slot');let ok=0;sl.forEach((s,i)=>{if(GATE[i]&&s.querySelector('.gt-t').value.trim().length>=3)ok++;});$('#gtBar').style.width=Math.round(ok/sl.length*100)+'%';$('#gtGo').disabled=ok<sl.length||!($('#gtAuth')||{}).checked;}
 const imgDims=f=>new Promise(r=>{const i=new Image();i.onload=()=>r(+(i.naturalWidth/i.naturalHeight).toFixed(4));i.onerror=()=>r(1);i.src=URL.createObjectURL(f);});
 async function gateSubmit(){const btn=$('#gtGo'),sl=$$('#gtSlots .gt-slot');btn.disabled=true;
   for(let i=0;i<sl.length;i++){if(sl[i].classList.contains('done'))continue;btn.textContent=`Posting ${i+1}/${sl.length}…`;const title=sl[i].querySelector('.gt-t').value.trim();
@@ -5192,6 +5289,235 @@ async function qStats(){const pc=peerConnection,el=document.getElementById('nxQ'
   const loss=pr+pl?Math.round(pl/(pr+pl)*100):0,ms=rtt?Math.round(rtt*1000):null;el.className=(ms>400||loss>8)?'bad':(ms>200||loss>3)?'mid':'good';el.textContent=`${route||'…'} · ${ms==null?'—':ms+' ms'} · ${loss}% loss`;if(!CS.qlog&&ms!=null){CS.qlog=1;logDiagnostic('Call quality',route+' '+ms+'ms '+loss+'%');}}catch(e){}}
 (function(){const sc=document.getElementById('callScreen');sc&&sc.insertAdjacentHTML('beforeend','<div id="nxQ"></div>');})();
 
+})();
+
+</script>
+<script>
+/* ===== NEXA 40 module ===== */
+(function(){
+'use strict';
+const q=s=>document.querySelector(s),qa=s=>[...document.querySelectorAll(s)];
+const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const toast=m=>{try{showToast(m);}catch(e){}};
+const vb=n=>{try{navigator.vibrate&&navigator.vibrate(n);}catch(e){}};
+const uid=()=>{try{return currentUserId||'anon';}catch(e){return 'anon';}};
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const LS={g(k,d){try{const v=localStorage.getItem('nx40_'+uid()+'_'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},s(k,v){try{localStorage.setItem('nx40_'+uid()+'_'+k,JSON.stringify(v));}catch(e){}}};
+const avOf=p=>{try{return avatarUrlFor(p);}catch(e){return p&&p.avatar_url||'';}};
+const nameOf=p=>(p&&(p.full_name||p.username))||'Someone';
+
+/* ---------- 1 · signup visual = same photo carousel as login ---------- */
+function signupPhotos(){
+  const src=q('#loginPhotos'),vis=q('#signup .auth-visual');if(!src||!vis||q('#signupPhotos'))return;
+  const ph=src.cloneNode(true);ph.id='signupPhotos';vis.insertBefore(ph,vis.firstChild);
+  qa('#signup .auth-visual-quote,#signup .auth-visual-stats').forEach(n=>n.remove());
+  const tint=document.createElement('div');tint.className='auth-visual-tint';const fade=document.createElement('div');fade.className='auth-visual-fade';
+  const cap=document.createElement('div');cap.className='auth-visual-caption show';cap.id='signupCaption';cap.textContent='Your story starts with one real photo 💚';
+  const dots=document.createElement('div');dots.className='auth-visual-dots';dots.innerHTML='<span class="active"></span><span></span><span></span><span></span>';
+  const word=q('#signup .auth-visual-word');vis.insertBefore(tint,word);vis.insertBefore(fade,word);vis.appendChild(cap);vis.appendChild(dots);
+  const caps=['Your story starts with one real photo 💚','Real people. Real chemistry. 🧡','Be yourself — that is the whole trick 😍','Someone is waiting to meet you 🏳️‍🌈'];
+  const ps=[...ph.querySelectorAll('.avp')],ds=[...dots.children];let i=0;
+  setInterval(()=>{if(!q('#signup.active'))return;const p=i;i=(i+1)%ps.length;ps[p].classList.remove('active');ps[p].classList.add('exiting');ps[i].classList.add('active');setTimeout(()=>ps[p].classList.remove('exiting'),1100);
+    ds.forEach((d,k)=>d.classList.toggle('active',k===i));cap.classList.remove('show');setTimeout(()=>{cap.textContent=caps[i];cap.classList.add('show');},350);},3000);
+}
+function signupCopy(){
+  const sub=q('#avatarUpload')&&q('#avatarUpload').closest('.step-pane');if(!sub||sub.querySelector('.photo-must'))return;
+  const s=sub.querySelector('.step-sub');if(s)s.innerHTML='<b>A profile photo is required.</b> It is the first thing people see.';
+  s&&s.insertAdjacentHTML('afterend','<div class="photo-must"><span>📸</span><span>Use a <b>real, clear photo of you</b> — your face, no one else. No stock pictures, cartoons or heavy filters. Authentic profiles get far more matches.</span></div>');
+}
+
+/* ---------- 3 · SWIPE TO REPLY (pointer events, draggable bubble) ---------- */
+(function swipe(){
+  const box=q('#messages');if(!box)return;const TH=58,MAX=96;let st=null,block=false;
+  const IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>';
+  box.addEventListener('pointerdown',e=>{
+    const b=e.target.closest('.bubble');if(!b||!box.contains(b)||(e.pointerType==='mouse'&&e.button!==0))return;
+    if(e.target.closest('a,button,input,video,audio,textarea'))return;
+    st={b,x:e.clientX,y:e.clientY,id:e.pointerId,on:false,hit:false,ic:null};
+  },{passive:true});
+  box.addEventListener('pointermove',e=>{
+    if(!st||e.pointerId!==st.id)return;const dx=e.clientX-st.x,dy=e.clientY-st.y;
+    if(!st.on){
+      if(Math.abs(dy)>12&&Math.abs(dy)>Math.abs(dx)){st=null;return;}
+      if(dx>8&&dx>Math.abs(dy)*1.3){st.on=true;try{box.setPointerCapture(e.pointerId);}catch(_){}
+        st.b.classList.remove('nx-spring');st.ic=document.createElement('span');st.ic.className='nx-swipe-ic';st.ic.innerHTML=IC;st.b.appendChild(st.ic);}
+      else return;
+    }
+    const d=dx<=TH?Math.max(0,dx):Math.min(MAX,TH+(dx-TH)*.3);
+    st.b.style.transform='translateX('+d+'px)';
+    const p=Math.min(1,d/TH);st.ic.style.opacity=p;st.ic.style.transform='scale('+(.4+.6*p)+')';
+    const hit=d>=TH;if(hit&&!st.hit){vb(12);}st.hit=hit;st.ic.classList.toggle('go',hit);
+    e.preventDefault();
+  });
+  function end(e){
+    if(!st||(e&&e.pointerId!==st.id))return;const s=st;st=null;
+    if(!s.on)return;block=true;setTimeout(()=>block=false,350);
+    s.b.classList.add('nx-spring');s.b.style.transform='';
+    setTimeout(()=>{s.b.classList.remove('nx-spring');s.ic&&s.ic.remove();},340);
+    try{box.releasePointerCapture(s.id);}catch(_){}
+    if(s.hit&&e&&e.type==='pointerup'){try{activeBubble=s.b;bubbleAction('reply');const i=q('#chatInput');i&&i.focus();}catch(_){}}
+  }
+  box.addEventListener('pointerup',end);box.addEventListener('pointercancel',end);
+  box.addEventListener('contextmenu',e=>{if(block||(st&&st.on)){e.preventDefault();e.stopImmediatePropagation();}},true);
+  box.addEventListener('click',e=>{if(block){e.stopImmediatePropagation();e.preventDefault();}},true);
+  box.addEventListener('dblclick',e=>{if(block){e.stopImmediatePropagation();}},true);
+  /* keyboard/desktop helper: Shift+click a bubble = reply */
+  box.addEventListener('click',e=>{const b=e.target.closest('.bubble');if(b&&e.shiftKey){activeBubble=b;bubbleAction('reply');}});
+  /* quoted reply inside bubbles */
+  const _ar=window.appendRealMessage;
+  if(_ar)window.appendRealMessage=function(m){const r=_ar.apply(this,arguments);
+    try{if(m&&m.reply_to_id&&m.type!=='reaction'){const b=q('.bubble[data-msg-id="'+m.id+'"]'),t=q('.bubble[data-msg-id="'+m.reply_to_id+'"]');
+      if(b&&!b.querySelector('.nx-quote')){const txt=t?(t.dataset.replyLabel||[...t.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('')||t.textContent):'Original message';
+        const qd=document.createElement('span');qd.className='nx-quote';qd.textContent='↩ '+txt.slice(0,70);qd.onclick=ev=>{ev.stopPropagation();const tt=q('.bubble[data-msg-id="'+m.reply_to_id+'"]');if(tt){tt.scrollIntoView({block:'center',behavior:'smooth'});tt.classList.add('nx-flash');setTimeout(()=>tt.classList.remove('nx-flash'),1300);}};
+        b.insertBefore(qd,b.firstChild);}}}catch(_){}return r;};
+})();
+
+/* ---------- sheet helper ---------- */
+function sheet(html,mount){
+  let bg=q('#nxSheetBg'),sh=q('#nxSheet');
+  if(!bg){document.body.insertAdjacentHTML('beforeend','<div id="nxSheetBg"></div><div id="nxSheet"></div>');bg=q('#nxSheetBg');sh=q('#nxSheet');bg.onclick=closeSheet;}
+  sh.innerHTML='<div class="sh-grab"></div><button class="sh-x" aria-label="Close">✕</button>'+html;sh.querySelector('.sh-x').onclick=closeSheet;
+  bg.classList.add('show');sh.classList.add('show');sh.scrollTop=0;mount&&mount(sh);return sh;
+}
+function closeSheet(){const b=q('#nxSheetBg'),s=q('#nxSheet');b&&b.classList.remove('show');s&&s.classList.remove('show');}
+
+/* ---------- 4 · streaks + achievements ---------- */
+function touchStreak(){
+  const t=today();let s=LS.g('streak',{n:0,last:'',best:0});
+  if(s.last!==t){const y=new Date();y.setDate(y.getDate()-1);const yd=y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');
+    s.n=s.last===yd?s.n+1:1;s.last=t;s.best=Math.max(s.best||0,s.n);LS.s('streak',s);
+    if([3,7,14,30].includes(s.n))setTimeout(()=>toast('🔥 '+s.n+'-day streak! New badge unlocked'),1500);}
+  const days=LS.g('days',[]);if(!days.includes(t)){days.push(t);LS.s('days',days.slice(-30));}
+  return s;
+}
+const bump=k=>{LS.s('c_'+k,(LS.g('c_'+k,0)||0)+1);};
+const BADGES=[
+  {e:'✨',n:'First Spark',t:s=>s.n>=1},{e:'🔥',n:'3-Day Flame',t:s=>s.best>=3},{e:'🌋',n:'7-Day Blaze',t:s=>s.best>=7},
+  {e:'👑',n:'30-Day Legend',t:s=>s.best>=30},{e:'💬',n:'Conversation Starter',t:()=>LS.g('c_msg',0)>=1},{e:'📝',n:'Daily Thinker',t:()=>LS.g('c_dq',0)>=1},
+  {e:'💘',n:'Match Maker',t:()=>LS.g('c_drop',0)>=1},{e:'🧪',n:'Quiz Taker',t:()=>!!LS.g('quiz',null)},{e:'💌',n:'Friend Magnet',t:()=>LS.g('c_inv',0)>=1}];
+function achSheet(){const s=LS.g('streak',{n:0,best:0});
+  sheet('<h3>Achievements</h3><p class="sh-sub">Current streak <b>'+s.n+'</b> day'+(s.n===1?'':'s')+' · best <b>'+(s.best||0)+'</b>. Come back every day to keep your flame alive.</p><div class="badge-grid">'+BADGES.map(b=>'<div class="bdg '+(b.t(s)?'on':'')+'"><span class="e">'+b.e+'</span>'+b.n+'</div>').join('')+'</div>');}
+
+/* ---------- 5 · daily drop ---------- */
+function rng(seed){let a=0;for(const c of seed)a=(a*31+c.charCodeAt(0))|0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function dropList(){let l=[];try{l=(realProfiles||[]).slice();}catch(e){}const r=rng(today()+uid());for(let i=l.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[l[i],l[j]]=[l[j],l[i]];}return l.slice(0,5);}
+function countdown(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);const s=Math.floor((m-n)/1000);return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,'0')).join(':');}
+function openProfile(p){try{closeSheet();renderUserProfileOverlay(p);openOverlay('userProfile');}catch(e){}}
+function dropSheet(){
+  const l=dropList();if(!LS.g('drop_'+today(),0)){LS.s('drop_'+today(),1);bump('drop');}
+  sheet('<h3>Your Daily Drop</h3><p class="sh-sub">5 people picked for you today. Next drop in <b id="dropCd">'+countdown()+'</b></p>'+
+    (l.length?l.map((p,i)=>'<div class="dp"><'+(avOf(p)?'img src="'+E(avOf(p))+'" alt=""':'div class="ph"')+'><div class="t"><b>'+E(nameOf(p))+'</b><span>'+E([p.city,p.country].filter(Boolean).join(', ')||'@'+(p.username||'nexa'))+'</span></div><div class="a"><button class="nxb ghost sm" data-v="'+i+'">View</button><button class="nxb sm" data-h="'+i+'">Say hi</button></div></div>').join(''):'<div class="sh-sub">Your drop is warming up — people are still loading. Try again in a moment.</div>')+
+    '<div class="lockrow" data-plus>🔒 Rewind yesterday’s drop &amp; get 10 picks a day <b>Plus</b></div>',
+    sh=>{sh.addEventListener('click',e=>{const v=e.target.closest('[data-v]'),h=e.target.closest('[data-h]'),pl=e.target.closest('[data-plus]');
+      if(v)openProfile(l[+v.dataset.v]);
+      if(h){const p=l[+h.dataset.h];closeSheet();Promise.resolve(startConversation(p.id)).then(()=>{const b=q('#topnav [data-tab="tab-chatroom"]');b&&b.click();}).catch(()=>{});}
+      if(pl)plusSheet();});});
+}
+
+/* ---------- 6 · daily question ---------- */
+const QS=['What is a small thing that instantly makes your day better?','What would your perfect Sunday look like?','Which song do you know every word to?','What is your most unpopular food opinion?','What is something you are secretly proud of?','Describe your love language without using the word “love”.','What is the best trip you ever took?','What would you do with a free day and no phone?','What is a green flag you look for?','Which movie can you watch on repeat?','What is the kindest thing a stranger did for you?','What is your go-to comfort meal?','What is a skill you wish you had?','If we met for coffee tomorrow, what would we talk about first?','What is a dream you have not told many people?'];
+function qOfDay(){const d=new Date(),k=Math.floor(new Date(d.getFullYear(),d.getMonth(),d.getDate())/864e5);return QS[k%QS.length];}
+function dqSheet(){const a=LS.g('dq_'+today(),'');
+  sheet('<h3>Question of the day</h3><p class="sh-sub">'+E(qOfDay())+'</p><textarea class="q-ta" id="dqTa" maxlength="280" placeholder="Your answer…">'+E(a)+'</textarea><div class="kit-row" style="margin-top:10px"><button class="nxb" id="dqSave">'+(a?'Update answer':'Save my answer')+'</button><button class="nxb ghost" id="dqShare">Share as my status</button></div><div class="lockrow" data-plus>🔒 See what others answered today <b>Plus</b></div>',
+    sh=>{sh.querySelector('#dqSave').onclick=()=>{const v=sh.querySelector('#dqTa').value.trim();if(!v)return toast('Write something first');if(!LS.g('dq_'+today(),''))bump('dq');LS.s('dq_'+today(),v);toast('Saved ✓ +1 spark');paintHub();closeSheet();};
+      sh.querySelector('#dqShare').onclick=()=>{const v=sh.querySelector('#dqTa').value.trim();if(!v)return toast('Write something first');try{navigator.clipboard.writeText(qOfDay()+' — '+v);toast('Copied — paste it anywhere');}catch(e){toast('Copy not supported here');}};
+      sh.addEventListener('click',e=>{if(e.target.closest('[data-plus]'))plusSheet();});});}
+
+/* ---------- 7 · compatibility quiz ---------- */
+const QZ=[['Perfect first date?',['Coffee & a long walk','Dinner somewhere fancy','Something adventurous','Movie night in']],['How do you handle conflict?',['Talk it out right away','Take space, then talk','Humor to lighten it','Write it down first']],['Your ideal weekend?',['Nature & fresh air','Party with friends','Cozy at home','Trying something new']],['What matters most?',['Loyalty','Laughter','Ambition','Kindness']],['Your texting style?',['Instant replies','Voice notes always','Memes & GIFs','Short and sweet']],['In five years you want…',['A home & family','Travel the world','A thriving career','A bit of everything']]];
+const STY=[['The Romantic','💞','You fall deep and show it. You look for someone who matches your warmth.'],['The Adventurer','🧭','Life is better shared. You bring spontaneity and want a partner in crime.'],['The Anchor','⚓','Calm, loyal and steady. People feel safe with you.'],['The Spark','⚡','Funny, magnetic, quick. You keep every conversation alive.']];
+function quizSheet(){const r=LS.g('quiz',null);if(r)return quizRes(r);let i=0,sc=[0,0,0,0];
+  const draw=()=>{sheet('<h3>Love-style quiz</h3><div class="q-bar"><i style="width:'+(i/QZ.length*100)+'%"></i></div><p class="sh-sub"><b>'+(i+1)+'/'+QZ.length+'</b> · '+QZ[i][0]+'</p>'+QZ[i][1].map((o,k)=>'<button class="opt" data-k="'+k+'">'+o+'</button>').join(''),
+    sh=>sh.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;sc[+b.dataset.k]++;i++;if(i>=QZ.length){const best=sc.indexOf(Math.max(...sc));LS.s('quiz',best);paintHub();quizRes(best);}else draw();}));};draw();}
+function quizRes(k){const s=STY[k];sheet('<div class="res"><div class="big">'+s[1]+'</div><p class="sh-sub" style="margin:0">Your love style</p><h4>'+s[0]+'</h4><p class="sh-sub">'+s[2]+'</p><div class="kit-row" style="justify-content:center"><button class="nxb" id="qzSh">Share my result</button><button class="nxb ghost" id="qzRe">Retake</button></div></div>',
+  sh=>{sh.querySelector('#qzSh').onclick=()=>{const t='I am '+s[0]+' '+s[1]+' on NEXA. What are you?';try{navigator.share?navigator.share({text:t,url:location.href}):(navigator.clipboard.writeText(t+' '+location.href),toast('Copied to clipboard'));}catch(e){}};
+    sh.querySelector('#qzRe').onclick=()=>{LS.s('quiz',null);quizSheet();};});}
+
+/* ---------- 8 · invite & earn ---------- */
+function inviteSheet(){let u='';try{u=(S&&S.me&&S.me.username)||'';}catch(e){}const link=location.origin+location.pathname+'?ref='+encodeURIComponent(u||uid().slice(0,8));
+  sheet('<h3>Invite &amp; earn</h3><p class="sh-sub">Invite 3 friends and unlock a free Boost. Friends who join with your link count automatically once rewards go live.</p><input class="kit-in" readonly value="'+E(link)+'"><div class="kit-row"><button class="nxb" id="ivCp">Copy link</button><button class="nxb ghost" id="ivSh">Share</button></div><div class="lockrow">🎁 Boost reward <b>Coming soon</b></div>',
+    sh=>{sh.querySelector('#ivCp').onclick=()=>{try{navigator.clipboard.writeText(link);}catch(e){}bump('inv');toast('Link copied 💌');};sh.querySelector('#ivSh').onclick=()=>{bump('inv');try{navigator.share?navigator.share({title:'NEXA',text:'Meet real people on NEXA',url:link}):(navigator.clipboard.writeText(link),toast('Link copied 💌'));}catch(e){}};});}
+
+/* ---------- 9 · NEXA Plus (payment skeleton only) ---------- */
+function plusSheet(focus){let yr=false;
+  const PL=[{n:'Plus',m:4.99,f:['See who liked you','Unlimited rewinds','5 Boosts / month','No ads']},{n:'Gold',m:9.99,pop:1,f:['Everything in Plus','See who visited your profile','Incognito browsing','Seen-by-others daily answers','View-once disappearing photos']},{n:'Platinum',m:19.99,f:['Everything in Gold','Priority in Daily Drop','Message before matching','Premium chat themes','Verified fast-track']}];
+  const draw=()=>sheet('<h3>NEXA Plus</h3><p class="sh-sub">Get noticed, see who is into you, and go further. Payments are launching soon — pick a plan to join the waitlist.</p><div class="pl-tog"><button data-y="0" class="'+(yr?'':'on')+'">Monthly</button><button data-y="1" class="'+(yr?'on':'')+'">Yearly · save 30%</button></div><div class="pl-grid">'+
+    PL.map(p=>{const v=yr?(p.m*12*.7/12):p.m;return '<div class="pl '+(p.pop?'pop':'')+'">'+(p.pop?'<span class="tag">MOST POPULAR</span>':'')+'<h4>'+p.n+'</h4><div class="pr">$'+v.toFixed(2)+'<small> / month'+(yr?' · billed yearly':'')+'</small></div><ul>'+p.f.map(x=>'<li>'+x+'</li>').join('')+'</ul><button class="nxb" data-p="'+p.n+'">Choose '+p.n+'</button></div>';}).join('')+'</div><p class="pl-note">Prices are placeholders · Cancel anytime · No payment is taken yet</p>',
+    sh=>sh.addEventListener('click',e=>{const t=e.target.closest('[data-y]'),c=e.target.closest('[data-p]');if(t){yr=t.dataset.y==='1';draw();}if(c){LS.s('waitlist',c.dataset.p);vb(20);toast('You are on the '+c.dataset.p+' waitlist ✨ We will notify you');closeSheet();}}));draw();}
+
+/* ---------- 10 · who liked / who visited (blurred, paywalled) ---------- */
+async function counts(){let likes=0,vis=0;try{const r=await sb.from('likes').select('id',{count:'exact',head:true}).eq('to_profile',currentUserId);likes=r.count||0;}catch(e){}
+  try{const r=await sb.from('profile_visits').select('id',{count:'exact',head:true}).eq('profile_id',currentUserId);if(!r.error)vis=r.count||0;}catch(e){}return{likes,vis};}
+function lockSheet(kind,n){const l=[];try{(realProfiles||[]).slice(0,5).forEach(p=>l.push(p));}catch(e){}
+  sheet('<h3>'+(kind==='likes'?'Who liked you':'Who visited your profile')+'</h3><p class="sh-sub">'+(n?'<b>'+n+'</b> '+(kind==='likes'?'people liked you':'people viewed you')+'. ':'')+'Upgrade to reveal them and say hi first.</p>'+
+    l.map(p=>'<div class="dp"><'+(avOf(p)?'img src="'+E(avOf(p))+'" style="filter:blur(9px)" alt=""':'div class="ph" style="filter:blur(9px)"')+'><div class="t"><b style="filter:blur(5px)">'+E(nameOf(p))+'</b><span>🔒 Hidden</span></div></div>').join('')+'<button class="nxb" style="width:100%;margin-top:6px" id="lkUp">Unlock with NEXA Plus</button>',sh=>{sh.querySelector('#lkUp').onclick=()=>plusSheet();});}
+const _rup=window.renderUserProfileOverlay;
+if(_rup)window.renderUserProfileOverlay=function(p){const r=_rup.apply(this,arguments);
+  try{if(p&&p.id&&p.id!==currentUserId){const k='v_'+p.id;if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,1);sb.from('profile_visits').insert({visitor_id:currentUserId,profile_id:p.id}).then(()=>{},()=>{});}}}catch(e){}return r;};
+
+/* ---------- 11 · daily hub on Home + Plus pill ---------- */
+let CNT={likes:0,vis:0};
+function hubHTML(){const s=LS.g('streak',{n:0,best:0}),days=LS.g('days',[]),a=LS.g('dq_'+today(),''),quiz=LS.g('quiz',null),dd=!!LS.g('drop_'+today(),0);
+  const wk=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);wk.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));}
+  let av='';try{av=(realProfiles||[]).slice(0,4).map(p=>avOf(p)?'<img src="'+E(avOf(p))+'" alt="">':'<i></i>').join('')||'<i></i><i></i><i></i>';}catch(e){av='<i></i><i></i>';}
+  return '<div class="dh-title"><b>Today on NEXA</b><button class="nxb ghost sm" data-a="ach">🏅 Badges</button></div><div class="dh-row">'+
+  '<button class="dh-card hot" data-a="streak"><span class="k">Streak</span><span class="v">🔥 '+s.n+' day'+(s.n===1?'':'s')+'</span><span class="d">Best '+(s.best||s.n)+' · keep it going</span><span class="dh-dots">'+wk.map(d=>'<i class="'+(days.includes(d)?'on':'')+'"></i>').join('')+'</span></button>'+
+  '<button class="dh-card" data-a="drop"><span class="k">Daily Drop</span><span class="v">💘 5 picks</span><span class="d">'+(dd?'Next drop in ':'Fresh for you · ')+'<b id="hubCd">'+countdown()+'</b></span></button>'+
+  '<button class="dh-card" data-a="dq"><span class="k">Question of the day</span><span class="v">'+(a?'Answered ✓':'💭 Answer')+'</span><span class="d">'+E(qOfDay().slice(0,52))+'…</span></button>'+
+  '<button class="dh-card" data-a="quiz"><span class="k">Love-style quiz</span><span class="v">'+(quiz!=null&&STY[quiz]?STY[quiz][1]+' '+STY[quiz][0]:'🧪 Take it')+'</span><span class="d">6 questions · shareable result</span></button>'+
+  '<button class="dh-card" data-a="likes"><span class="dh-lock">🔒</span><span class="k">Who liked you</span><span class="v">'+(CNT.likes||'—')+'</span><span class="dh-blur">'+av+'</span></button>'+
+  '<button class="dh-card" data-a="vis"><span class="dh-lock">🔒</span><span class="k">Profile visitors</span><span class="v">'+(CNT.vis||'—')+'</span><span class="dh-blur">'+av+'</span></button>'+
+  '<button class="dh-card" data-a="inv"><span class="k">Invite &amp; earn</span><span class="v">🎁 Boost</span><span class="d">Invite 3 friends, get a free Boost</span></button>'+
+  '<button class="dh-card" data-a="plus" style="background:linear-gradient(135deg,rgba(255,201,120,.25),rgba(242,84,141,.2));border-color:rgba(255,201,120,.5)"><span class="k">NEXA Plus</span><span class="v">✨ Go Plus</span><span class="d">Likes, visitors, boosts &amp; more</span></button></div>';}
+function paintHub(){const h=q('#nxDaily');if(h)h.innerHTML=hubHTML();}
+function mountHub(){const home=q('#tab-home .home-wrap');if(!home||q('#nxDaily'))return;const d=document.createElement('div');d.id='nxDaily';const st=[...home.children].find(c=>c.classList.contains('section-title'));home.insertBefore(d,st||null);
+  d.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+    ({ach:achSheet,streak:achSheet,drop:()=>{dropSheet();paintHub();},dq:dqSheet,quiz:quizSheet,likes:()=>lockSheet('likes',CNT.likes),vis:()=>lockSheet('vis',CNT.vis),inv:inviteSheet,plus:()=>plusSheet()})[a]();});
+  paintHub();}
+function mountPlusPill(){const tl=q('.topbar-left');if(!tl||q('#nxPlusBtn'))return;const b=document.createElement('button');b.id='nxPlusBtn';b.className='plus-pill';b.textContent='✨ Plus';b.onclick=()=>plusSheet();tl.appendChild(b);}
+
+/* ---------- 12 · chat kit: icebreakers, games, date planner, search ---------- */
+const ICE=['If you could have dinner with anyone, who and why?','What is the last thing that made you laugh out loud?','Beach holiday or mountain cabin?','What is your hidden talent?','What is a song that always lifts your mood?','What is the best advice you ever got?','Coffee, tea, or something else entirely?','What is on your bucket list this year?'];
+const WYR=['Would you rather travel the world for a year or own your dream home?','Would you rather always be early or always be fashionably late?','Would you rather text all day or talk on the phone for hours?','Would you rather have a movie night in or a night out dancing?'];
+const TOT=['This or that: sunrise or sunset?','This or that: pizza or sushi?','This or that: city lights or quiet village?','This or that: Netflix marathon or road trip?','This or that: sweet or savoury?'];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function sendText(t){const i=q('#chatInput');if(!i)return;i.value=t;try{sendMessage();}catch(e){}closeSheet();}
+function kitSheet(tab){tab=tab||'ice';
+  const T={ice:'💬 Icebreakers',game:'🎮 Games',date:'📅 Date planner',find:'🔎 Search'};
+  const tabs='<div class="kit-tabs">'+Object.keys(T).map(k=>'<button data-t="'+k+'" class="'+(k===tab?'on':'')+'">'+T[k]+'</button>').join('')+'</div>';let body='';
+  if(tab==='ice')body='<div class="kit-q" id="kq">'+E(pick(ICE))+'</div><div class="kit-row"><button class="nxb ghost" id="kShuf">🔀 Shuffle</button><button class="nxb" id="kSend">Send it</button></div>';
+  if(tab==='game')body='<p class="sh-sub">Pick a game — it lands in the chat as a prompt for both of you.</p><button class="opt" data-g="wyr">🤔 Would you rather…</button><button class="opt" data-g="tot">⚖️ This or that</button><button class="opt" data-g="ttl">🕵️ Two truths &amp; a lie</button><button class="opt" data-g="20q">❓ 20 questions — I am thinking of something…</button><button class="opt" data-g="rate">⭐ Rate my day 1–10 (you go next)</button>';
+  if(tab==='date')body='<p class="sh-sub">Propose a date. Your match gets a clear invite and you can save it to your calendar.</p><input class="kit-in" id="dpPlace" placeholder="Where? e.g. Java House, Westlands"><div class="kit-row"><input class="kit-in" id="dpDate" type="date" style="flex:1"><input class="kit-in" id="dpTime" type="time" value="18:00" style="flex:1"></div><input class="kit-in" id="dpNote" placeholder="Add a note (optional)"><div class="kit-row"><button class="nxb" id="dpSend">Send invite</button><button class="nxb ghost" id="dpIcs">Save to calendar</button></div>';
+  if(tab==='find')body='<input class="kit-in" id="fq" placeholder="Search this chat…"><div class="kit-row"><button class="nxb ghost sm" id="fStar">★ Starred only</button><button class="nxb ghost sm" id="fClr">Clear filter</button></div><div class="lockrow" data-plus>🔒 View-once &amp; disappearing photos <b>Plus</b></div>';
+  sheet('<h3>Chat toolkit</h3>'+tabs+body,sh=>{
+    sh.querySelector('.kit-tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b)kitSheet(b.dataset.t);};
+    const $=s=>sh.querySelector(s);
+    if(tab==='ice'){$('#kShuf').onclick=()=>{$('#kq').textContent=pick(ICE);};$('#kSend').onclick=()=>sendText('💬 Icebreaker: '+$('#kq').textContent);}
+    if(tab==='game')sh.addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;const g=b.dataset.g;
+      sendText(g==='wyr'?'🎮 '+pick(WYR):g==='tot'?'🎮 '+pick(TOT):g==='ttl'?'🕵️ Two truths & a lie — here is mine: 1) … 2) … 3) … Guess which one is the lie!':g==='20q'?'❓ 20 questions: I am thinking of a place we should visit together. Ask me yes/no questions!':'⭐ My day was a __/10 because… your turn!');});
+    if(tab==='date'){const d=new Date();d.setDate(d.getDate()+2);$('#dpDate').value=d.toISOString().slice(0,10);
+      const info=()=>({p:$('#dpPlace').value.trim(),d:$('#dpDate').value,t:$('#dpTime').value,n:$('#dpNote').value.trim()});
+      $('#dpSend').onclick=()=>{const v=info();if(!v.p||!v.d)return toast('Add a place and a date');const dt=new Date(v.d+'T'+(v.t||'18:00'));sendText('📅 Date invite: '+v.p+' · '+dt.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+' at '+(v.t||'18:00')+(v.n?' — '+v.n:'')+'. Are you in? 💘');};
+      $('#dpIcs').onclick=()=>{const v=info();if(!v.p||!v.d)return toast('Add a place and a date');const s=new Date(v.d+'T'+(v.t||'18:00')),e=new Date(+s+36e5),f=x=>x.toISOString().replace(/[-:]|\.\d{3}/g,'');
+        const ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTART:'+f(s)+'\r\nDTEND:'+f(e)+'\r\nSUMMARY:Date on NEXA\r\nLOCATION:'+v.p+'\r\nDESCRIPTION:'+v.n+'\r\nEND:VEVENT\r\nEND:VCALENDAR';
+        const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='nexa-date.ics';a.click();toast('Saved to calendar file 📅');};}
+    if(tab==='find'){const run=()=>{const t=$('#fq').value.trim().toLowerCase();qa('#messages .bubble-row').forEach(r=>{const b=r.querySelector('.bubble');r.style.display=(!t||!b||b.textContent.toLowerCase().includes(t))?'':'none';});};
+      $('#fq').oninput=run;$('#fStar').onclick=()=>{qa('#messages .bubble-row').forEach(r=>{const b=r.querySelector('.bubble');r.style.display=b&&b.classList.contains('starred')?'':'none';});closeSheet();};
+      $('#fClr').onclick=()=>{qa('#messages .bubble-row').forEach(r=>r.style.display='');$('#fq').value='';};
+      sh.addEventListener('click',e=>{if(e.target.closest('[data-plus]'))plusSheet();});}
+  });
+}
+function mountKit(){const bar=q('#chatInputBar');if(!bar||q('#nxKitBtn'))return;const b=document.createElement('button');b.className='icon-btn';b.id='nxKitBtn';b.title='Games, icebreakers & date planner';b.textContent='🎲';b.style.fontSize='18px';b.onclick=()=>kitSheet('ice');const i=q('#chatInput'),pa=i&&i.parentNode;if(pa&&pa!==bar)bar.insertBefore(b,pa);else bar.insertBefore(b,i||null);}
+const _sm=window.sendMessage;if(_sm)window.sendMessage=function(){const i=q('#chatInput'),had=i&&i.value.trim();const r=_sm.apply(this,arguments);if(had)bump('msg');return r;};
+
+/* ---------- boot ---------- */
+try{signupPhotos();}catch(e){}try{signupCopy();}catch(e){}try{mountKit();}catch(e){}
+let lastUser=null;
+setInterval(()=>{
+  try{if(currentUserId&&currentUserId!==lastUser){lastUser=currentUserId;touchStreak();mountPlusPill();mountHub();counts().then(c=>{CNT=c;paintHub();});}}catch(e){}
+  try{mountKit();}catch(e){}
+  const cd=countdown(),a=q('#hubCd'),b=q('#dropCd');a&&(a.textContent=cd);b&&(b.textContent=cd);
+},1000);
 })();
 
 </script>
